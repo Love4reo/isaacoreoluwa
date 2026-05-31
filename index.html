@@ -103,8 +103,8 @@ body{background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;min-height
 </head>
 <body>
 
-<div class="corner" id="cTL"><a href="https://www.behance.net/isaacoreoluwa" target="_blank">Designer</a></div>
-<div class="corner" id="cTR"><a href="https://wildwide.wtf" target="_blank">Powerlifter</a></div>
+<div class="corner" id="cTL"><a href="/design">Design</a></div>
+<div class="corner" id="cTR"><a href="https://wildwide.wtf" target="_blank">Performance</a></div>
 <div class="corner" id="cBL"><span id="clkDate"></span> &nbsp; <span id="clkTime"></span></div>
 <div id="root">
   <p class="eyebrow">THERE'S MORE THAN ONE VERSION OF ME</p>
@@ -114,8 +114,8 @@ body{background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;min-height
       <circle id="cProgress" cx="140" cy="140" r="128"/>
     </svg>
     <div class="coin" id="coin">
-      <div class="face face-front"><img id="img-designer" alt="Designer"/></div>
-      <div class="face face-back"><img id="img-lifter" alt="Powerlifter"/></div>
+      <div class="face face-front"><img id="img-designer" alt="Design"/></div>
+      <div class="face face-back"><img id="img-lifter" alt="Performance"/></div>
     </div>
   </div>
   <button class="toss-btn" id="tossBtn" onclick="toss()">SPIN THE COIN</button>
@@ -148,7 +148,7 @@ body{background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;min-height
 </button>
 
 <script>
-var DESIGNER_URL = 'https://www.behance.net/isaacoreoluwa';
+var DESIGNER_URL = '/design';
 var LIFTER_URL   = 'https://wildwide.wtf';
 var CIRC = 804.2477;
 
@@ -292,7 +292,7 @@ function showResult(side){
   var res  = document.getElementById('result');
   var name = document.getElementById('resultName');
   var btn  = document.getElementById('enterBtn');
-  name.textContent = side==='designer' ? 'The Designer' : 'The Powerlifter';
+  name.textContent = side==='designer' ? 'Design' : 'Performance';
   document.getElementById('resultSub').textContent = side==='designer'
     ? 'This is where the work speaks.'
     : 'Strength is the language spoken here.';
