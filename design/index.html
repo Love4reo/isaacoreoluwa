@@ -82,7 +82,35 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);displ
 .work-scroll .work-meta{flex-direction:row;align-items:center;gap:6px;width:100%;}
 .work-scroll .work-arrow{opacity:0.4;margin-left:auto;}
 .work-scroll .work-item:hover .work-arrow{opacity:1;transform:translate(2px,-2px);}
-.about-bts{font-size:14px;color:#71717a;line-height:1.8;max-width:520px;}.avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--border);margin-bottom:14px;display:block;filter:grayscale(0.1);}</style>
+.about-bts{font-size:14px;color:#71717a;line-height:1.8;max-width:520px;}.avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--border);margin-bottom:14px;display:block;filter:grayscale(0.1);}
+/* Light mode */
+body.light{
+  --bg:#fafafa;
+  --bg2:#f4f4f5;
+  --border:rgba(0,0,0,0.08);
+  --text:#09090b;
+  --muted:#a1a1aa;
+  --muted2:#d4d4d8;
+  --link:#52525b;
+  --link-hov:#09090b;
+}
+body.light .dot{background:#16a34a;box-shadow:0 0 6px #16a34a88;}
+body.light .tagline{color:#a1a1aa;}
+body.light .hero p{color:#52525b;}
+body.light .work-desc{color:#a1a1aa;}
+body.light .about-bts{color:#52525b;}
+body.light .footer-left{color:#d4d4d8;}
+body.light .skill-chip{color:#71717a;}
+body.light .proj-wip{color:#a1a1aa;}
+body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
+body.light .work-title{color:#3f3f46;}
+
+/* Toggle button */
+.theme-toggle{display:inline-flex;align-items:center;gap:5px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;padding:3px 10px 3px 8px;cursor:pointer;font-family:var(--mono);font-size:10px;color:var(--muted);transition:color 0.2s,border-color 0.2s,background 0.2s;vertical-align:middle;}
+.theme-toggle:hover{color:var(--link-hov);border-color:var(--link);}
+.theme-toggle svg{transition:transform 0.5s ease;}
+.theme-toggle:hover svg{transform:rotate(30deg);}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -191,9 +219,43 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);displ
       <a href="http://linkedin.com/in/oshideroore/" target="_blank">LinkedIn</a>
       <a href="http://twitter.com/reoworx" target="_blank">Twitter</a>
       <a href="https://contra.com/oshiderooreoluwa" target="_blank">Contra</a>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+        <svg id="themeIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <span id="themeLabel">Light</span>
+      </button>
     </div>
   </footer>
 
 </div>
+
+<script>
+(function(){
+  var saved = localStorage.getItem('theme');
+  if(saved === 'light') applyLight();
+
+  function applyLight(){
+    document.body.classList.add('light');
+    document.getElementById('themeLabel').textContent = 'Dark mode';
+    var icon = document.getElementById('themeIcon');
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  }
+  function applyDark(){
+    document.body.classList.remove('light');
+    document.getElementById('themeLabel').textContent = 'Light mode';
+    var icon = document.getElementById('themeIcon');
+    icon.innerHTML = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+  }
+
+  window.toggleTheme = function(){
+    if(document.body.classList.contains('light')){
+      applyDark();
+      localStorage.setItem('theme','dark');
+    } else {
+      applyLight();
+      localStorage.setItem('theme','light');
+    }
+  };
+})();
+</script>
 </body>
 </html>
