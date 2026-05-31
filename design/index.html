@@ -63,12 +63,20 @@ footer{margin-top:80px;padding-top:24px;border-top:1px solid var(--border);displ
 .fade-up:nth-child(7){animation-delay:0.42s;}
 @media(max-width:480px){.wrap{padding:48px 20px 80px;}header{margin-bottom:40px;}.hero{margin-bottom:40px;}.about-block{flex-direction:column;}footer{flex-direction:column;align-items:flex-start;}}
 
-.projects-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
-.proj-link{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--link);text-decoration:none;transition:color 0.15s,border-color 0.15s,background 0.15s;}
-.proj-link:hover{color:var(--link-hov);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);}
-.proj-link svg{opacity:0.5;}
-.proj-wip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--muted2);cursor:default;opacity:0.6;}
-.proj-wip-tag{font-size:9px;font-family:var(--mono);letter-spacing:0.06em;text-transform:uppercase;padding:2px 6px;border:1px solid var(--muted2);border-radius:3px;color:var(--muted2);}
+.projects-grid{display:flex;flex-direction:column;gap:8px;}
+.proj-card{display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:var(--bg2);border:1px solid var(--border);text-decoration:none;transition:transform 0.2s ease,box-shadow 0.2s ease;cursor:pointer;}
+.proj-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.3);}
+.proj-card.disabled{cursor:default;opacity:0.55;}
+.proj-card.disabled:hover{transform:none;box-shadow:none;}
+.proj-icon{width:100%;height:120px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;letter-spacing:-0.04em;color:rgba(255,255,255,0.9);font-family:var(--sans);position:relative;overflow:hidden;}
+.proj-icon::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.08);}
+.proj-footer{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;}
+.proj-name{font-size:13px;font-weight:500;color:var(--text);font-family:var(--sans);}
+.proj-wip-tag{font-size:9px;font-family:var(--mono);letter-spacing:0.08em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--muted2);border-radius:999px;color:var(--muted2);}
+.proj-arrow{font-size:12px;color:var(--muted);opacity:0.6;}
+.proj-card:hover .proj-arrow{opacity:1;}
+/* Light mode adjustments */
+body.light .proj-card{background:#f4f4f5;}
 
 .work-scroll{display:flex;flex-direction:row;gap:12px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none;-ms-overflow-style:none;}
 .work-scroll::-webkit-scrollbar{display:none;}
@@ -137,19 +145,38 @@ body.light .work-title{color:#3f3f46;}
 
   <section class="fade-up">
     <p class="section-label">Projects</p>
-    <div class="projects-row">
-      <a class="proj-link" href="https://www.lyngo.live/" target="_blank">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Lyngo
+    <div class="projects-grid">
+
+      <a class="proj-card" href="https://www.lyngo.live/" target="_blank">
+        <div class="proj-icon" style="background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-name">Lyngo</span>
+          <span class="proj-arrow">&#8599;</span>
+        </div>
       </a>
-      <span class="proj-wip">
-        Muhsl
-        <span class="proj-wip-tag">In Progress</span>
-      </span>
-      <span class="proj-wip">
-        ClipForge
-        <span class="proj-wip-tag">In Progress</span>
-      </span>
+
+      <div class="proj-card disabled">
+        <div class="proj-icon" style="background:linear-gradient(135deg,#1c1c1c 0%,#2a2a2a 100%);">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-name">Muhsl</span>
+          <span class="proj-wip-tag">In Progress</span>
+        </div>
+      </div>
+
+      <div class="proj-card disabled">
+        <div class="proj-icon" style="background:linear-gradient(135deg,#1a1a1a 0%,#252525 100%);">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-name">ClipForge</span>
+          <span class="proj-wip-tag">In Progress</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
