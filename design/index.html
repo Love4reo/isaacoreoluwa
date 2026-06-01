@@ -411,13 +411,13 @@ body.light .cal-card{background:#f4f4f5;}
     <div class="cal-card">
       <div class="cal-left">
         <p class="cal-eyebrow">Let's talk</p>
-        <p class="cal-heading">Book a 15 min call</p>
-        <p class="cal-sub">Free &middot; Video call &middot; No commitment</p>
+        <p class="cal-heading">Book a discovery call</p>
+        <p class="cal-sub">Free &middot; 30 min &middot; Video call</p>
       </div>
       <button
         class="cal-btn"
-        data-cal-namespace="15min"
-        data-cal-link="isaacoreoluwa/15min"
+        data-cal-namespace="30min"
+        data-cal-link="isaacoreoluwa/30min"
         data-cal-config='{"layout":"month_view","theme":"dark"}'>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a call
@@ -593,8 +593,8 @@ document.addEventListener('DOMContentLoaded', function(){
   };
 })(window, "https://app.cal.com/embed/embed.js", "init");
 
-Cal("init", "15min", {origin:"https://cal.com"});
-Cal.ns["15min"]("ui", {
+Cal("init", "30min", {origin:"https://cal.com"});
+Cal.ns["30min"]("ui", {
   hideEventTypeDetails: false,
   layout: "month_view",
   theme: "dark"
