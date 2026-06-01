@@ -225,6 +225,62 @@ body.light .work-title{color:#3f3f46;}
 #gifBanner.gif-active{
   transform:scale(1.02);
 }
+
+.cal-section{margin-bottom:52px;}
+.cal-card{
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  background:var(--bg2);
+  flex-wrap:wrap;
+}
+.cal-left{}
+.cal-eyebrow{
+  font-size:10px;
+  font-family:var(--mono);
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.cal-heading{
+  font-size:16px;
+  font-weight:500;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  margin-bottom:4px;
+}
+.cal-sub{
+  font-size:12px;
+  color:var(--muted);
+  font-family:var(--mono);
+}
+.cal-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:11px 22px;
+  font-size:11px;
+  font-family:var(--mono);
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-weight:500;
+  border-radius:999px;
+  background:var(--text);
+  color:var(--bg);
+  border:none;
+  cursor:pointer;
+  transition:opacity 0.15s, transform 0.12s;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.cal-btn:hover{opacity:0.85;}
+.cal-btn:active{transform:scale(0.97);}
+body.light .cal-card{background:#f4f4f5;}
 </style>
 </head>
 <body>
@@ -348,6 +404,24 @@ body.light .work-title{color:#3f3f46;}
       <span class="skill-chip">Tailwind CSS</span>
       <span class="skill-chip">Editorial Design</span>
       <span class="skill-chip">Pitch Decks</span>
+    </div>
+  </section>
+
+  <section class="cal-section fade-up">
+    <div class="cal-card">
+      <div class="cal-left">
+        <p class="cal-eyebrow">Let's talk</p>
+        <p class="cal-heading">Book a 15 min call</p>
+        <p class="cal-sub">Free &middot; Video call &middot; No commitment</p>
+      </div>
+      <button
+        class="cal-btn"
+        data-cal-namespace="15min"
+        data-cal-link="isaacoreoluwa/15min"
+        data-cal-config='{"layout":"month_view","theme":"dark"}'>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a call
+      </button>
     </div>
   </section>
 
@@ -491,5 +565,40 @@ document.addEventListener('DOMContentLoaded', function(){
 <div class="cursor-preview" id="cursorPreview">
   <img id="cursorPreviewImg" src="" alt=""/>
 </div>
+
+<!-- Cal.com embed -->
+<script type="text/javascript">
+(function (C, A, L) {
+  let p = function (a, ar) { a.q.push(ar); };
+  let d = C.document;
+  C.Cal = C.Cal || function () {
+    let cal = C.Cal; let ar = arguments;
+    if (!cal.loaded) {
+      cal.ns = {}; cal.q = cal.q || [];
+      d.head.appendChild(d.createElement("script")).src = A;
+      cal.loaded = true;
+    }
+    if (ar[0] === L) {
+      const api = function () { p(api, arguments); };
+      const namespace = ar[1];
+      api.q = api.q || [];
+      if (typeof namespace === "string") {
+        cal.ns[namespace] = cal.ns[namespace] || api;
+        p(cal.ns[namespace], ar);
+        p(cal, ["initNamespace", namespace]);
+      } else p(cal, ar);
+      return;
+    }
+    p(cal, ar);
+  };
+})(window, "https://app.cal.com/embed/embed.js", "init");
+
+Cal("init", "15min", {origin:"https://cal.com"});
+Cal.ns["15min"]("ui", {
+  hideEventTypeDetails: false,
+  layout: "month_view",
+  theme: "dark"
+});
+</script>
 </body>
 </html>
