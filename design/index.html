@@ -181,6 +181,38 @@ body.light .work-title{color:#3f3f46;}
   width:100%;height:100%;object-fit:cover;display:block;
 }
 .work-scroll .work-item{cursor:none;}
+
+/* GIF scatter mode */
+.gif-scatter-el{will-change:transform,opacity;}
+.gif-label{
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  font-size:10px;
+  font-family:var(--mono);
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.75);
+  background:rgba(0,0,0,0.4);
+  padding:5px 16px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.12);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.3s ease, transform 0.3s ease;
+  white-space:nowrap;
+}
+#gifBanner:hover .gif-label{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+#gifBanner{
+  transition:transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+#gifBanner.gif-active{
+  transform:scale(1.02);
+}
 </style>
 </head>
 <body>
@@ -212,8 +244,9 @@ body.light .work-title{color:#3f3f46;}
     </div>
   </div>
 
-  <div class="work-banner fade-up">
+  <div class="work-banner fade-up" id="gifBanner">
     <img src="https://www.functionstudioo.com/ore.gif" alt="Work showcase"/>
+    <span class="gif-label">Work in motion</span>
   </div>
 
   <section class="fade-up">
@@ -393,6 +426,53 @@ document.addEventListener('DOMContentLoaded', function(){
       rafId = null;
     });
   });
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  var banner = document.getElementById('gifBanner');
+  if(!banner) return;
+
+  var wrap = document.querySelector('.wrap');
+  var targets = Array.from(wrap.children).filter(function(el){
+    return el !== banner;
+  });
+
+  var directions = [
+    {x:-140, y:-80,  r:-8},
+    {x: 160, y:-60,  r: 6},
+    {x:-120, y: 100, r:-5},
+    {x: 130, y: 110, r: 7},
+    {x:-90,  y:-120, r:-10},
+    {x: 170, y:-90,  r: 9},
+    {x:-150, y: 80,  r:-6},
+    {x: 110, y: 130, r: 5},
+    {x:-70,  y: 140, r:-7},
+    {x: 90,  y:-140, r: 8},
+  ];
+
+  function scatter(){
+    banner.classList.add('gif-active');
+    targets.forEach(function(el, i){
+      var d = directions[i % directions.length];
+      el.style.transition = 'transform 0.6s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease';
+      el.style.transform  = 'translate('+d.x+'px,'+d.y+'px) rotate('+d.r+'deg) scale(0.85)';
+      el.style.opacity    = '0';
+      el.style.pointerEvents = 'none';
+    });
+  }
+
+  function reassemble(){
+    banner.classList.remove('gif-active');
+    targets.forEach(function(el){
+      el.style.transition = 'transform 0.7s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease';
+      el.style.transform  = 'translate(0,0) rotate(0deg) scale(1)';
+      el.style.opacity    = '1';
+      el.style.pointerEvents = '';
+    });
+  }
+
+  banner.addEventListener('mouseenter', scatter);
+  banner.addEventListener('mouseleave', reassemble);
 });
 </script>
 
