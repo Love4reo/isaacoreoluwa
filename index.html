@@ -341,10 +341,16 @@ function stopCountdown(){
 function doRedirect(side){
   stopCountdown();
   var url  = side==='designer' ? DESIGNER_URL : LIFTER_URL;
-  var name = side==='designer' ? 'Behance' : 'wildwide.wtf';
+  var name = side==='designer' ? 'Design Portfolio' : 'wildwide.wtf';
   document.getElementById('rDest').textContent = name;
   document.getElementById('redirectOverlay').classList.add('on');
-  setTimeout(function(){ window.open(url,'_blank'); }, 900);
+  setTimeout(function(){
+    if(side==='designer'){
+      window.location.href = url;
+    } else {
+      window.open(url,'_blank');
+    }
+  }, 900);
 }
 
 /* ── Coin toss ── */
@@ -390,7 +396,14 @@ function showResult(side){
     ? 'This is where the work speaks.'
     : 'Strength is the language spoken here.';
   btn.textContent  = 'ENTER →';
-  btn.onclick = function(){ stopCountdown(); window.open(side==='designer'?DESIGNER_URL:LIFTER_URL,'_blank'); };
+  btn.onclick = function(){
+    stopCountdown();
+    if(side==='designer'){
+      window.location.href = DESIGNER_URL;
+    } else {
+      window.open(LIFTER_URL,'_blank');
+    }
+  };
   res.classList.add('visible');
   document.getElementById('tossBtn').style.display='none';
   // Hide corners on result screen
