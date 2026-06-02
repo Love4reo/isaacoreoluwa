@@ -629,8 +629,10 @@ Cal.ns["30min"]("ui", {
 });
 
 function deployOreoluwa(){
-  if(window.Cal && window.Cal.ns && window.Cal.ns['15min']){
-    window.Cal.ns['15min']('openModal',{calLink:'isaacoreoluwa/30min'});
+  if(window.Cal && window.Cal.ns && window.Cal.ns['30min']){
+    window.Cal.ns['30min']('modal',{calLink:'isaacoreoluwa/30min',config:{layout:'month_view',theme:'dark'}});
+  } else if(window.Cal){
+    window.Cal('modal',{calLink:'isaacoreoluwa/30min',config:{layout:'month_view',theme:'dark'}});
   } else {
     window.open('https://cal.com/isaacoreoluwa/30min','_blank');
   }
