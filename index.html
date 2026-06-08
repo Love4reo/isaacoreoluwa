@@ -55,7 +55,7 @@ body{background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;min-height
 .face img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
 .face-front{transform:rotateY(0deg);}
 .face-back{transform:rotateY(180deg);}
-.face-back img{object-fit:cover;object-position:center 12%;transform:scale(1.5);transform-origin:center 18%;}
+
 
 .toss-btn{padding:clamp(12px,3vw,15px) clamp(28px,8vw,52px);font-size:clamp(10px,2.5vw,11px);letter-spacing:0.22em;font-weight:500;text-transform:uppercase;border:1px solid #282828;border-radius:999px;background:transparent;color:#888;cursor:pointer;transition:border-color 0.2s,color 0.2s,transform 0.12s;font-family:inherit;width:auto;}
 .toss-btn:hover{border-color:#555;color:#e0e0e0;}
@@ -200,8 +200,35 @@ body.light .coin-glow{
       <circle id="cProgress" cx="140" cy="140" r="128"/>
     </svg>
     <div class="coin" id="coin">
-      <div class="face face-front"><img id="img-designer" alt="Design"/></div>
-      <div class="face face-back"><img id="img-lifter" alt="Performance"/></div>
+      <div class="face face-front" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="4" width="14" height="14" rx="2" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <rect x="22" y="4" width="14" height="14" rx="2" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
+          <rect x="34" y="4" width="14" height="14" rx="2" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.2"/>
+          <rect x="4" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.2)" stroke-width="1.2"/>
+          <rect x="22" y="22" width="14" height="14" rx="2" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.8)" stroke-width="1.5"/>
+          <rect x="40" y="22" width="8" height="8" rx="1.5" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <rect x="4" y="40" width="8" height="8" rx="1.5" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+          <rect x="22" y="40" width="14" height="8" rx="1.5" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+          <line x1="18" y1="11" x2="22" y2="11" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+          <line x1="29" y1="18" x2="29" y2="22" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+        </svg>
+        <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:rgba(255,255,255,0.4);">Design</span>
+      </div>
+      <div class="face face-back" style="background:#f0f0f0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+        <svg width="54" height="32" viewBox="0 0 54 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="10" width="6" height="12" rx="2" fill="rgba(0,0,0,0.75)" stroke="rgba(0,0,0,0.4)" stroke-width="0.8"/>
+          <rect x="6" y="13" width="4" height="6" rx="1" fill="rgba(0,0,0,0.55)"/>
+          <rect x="10" y="1" width="5" height="30" rx="2" fill="rgba(0,0,0,0.8)" stroke="rgba(0,0,0,0.4)" stroke-width="0.8"/>
+          <rect x="15" y="14" width="24" height="4" rx="1.5" fill="rgba(0,0,0,0.35)" stroke="rgba(0,0,0,0.2)" stroke-width="0.5"/>
+          <rect x="39" y="1" width="5" height="30" rx="2" fill="rgba(0,0,0,0.8)" stroke="rgba(0,0,0,0.4)" stroke-width="0.8"/>
+          <rect x="44" y="13" width="4" height="6" rx="1" fill="rgba(0,0,0,0.55)"/>
+          <rect x="48" y="10" width="6" height="12" rx="2" fill="rgba(0,0,0,0.75)" stroke="rgba(0,0,0,0.4)" stroke-width="0.8"/>
+          <line x1="12" y1="8" x2="12" y2="24" stroke="rgba(0,0,0,0.15)" stroke-width="0.6"/>
+          <line x1="13.5" y1="6" x2="13.5" y2="26" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/>
+        </svg>
+        <span style="font-family:'Helvetica Neue',Arial,sans-serif;font-size:9px;font-weight:500;letter-spacing:0.32em;text-transform:uppercase;color:rgba(0,0,0,0.45);">Performance</span>
+      </div>
     </div>
     <div class="coin-reflection"></div>
     <div class="coin-glow"></div>
@@ -254,8 +281,8 @@ var SND_LAND="UklGRqxYAQBXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YYhYAQAAAGgNhB
 
 /* ── Images ── */
 window.addEventListener('load', function(){
-  document.getElementById('img-designer').src = 'data:image/jpeg;base64,' + DESIGNER;
-  document.getElementById('img-lifter').src   = 'data:image/jpeg;base64,' + LIFTER;
+  
+  
   setTimeout(function(){ document.getElementById('coin').classList.add('idle'); }, 400);
 });
 
