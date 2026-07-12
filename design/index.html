@@ -303,6 +303,351 @@ body.light .cal-card{background:#f4f4f5;}
 
 
 
+
+/* ============================================
+   DEV MODE
+   ============================================ */
+body.dev{
+  background:#0d0d0d;
+  color:#e0e0e0;
+  font-family:'Courier New',Courier,monospace;
+}
+body.dev .wrap{max-width:680px;}
+
+/* Scanline overlay */
+body.dev::after{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events:none;
+  z-index:9998;
+}
+
+/* Header */
+body.dev header .name{
+  font-family:'Courier New',monospace;
+  font-size:13px;
+  color:#00ff88;
+  letter-spacing:0.04em;
+}
+body.dev header .name::before{content:'> ';}
+body.dev .dot{background:#00ff88;box-shadow:0 0 8px #00ff88;}
+body.dev .availability{font-family:'Courier New',monospace;color:#555;}
+
+/* Tagline */
+body.dev .tagline{
+  color:#00ff88;
+  font-family:'Courier New',monospace;
+  font-size:12px;
+}
+body.dev .tagline::before{content:'# ';}
+
+/* H1 */
+body.dev .hero h1{
+  font-size:clamp(18px,4vw,22px);
+  color:#e0e0e0;
+  font-family:'Courier New',monospace;
+  font-weight:400;
+  letter-spacing:0;
+}
+body.dev .hero h1::before{
+  content:'/** ';
+  color:#4d9e75;
+}
+body.dev .hero h1::after{
+  content:' */';
+  color:#4d9e75;
+}
+
+/* Hero bio */
+body.dev .hero p{
+  font-family:'Courier New',monospace;
+  font-size:12px;
+  color:#666;
+  line-height:1.8;
+}
+body.dev .hero p::before{content:'// ';color:#444;}
+
+/* Links row */
+body.dev .links-row a{
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  border-color:#1e3a2e;
+  color:#00cc66;
+  border-radius:3px;
+  background:rgba(0,255,136,0.04);
+}
+body.dev .links-row a:hover{
+  border-color:#00ff88;
+  color:#00ff88;
+  background:rgba(0,255,136,0.08);
+}
+body.dev .links-row a::before{content:'[';}
+body.dev .links-row a::after{content:']';}
+
+/* Section labels */
+body.dev .section-label{
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  color:#00cc66;
+  letter-spacing:0.08em;
+  border-bottom:1px solid #1a1a1a;
+  text-transform:none;
+}
+body.dev .section-label::before{content:'const ';}
+body.dev .section-label::after{content:' = {';}
+
+/* Work items */
+body.dev .work-item{
+  border-color:#1a1a1a;
+  border-radius:3px;
+  background:transparent;
+  padding:12px 0;
+  border-bottom:1px solid #1a1a1a;
+  border-top:none;border-left:none;border-right:none;
+}
+body.dev .work-item:hover{background:rgba(0,255,136,0.03);}
+body.dev .work-title{
+  font-family:'Courier New',monospace;
+  font-size:12px;
+  color:#00cc66;
+}
+body.dev .work-title::before{content:'fn ';}
+body.dev .work-desc{
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  color:#444;
+}
+body.dev .work-tag{
+  font-family:'Courier New',monospace;
+  font-size:9px;
+  color:#2a5c3f;
+  border-color:#1a3a2a;
+  border-radius:2px;
+}
+body.dev .work-arrow{color:#00ff88;}
+
+/* Thumbnail */
+body.dev .work-thumb{filter:grayscale(0.6) brightness(0.7);border-bottom:1px solid #1a1a1a;}
+body.dev .work-item:hover .work-thumb{filter:grayscale(0.3) brightness(0.9);}
+
+/* Skills */
+body.dev .skill-chip{
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  border-color:#1a2a1a;
+  border-radius:2px;
+  color:#2a6e45;
+  background:rgba(0,255,136,0.03);
+}
+body.dev .skill-chip::before{content:'"';}
+body.dev .skill-chip::after{content:'",';}
+body.dev .skill-chip:hover{color:#0d0d0d;border-color:#00ff88;}
+body.dev .skill-chip:hover::before,
+body.dev .skill-chip:hover::after{color:#0d0d0d;}
+
+/* Projects */
+body.dev .proj-card{border-radius:3px;border-color:#1a1a1a;}
+body.dev .proj-name{font-family:'Courier New',monospace;font-size:11px;color:#e0e0e0;}
+body.dev .proj-wip-tag{font-family:'Courier New',monospace;border-color:#1e3a2e;color:#2a5c3f;}
+body.dev .proj-card:hover{border-color:#00ff88;box-shadow:0 0 12px rgba(0,255,136,0.08);}
+
+/* Cal card */
+body.dev .cal-card{border-color:#1a1a1a;border-radius:3px;background:#0a0a0a;}
+body.dev .cal-eyebrow{color:#2a5c3f;}
+body.dev .cal-heading{font-family:'Courier New',monospace;color:#00cc66;font-size:14px;}
+body.dev .cal-sub{color:#333;}
+body.dev .cal-btn{
+  background:#00ff88;color:#0d0d0d;
+  border-radius:3px;
+  font-family:'Courier New',monospace;
+}
+body.dev .cal-btn:hover{background:#00cc66;}
+
+/* Footer */
+body.dev footer{border-top:1px solid #1a1a1a;}
+body.dev .footer-left{font-family:'Courier New',monospace;color:#333;font-size:10px;}
+body.dev .footer-links a{font-family:'Courier New',monospace;color:#2a5c3f;}
+body.dev .footer-links a:hover{color:#00ff88;}
+
+/* Avatar */
+body.dev .avatar{border-color:#1a3a2a;filter:grayscale(0.5);}
+body.dev .avatar-ring{border-color:#00ff88 !important;}
+body.dev .avatar-tooltip{
+  font-family:'Courier New',monospace;
+  font-size:10px;
+  background:#0a0a0a;
+  border-color:#1e3a2e;
+  color:#00cc66;
+}
+
+/* GIF banner */
+body.dev .work-banner{filter:grayscale(0.4) brightness(0.8);}
+body.dev .work-banner:hover img{filter:grayscale(0.1) brightness(1);}
+
+/* Cursor blink for dev feel */
+body.dev .hero h1::before{
+  animation:blink 1.2s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* Mode switcher */
+.mode-switcher{
+  position:fixed;
+  bottom:clamp(1rem,3vw,1.5rem);
+  left:clamp(1rem,3vw,1.5rem);
+  display:flex;
+  align-items:center;
+  gap:0;
+  border:1px solid var(--border);
+  border-radius:999px;
+  overflow:hidden;
+  z-index:20;
+  background:var(--bg2);
+}
+.mode-btn{
+  padding:6px 12px;
+  font-size:9px;
+  font-family:var(--mono);
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border:none;
+  background:transparent;
+  color:var(--muted);
+  transition:background 0.15s,color 0.15s;
+}
+.mode-btn.active{
+  background:var(--text);
+  color:var(--bg);
+}
+.mode-btn:hover:not(.active){color:var(--link-hov);}
+body.dev .mode-switcher{
+  border-color:#1e3a2e;
+  background:#0a0a0a;
+}
+body.dev .mode-btn{
+  font-family:'Courier New',monospace;
+  color:#2a5c3f;
+}
+body.dev .mode-btn.active{
+  background:#00ff88;
+  color:#0d0d0d;
+}
+body.light .mode-btn.active{background:#111;color:#fff;}
+
+/* ============================================
+   TERMINAL DEV MODE
+   ============================================ */
+
+/* Terminal overlay — sits above everything when dev mode active */
+#terminalOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0c0c0c;
+  z-index:500;
+  font-family:'Courier New',Courier,monospace;
+  color:#00ff88;
+  overflow-y:auto;
+  padding:32px clamp(16px,5vw,48px) 120px;
+}
+body.dev #terminalOverlay{ display:block; }
+body.dev .wrap{ display:none; }
+
+/* Terminal header bar */
+.term-bar{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:28px;
+  padding-bottom:14px;
+  border-bottom:1px solid #1a1a1a;
+}
+.term-dot{width:12px;height:12px;border-radius:50%;}
+.term-dot.red{background:#ff5f57;}
+.term-dot.yellow{background:#febc2e;}
+.term-dot.green{background:#28c840;}
+.term-title{
+  font-size:11px;color:#333;
+  letter-spacing:0.1em;
+  margin-left:8px;
+}
+
+/* Terminal lines */
+.term-line{
+  display:flex;
+  gap:10px;
+  margin-bottom:6px;
+  line-height:1.6;
+  font-size:13px;
+  opacity:0;
+  animation:termFadeIn 0.01s forwards;
+}
+.term-line.visible{ opacity:1; }
+
+.term-prompt{ color:#555; flex-shrink:0; }
+.term-cmd{ color:#e0e0e0; }
+.term-comment{ color:#2a4a36; font-style:italic; }
+.term-key{ color:#00cc66; }
+.term-val{ color:#9cdcfe; }
+.term-str{ color:#ce9178; }
+.term-num{ color:#b5cea8; }
+.term-bracket{ color:#ffd700; }
+.term-tag{ color:#4ec9b0; }
+.term-out{ color:#666; padding-left:20px; }
+.term-link{
+  color:#00ff88;text-decoration:underline;
+  cursor:pointer;
+  transition:color 0.15s;
+}
+.term-link:hover{ color:#fff; }
+.term-err{ color:#f44747; }
+.term-success{ color:#4ec9b0; }
+.term-section{
+  margin-top:22px;
+  margin-bottom:4px;
+  color:#ffd700;
+  font-size:11px;
+  letter-spacing:0.1em;
+}
+
+/* Blinking cursor */
+.term-cursor{
+  display:inline-block;
+  width:8px;height:14px;
+  background:#00ff88;
+  vertical-align:middle;
+  margin-left:2px;
+  animation:cursorBlink 1s step-end infinite;
+}
+@keyframes cursorBlink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes termFadeIn{to{opacity:1;}}
+
+/* Scroll indicator */
+.term-scroll-hint{
+  position:fixed;bottom:80px;right:24px;
+  font-size:10px;color:#1e3a2e;
+  font-family:'Courier New',monospace;
+  letter-spacing:0.1em;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:0.5;}50%{opacity:1;}}
+
+/* Scanlines */
+body.dev #terminalOverlay::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,transparent,transparent 2px,
+    rgba(0,0,0,0.12) 2px,rgba(0,0,0,0.12) 4px
+  );
+  pointer-events:none;z-index:1;
+}
+body.dev #terminalOverlay > *{ position:relative;z-index:2; }
 </style>
 </head>
 <body>
@@ -656,8 +1001,146 @@ function deployOreoluwa(){
   }
 }
 
+
+// Mode switcher
+(function(){
+  var saved = localStorage.getItem('portfolio-mode') || 'default';
+  applyMode(saved);
+
+  function applyMode(mode){
+    document.body.classList.remove('dev');
+    if(mode === 'dev') document.body.classList.add('dev');
+    localStorage.setItem('portfolio-mode', mode);
+    // Sync all switchers
+    var cap = mode.charAt(0).toUpperCase() + mode.slice(1);
+    ['btnDefault','btnDev','btnDefaultTerm','btnDevTerm'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.classList.toggle('active', el.id === 'btn' + cap || el.id === 'btn' + cap + 'Term');
+    });
+  }
+
+  window.setMode = function(mode){
+    applyMode(mode);
+    if(mode === 'dev') runTerminal();
+  };
+})();
+
+function runTerminal(){
+  var lines = document.querySelectorAll('#terminalOverlay .term-line');
+  var overlay = document.getElementById('terminalOverlay');
+  if(!overlay) return;
+  // Reset
+  lines.forEach(function(l){ l.style.opacity='0'; });
+  overlay.scrollTop = 0;
+  // Typewriter reveal each line
+  var delays = [];
+  var t = 0;
+  lines.forEach(function(line, i){
+    var isCmd = line.querySelector('.term-cmd');
+    var delay = isCmd ? 400 : 80;
+    t += delay;
+    delays.push(t);
+  });
+  lines.forEach(function(line, i){
+    setTimeout(function(){
+      line.style.opacity = '1';
+      // Auto scroll
+      line.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }, delays[i]);
+  });
+}
+// Run on load if saved mode is dev
+if(localStorage.getItem('portfolio-mode') === 'dev'){
+  document.addEventListener('DOMContentLoaded', function(){ runTerminal(); });
+}
 </script>
 </div>
 
+
+<div class="mode-switcher" id="modeSwitcher">
+  <button class="mode-btn active" id="btnDefault" onclick="setMode('default')">Default</button>
+  <button class="mode-btn" id="btnDev" onclick="setMode('dev')">Dev</button>
+</div>
+
+<div id="terminalOverlay">
+  <!-- Window chrome -->
+  <div class="term-bar">
+    <div class="term-dot red"></div>
+    <div class="term-dot yellow"></div>
+    <div class="term-dot green"></div>
+    <span class="term-title">oreoluwa@portfolio ~ bash</span>
+  </div>
+
+  <!-- Boot sequence -->
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">whoami</span></div>
+  <div class="term-line"><span class="term-out">Isaac Oreoluwa &mdash; Product Designer &amp; Frontend Builder &mdash; Lagos, NG</span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat about.md</span></div>
+  <div class="term-line"><span class="term-comment"># Businesses hire me when they need more than beautiful interfaces.</span></div>
+  <div class="term-line"><span class="term-comment"># I help turn complex ideas into products that attract users,</span></div>
+  <div class="term-line"><span class="term-comment"># keep them engaged, and move key business metrics in the right direction.</span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">ls ./case-studies/</span></div>
+  <div class="term-line"><span class="term-out"><span class="term-tag">mykommune.md</span>&nbsp;&nbsp;<span class="term-tag">overflow-nav.md</span>&nbsp;&nbsp;<span class="term-tag">suberra.md</span>&nbsp;&nbsp;<span class="term-tag">rail-travel.md</span></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat ./case-studies/mykommune.md</span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">title:</span> <span class="term-str">"Simplifying Community Engagement and Event Discovery"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">role:</span> <span class="term-str">"Product Designer"</span> &nbsp;<span class="term-key">type:</span> <span class="term-str">"Product &middot; Community"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">url:</span> <a class="term-link" href="https://www.behance.net/gallery/242100717/Simplifying-Community-Engagement-and-Event-Discovery" target="_blank">"behance.net/gallery/242100717"</a></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat ./case-studies/overflow-nav.md</span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">title:</span> <span class="term-str">"Optimizing Navigation with Side Navs"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">role:</span> <span class="term-str">"Product Designer"</span> &nbsp;<span class="term-key">type:</span> <span class="term-str">"UX &middot; Navigation"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">url:</span> <a class="term-link" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank">"behance.net/gallery/218336225"</a></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat ./case-studies/suberra.md</span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">title:</span> <span class="term-str">"Redesigning Suberra's Website for Clarity and Conversion"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">role:</span> <span class="term-str">"Product Designer"</span> &nbsp;<span class="term-key">type:</span> <span class="term-str">"Web Design &middot; Brand"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">url:</span> <a class="term-link" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank">"behance.net/gallery/180338549"</a></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat ./case-studies/rail-travel.md</span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">title:</span> <span class="term-str">"Simplifying the Rail Travel Experience"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">role:</span> <span class="term-str">"Product Designer"</span> &nbsp;<span class="term-key">type:</span> <span class="term-str">"Mobile &middot; UX"</span></span></div>
+  <div class="term-line"><span class="term-out"><span class="term-key">url:</span> <a class="term-link" href="https://www.behance.net/gallery/198485845/All-in-one-train-schedule-app-and-more-Case-study" target="_blank">"behance.net/gallery/198485845"</a></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">ls ./projects/</span></div>
+  <div class="term-line"><span class="term-out"><a class="term-link" href="https://www.lyngo.live/" target="_blank">lyngo/</a>&nbsp;&nbsp;<span class="term-err">muhsl-pro/ [wip]</span>&nbsp;&nbsp;<span class="term-err">clipy/ [wip]</span></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cat ./competencies.json</span></div>
+  <div class="term-line"><span class="term-bracket">{</span></div>
+  <div class="term-line"><span class="term-out">&nbsp;&nbsp;<span class="term-key">"skills"</span>: <span class="term-bracket">[</span></span></div>
+  <div class="term-line"><span class="term-out">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-str">"Product Strategy"</span>, <span class="term-str">"UX &amp; Interface Design"</span>, <span class="term-str">"AI Product Design"</span>,</span></div>
+  <div class="term-line"><span class="term-out">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-str">"Growth &amp; Conversion Design"</span>, <span class="term-str">"Design Systems"</span>, <span class="term-str">"Interaction Design"</span>, <span class="term-str">"Video Editing"</span></span></div>
+  <div class="term-line"><span class="term-out">&nbsp;&nbsp;<span class="term-bracket">]</span></span></div>
+  <div class="term-line"><span class="term-bracket">}</span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">open --links</span></div>
+  <div class="term-line"><span class="term-out">
+    <a class="term-link" href="https://www.functionstudioo.com/Isaac_Oreoluwa_CV.pdf" target="_blank">CV</a>&nbsp;&nbsp;
+    <a class="term-link" href="mailto:oshiderooreoluwa@gmail.com">mail</a>&nbsp;&nbsp;
+    <a class="term-link" href="https://www.behance.net/isaacoreoluwa" target="_blank">behance</a>&nbsp;&nbsp;
+    <a class="term-link" href="https://contra.com/oshiderooreoluwa" target="_blank">contra</a>&nbsp;&nbsp;
+    <a class="term-link" href="http://linkedin.com/in/oshideroore/" target="_blank">linkedin</a>&nbsp;&nbsp;
+    <a class="term-link" href="http://twitter.com/reoworx" target="_blank">twitter</a>
+  </span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">cal --book-call isaacoreoluwa/30min</span></div>
+  <div class="term-line"><span class="term-out term-success">&#10003; Cal.com ready &mdash; <a class="term-link" href="#" data-cal-namespace="30min" data-cal-link="isaacoreoluwa/30min" data-cal-config='{"layout":"month_view","theme":"dark"}'>open scheduler</a></span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cmd">exit --mode design</span></div>
+  <div class="term-line"><span class="term-out term-success">&#10003; Switching to design mode &mdash; <a class="term-link" href="#" onclick="setMode('default');return false;">click here</a> or use the switcher &#8595;</span></div>
+
+  <div class="term-line"><span class="term-prompt">~$</span><span class="term-cursor"></span></div>
+
+  <!-- Mode switcher inside terminal -->
+  <div style="position:fixed;bottom:clamp(1rem,3vw,1.5rem);left:clamp(1rem,3vw,1.5rem);z-index:600;">
+    <div class="mode-switcher" id="modeSwitcherTerm">
+      <button class="mode-btn" id="btnDefaultTerm" onclick="setMode('default')">Default</button>
+      <button class="mode-btn active" id="btnDevTerm" onclick="setMode('dev')">Dev</button>
+    </div>
+  </div>
+
+  <div class="term-scroll-hint">&#8595; scroll for more</div>
+</div>
 </body>
 </html>
