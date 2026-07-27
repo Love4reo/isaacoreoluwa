@@ -176,7 +176,11 @@ body.light .work-title{color:#3f3f46;}
   position:relative;
   margin-bottom:52px;
   border-radius:0;
+  cursor:grab;
+  user-select:none;
 }
+.work-banner.dragging{cursor:grabbing;}
+.work-banner.dragging .slider-track{animation-play-state:paused;}
 /* Slider track */
 .slider-track{
   display:flex;
@@ -184,7 +188,7 @@ body.light .work-title{color:#3f3f46;}
   width:max-content;
   animation:sliderLeft 30s linear infinite;
 }
-.slider-track:hover{ animation-play-state:paused; }
+
 @keyframes sliderLeft{
   0%{transform:translateX(0);}
   100%{transform:translateX(-50%);}
@@ -436,8 +440,8 @@ body.light .cal-card{background:#f4f4f5;}
 .gallery-card{
   position:relative;
   flex-shrink:0;
-  width:180px;
-  border-radius:8px;
+  width:240px;
+  border-radius:10px;
   overflow:hidden;
   cursor:pointer;
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
@@ -451,7 +455,7 @@ body.light .cal-card{background:#f4f4f5;}
   z-index:10;
 }
 .gallery-card img{
-  width:180px;height:130px;
+  width:240px;height:300px;
   object-fit:cover;
   object-position:center center;
   display:block;
@@ -934,6 +938,98 @@ function closeSliderLB(e){
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeSliderLB();
 });
+
+// Slider drag to scroll
+(function(){
+  var banner = document.querySelector('.work-banner');
+  var track  = document.querySelector('.slider-track');
+  if(!banner || !track) return;
+
+  var isDragging = false;
+  var startX = 0;
+  var offsetX = 0;
+  var currentTranslate = 0;
+  var animOffset = 0;
+  var lastAnimX = 0;
+  var raf;
+
+  // Read current animation translateX
+  function getAnimX(){
+    var style = window.getComputedStyle(track);
+    var matrix = new DOMMatrix(style.transform);
+    return matrix.m41;
+  }
+
+  banner.addEventListener('mousedown', function(e){
+    // Don't intercept clicks on slide-card
+    isDragging = true;
+    startX = e.clientX;
+    lastAnimX = getAnimX();
+    currentTranslate = lastAnimX;
+    track.style.animationPlayState = 'paused';
+    track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    banner.classList.add('dragging');
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', function(e){
+    if(!isDragging) return;
+    var dx = e.clientX - startX;
+    var newX = currentTranslate + dx;
+    track.style.transform = 'translateX(' + newX + 'px)';
+    offsetX = dx;
+  });
+
+  window.addEventListener('mouseup', function(e){
+    if(!isDragging) return;
+    isDragging = false;
+    banner.classList.remove('dragging');
+    // Resume animation from current position
+    var finalX = currentTranslate + offsetX;
+    track.style.transform = '';
+    // Re-sync animation by adjusting animation-delay
+    var totalWidth = track.scrollWidth / 2;
+    var duration = 30; // seconds
+    var pct = (-finalX % totalWidth) / totalWidth;
+    if(pct < 0) pct += 1;
+    var delay = -(pct * duration);
+    track.style.animationDelay = delay + 's';
+    track.style.animationPlayState = 'running';
+    offsetX = 0;
+  });
+
+  // Touch support
+  banner.addEventListener('touchstart', function(e){
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    lastAnimX = getAnimX();
+    currentTranslate = lastAnimX;
+    track.style.animationPlayState = 'paused';
+    track.style.transform = 'translateX(' + currentTranslate + 'px)';
+    offsetX = 0;
+  }, {passive:true});
+
+  banner.addEventListener('touchmove', function(e){
+    if(!isDragging) return;
+    var dx = e.touches[0].clientX - startX;
+    track.style.transform = 'translateX(' + (currentTranslate + dx) + 'px)';
+    offsetX = dx;
+  }, {passive:true});
+
+  banner.addEventListener('touchend', function(){
+    if(!isDragging) return;
+    isDragging = false;
+    var finalX = currentTranslate + offsetX;
+    track.style.transform = '';
+    var totalWidth = track.scrollWidth / 2;
+    var duration = 30;
+    var pct = (-finalX % totalWidth) / totalWidth;
+    if(pct < 0) pct += 1;
+    track.style.animationDelay = -(pct * duration) + 's';
+    track.style.animationPlayState = 'running';
+    offsetX = 0;
+  });
+})();
 </script>
 
 <div id="sliderLightbox" onclick="closeSliderLB()">
