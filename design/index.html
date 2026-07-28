@@ -36,7 +36,74 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .hero h1{font-size:clamp(22px,5vw,28px);font-weight:500;line-height:1.25;letter-spacing:-0.03em;color:var(--text);margin-bottom:16px;}
 .tagline{font-size:13px;color:var(--muted);font-family:var(--mono);margin-bottom:20px;}
 .hero p{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;}
-.bio-text{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;margin-top:20px;margin-bottom:24px;}
+.bio-text{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;margin-top:0;margin-bottom:16px;}
+.bio-block{margin-top:20px;margin-bottom:8px;}
+.bio-block .bio-text:last-child{margin-bottom:0;}
+.bio-chip{
+  position:relative;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:2px 10px 2px 4px;
+  margin:0 1px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:999px;
+  font-weight:500;
+  font-size:13px;
+  color:var(--text);
+  cursor:pointer;
+  white-space:nowrap;
+  vertical-align:middle;
+  transition:border-color 0.15s,background 0.15s;
+}
+.bio-chip:hover,.bio-chip:focus{border-color:rgba(255,255,255,0.22);background:rgba(255,255,255,0.05);outline:none;}
+.bio-chip .chip-icon{
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;
+  flex-shrink:0;
+}
+.bio-chip-popover{
+  position:absolute;
+  bottom:calc(100% + 10px);
+  left:50%;
+  transform:translateX(-50%) translateY(6px);
+  width:260px;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 16px;
+  box-shadow:0 16px 44px rgba(0,0,0,0.45);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s ease, transform 0.2s ease;
+  z-index:20;
+  font-family:var(--sans);
+  font-size:12.5px;
+  line-height:1.65;
+  font-weight:400;
+  color:#a1a1aa;
+  white-space:normal;
+  text-align:left;
+  cursor:default;
+}
+.bio-chip-popover .chip-popover-title{
+  display:flex;align-items:center;gap:6px;
+  font-weight:600;color:var(--text);
+  margin-bottom:6px;font-size:13px;
+}
+.bio-chip:hover .bio-chip-popover,
+.bio-chip:focus .bio-chip-popover,
+.bio-chip.active .bio-chip-popover{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+@media(max-width:480px){
+  .bio-chip-popover{width:220px;left:0;transform:translateX(0) translateY(6px);}
+  .bio-chip:hover .bio-chip-popover,
+  .bio-chip:focus .bio-chip-popover,
+  .bio-chip.active .bio-chip-popover{transform:translateX(0) translateY(0);}
+}
 .links-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px;align-items:center;}.links-row .links-right{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;}
 .links-row a{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--link);text-decoration:none;transition:color 0.15s,border-color 0.15s,background 0.15s;}
 .links-row a:hover{color:var(--link-hov);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);}
@@ -917,7 +984,11 @@ body.light .header-cal-btn{background:#111;color:#fff;}
       </div></div>
   </div>
 
-  <p class="bio-text" id="bioText">Businesses hire me when they need more than beautiful interfaces. I help turn complex ideas into products that attract users, keep them engaged, and move key business metrics in the right direction.</p>
+  <div class="bio-block" id="bioText">
+    <p class="bio-text">I'm a Product Designer based in Lagos, Nigeria, building functional, accessible, and enjoyable digital products across fintech, agency, and brand work.</p>
+    <p class="bio-text">Most recently, I led product design at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#f5c451;color:#3a2a00;">I</span>Ivory Finance<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#f5c451;color:#3a2a00;">I</span>Ivory Finance</span>AI-powered platform for portfolio management and investment research. Led design of IvoryMind 1.0 — an AI assistant for portfolio insights — shipped in under 12 weeks. Winner of the Ivory Design Excellence Award (2025).</span></span>, shaping the AI assistant behind its portfolio insights and research workflows.</p>
+    <p class="bio-text">Earlier, I designed across e-commerce, real estate, and logistics products at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#7dd3fc;color:#0c3a52;">B</span>Big Field Digital<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#7dd3fc;color:#0c3a52;">B</span>Big Field Digital</span>Full-service digital agency. Supported UI/UX design for 5+ client-facing products, improving handoff speed by 20% and design-to-dev implementation accuracy to 95%.</span></span>, and started out in visual design at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#f0abfc;color:#4a0d5c;">T</span>TinklingD<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#f0abfc;color:#4a0d5c;">T</span>TinklingD</span>Digital marketing and creative team. Designed print and digital campaign assets for SMEs, building strong fundamentals in layout, typography, and brand consistency.</span></span>.</p>
+  </div>
 
   <section class="fade-up">
     <p class="section-label">Projects</p>
@@ -1201,6 +1272,19 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') closeLightbox();
+  });
+
+  // Bio chip popovers (tap support for touch devices)
+  document.querySelectorAll('.bio-chip').forEach(function(chip){
+    chip.addEventListener('click', function(e){
+      e.stopPropagation();
+      var wasActive = chip.classList.contains('active');
+      document.querySelectorAll('.bio-chip.active').forEach(function(c){ c.classList.remove('active'); });
+      if(!wasActive) chip.classList.add('active');
+    });
+  });
+  document.addEventListener('click', function(){
+    document.querySelectorAll('.bio-chip.active').forEach(function(c){ c.classList.remove('active'); });
   });
 
   // Draggable scattered-photo canvas
