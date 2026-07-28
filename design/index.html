@@ -546,6 +546,27 @@ body.light .cal-card{background:#f4f4f5;}
 .header-cal-btn:hover{opacity:0.82;}
 .header-cal-btn:active{transform:scale(0.97);}
 body.light .header-cal-btn{background:#111;color:#fff;}
+.btn-marquee{
+  display:inline-block;
+  overflow:hidden;
+  position:relative;
+  vertical-align:middle;
+  height:1.3em;
+  line-height:1.3em;
+}
+.btn-marquee-track{
+  display:inline-flex;
+  animation:btnMarquee 4.5s linear infinite;
+  will-change:transform;
+}
+.btn-marquee-item{
+  white-space:nowrap;
+  padding-right:20px;
+}
+@keyframes btnMarquee{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
 
 .header-right{display:flex;align-items:center;gap:10px;}
 /* Slider image lightbox */
@@ -594,7 +615,12 @@ body.light .header-cal-btn{background:#111;color:#fff;}
         data-cal-link="isaacoreoluwa/30min"
         data-cal-config='{"layout":"month_view","theme":"dark"}'>
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book a call
+        <span class="btn-marquee" id="calBtnMarquee">
+          <span class="btn-marquee-track">
+            <span class="btn-marquee-item">Book a call</span>
+            <span class="btn-marquee-item">Book a call</span>
+          </span>
+        </span>
       </button>
     </div>
   </header>
@@ -1054,6 +1080,17 @@ function toggleBio(){
   p.classList.toggle('truncated', !expanded);
   btn.textContent = expanded ? 'Read less' : 'Read more';
 }
+// Size the header button marquee to one text instance for a seamless loop
+(function(){
+  var wrap = document.getElementById('calBtnMarquee');
+  if(!wrap) return;
+  var item = wrap.querySelector('.btn-marquee-item');
+  function setWidth(){
+    wrap.style.width = item.offsetWidth + 'px';
+  }
+  setWidth();
+  window.addEventListener('resize', setWidth);
+})();
 function closeSliderLB(e){
   document.getElementById('sliderLightbox').classList.remove('on');
   document.body.style.overflow = '';
