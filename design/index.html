@@ -568,14 +568,16 @@ body.light .header-cal-btn{background:#111;color:#fff;}
 #sliderLightbox.on img{transform:scale(1);}
 #sliderClose{
   position:absolute;top:20px;right:24px;
+  width:38px;height:38px;
+  display:flex;align-items:center;justify-content:center;
   background:rgba(255,255,255,0.1);
   border:1px solid rgba(255,255,255,0.2);
-  border-radius:999px;padding:6px 16px;
-  font-size:11px;font-family:var(--mono);letter-spacing:0.14em;
-  text-transform:uppercase;color:rgba(255,255,255,0.7);
-  cursor:pointer;transition:background 0.15s,color 0.15s;
+  border-radius:50%;padding:0;
+  color:rgba(255,255,255,0.7);
+  cursor:pointer;transition:background 0.15s,color 0.15s,transform 0.15s;
 }
-#sliderClose:hover{background:rgba(255,255,255,0.18);color:#fff;}
+#sliderClose svg{width:16px;height:16px;}
+#sliderClose:hover{background:rgba(255,255,255,0.18);color:#fff;transform:scale(1.08);}
 .slide-card{cursor:zoom-in;}
 </style>
 </head>
@@ -1154,7 +1156,7 @@ document.addEventListener('keydown', function(e){
 </script>
 
 <div id="sliderLightbox" onclick="closeSliderLB()">
-  <button id="sliderClose" onclick="closeSliderLB()">&#215; Close</button>
+  <button id="sliderClose" onclick="closeSliderLB()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
   <img id="sliderLBImg" src="" alt="Design work"/>
 </div>
 </body>
