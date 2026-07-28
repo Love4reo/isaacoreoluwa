@@ -36,6 +36,10 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .hero h1{font-size:clamp(22px,5vw,28px);font-weight:500;line-height:1.25;letter-spacing:-0.03em;color:var(--text);margin-bottom:16px;}
 .tagline{font-size:13px;color:var(--muted);font-family:var(--mono);margin-bottom:20px;}
 .hero p{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;}
+.bio-text.truncated{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px;margin-bottom:0;}
+.bio-text.expanded{white-space:normal;}
+.read-more-btn{background:none;border:none;padding:0;margin-top:6px;margin-bottom:20px;display:block;font-family:var(--mono);font-size:12px;color:var(--link);cursor:pointer;text-decoration:underline;text-underline-offset:2px;transition:color 0.15s;}
+.read-more-btn:hover{color:var(--link-hov);}
 .links-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px;align-items:center;}.links-row .links-right{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;}
 .links-row a{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:var(--mono);color:var(--link);text-decoration:none;transition:color 0.15s,border-color 0.15s,background 0.15s;}
 .links-row a:hover{color:var(--link-hov);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);}
@@ -197,6 +201,7 @@ body.light .work-title{color:#3f3f46;}
   position:relative;
   flex-shrink:0;
   width:360px;
+  aspect-ratio:4/3;
   border-radius:10px;
   overflow:hidden;
   border:1px solid var(--border);
@@ -210,7 +215,8 @@ body.light .work-title{color:#3f3f46;}
 }
 .slide-card img{
   width:100%;
-  height:auto;
+  height:100%;
+  object-fit:cover;
   display:block;
   filter:grayscale(0.05);
   transition:filter 0.3s, transform 0.4s ease;
@@ -599,7 +605,8 @@ body.light .header-cal-btn{background:#111;color:#fff;}
     </div>
     <p class="tagline">// product designer &middot; Lagos, NG</p>
     <h1>I design products that drive growth, not just attention.</h1>
-    <p>Businesses hire me when they need more than beautiful interfaces. I help turn complex ideas into products that attract users, keep them engaged, and move key business metrics in the right direction.</p>
+    <p class="bio-text truncated" id="bioText">Businesses hire me when they need more than beautiful interfaces. I help turn complex ideas into products that attract users, keep them engaged, and move key business metrics in the right direction.</p>
+    <button class="read-more-btn" id="readMoreBtn" onclick="toggleBio()">Read more</button>
     <div class="links-row">
       <a href="https://www.functionstudioo.com/Isaac_Oreoluwa_CV.pdf" target="_blank"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>CV</a>
       <a href="mailto:oshiderooreoluwa@gmail.com"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Mail</a>
@@ -1038,6 +1045,13 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 });
+function toggleBio(){
+  var p = document.getElementById('bioText');
+  var btn = document.getElementById('readMoreBtn');
+  var expanded = p.classList.toggle('expanded');
+  p.classList.toggle('truncated', !expanded);
+  btn.textContent = expanded ? 'Read less' : 'Read more';
+}
 function closeSliderLB(e){
   document.getElementById('sliderLightbox').classList.remove('on');
   document.body.style.overflow = '';
