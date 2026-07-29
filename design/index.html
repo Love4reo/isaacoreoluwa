@@ -318,30 +318,6 @@ body.light .work-title{color:#3f3f46;}
 .slide-card:hover::after{
   background:rgba(0,0,0,0.28);
 }
-.slide-expand{
-  position:absolute;
-  top:50%;left:50%;
-  width:42px;height:42px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.35);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  opacity:0;
-  transform:translate(-50%,-50%) scale(0.5) rotate(-20deg);
-  transition:opacity 0.25s ease, transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-  pointer-events:none;
-  z-index:3;
-}
-.slide-expand svg{width:17px;height:17px;}
-.slide-card:hover .slide-expand{
-  opacity:1;
-  transform:translate(-50%,-50%) scale(1) rotate(0deg);
-}
 /* Edge fades */
 .work-banner::before,
 .work-banner::after{
@@ -620,6 +596,33 @@ body.light .testimonial-card{background:#f4f4f5;}
   box-shadow:0 20px 55px rgba(0,0,0,0.6);
   z-index:50;
 }
+#expandCursor{
+  position:fixed;
+  top:0;left:0;
+  width:72px;height:72px;
+  border-radius:50%;
+  background:rgba(15,15,15,0.75);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,0.15);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  pointer-events:none;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(0.4);
+  transition:opacity 0.25s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:200;
+  white-space:nowrap;
+}
+#expandCursor span{font-size:14px;line-height:1;}
+#expandCursor.visible{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
 .gallery-card img{
   width:170px;height:210px;
   object-fit:cover;
@@ -846,187 +849,141 @@ body.light .header-cal-btn{background:#111;color:#fff;}
     <div class="slider-track">
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186112/Frame_1000003596_ioqerw.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221690/702shots_so_ffk8q4.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221691/28shots_so_l6mvjp.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221213/Frame_1000003571_rczu1y.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003570_welcio.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186685/Frame_1000003575_wjqnhn.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785222007/Frame_1000003604_2_zdtdzm.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186108/Frame_1000003561_azpuoj.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003587_d8qt6l.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003588_1_a9t8s3.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186117/Frame_1000003590_1_gzighw.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186116/Frame_1000003591_b3f6af.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186112/Frame_1000003598_ozufcb.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951709_nbwvr6.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251636/Frame_1966951710_qrsfy4.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951711_bsytbc.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251638/Frame_1966951712_wicpyn.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951713_fvhn4n.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785275543/Frame_1966951715_rbno4v.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785297419/Desktop_-_237_tzvrm5.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785298100/Frame_1966951717_a5azg2.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785297417/Desktop_-_237_1_rlcqiv.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785298512/Frame_1966951718_cwauyp.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186112/Frame_1000003596_ioqerw.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221690/702shots_so_ffk8q4.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221691/28shots_so_l6mvjp.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785221213/Frame_1000003571_rczu1y.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003570_welcio.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186685/Frame_1000003575_wjqnhn.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785222007/Frame_1000003604_2_zdtdzm.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186108/Frame_1000003561_azpuoj.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003587_d8qt6l.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186109/Frame_1000003588_1_a9t8s3.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186117/Frame_1000003590_1_gzighw.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186116/Frame_1000003591_b3f6af.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785186112/Frame_1000003598_ozufcb.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951709_nbwvr6.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251636/Frame_1966951710_qrsfy4.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951711_bsytbc.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251638/Frame_1966951712_wicpyn.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785251639/Frame_1966951713_fvhn4n.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785275543/Frame_1966951715_rbno4v.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785297419/Desktop_-_237_tzvrm5.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785298100/Frame_1966951717_a5azg2.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785297417/Desktop_-_237_1_rlcqiv.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785298512/Frame_1966951718_cwauyp.png" alt="Design work" loading="lazy"/>
-        <div class="slide-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></div>
       </div></div>
   </div>
 
@@ -1345,6 +1302,28 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   document.addEventListener('click', function(){
     document.querySelectorAll('.bio-chip.active').forEach(function(c){ c.classList.remove('active'); });
+  });
+
+  // Custom "Expand +" cursor-follow badge for slider images
+  var expandCursor = document.createElement('div');
+  expandCursor.id = 'expandCursor';
+  expandCursor.innerHTML = 'Expand<span>+</span>';
+  document.body.appendChild(expandCursor);
+
+  function moveExpandCursor(e){
+    expandCursor.style.left = e.clientX + 'px';
+    expandCursor.style.top = e.clientY + 'px';
+  }
+  document.querySelectorAll('.slide-card').forEach(function(el){
+    el.addEventListener('mouseenter', function(){
+      expandCursor.classList.add('visible');
+      el.style.cursor = 'none';
+    });
+    el.addEventListener('mousemove', moveExpandCursor);
+    el.addEventListener('mouseleave', function(){
+      expandCursor.classList.remove('visible');
+      el.style.cursor = '';
+    });
   });
 
   // Draggable scattered-photo canvas
