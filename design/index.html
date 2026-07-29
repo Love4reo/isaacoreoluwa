@@ -40,6 +40,7 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 .bio-block{margin-top:20px;margin-bottom:8px;}
 .bio-block .bio-text:last-child{margin-bottom:0;}
 .bio-chip{
+  text-decoration:none;
   position:relative;
   display:inline-flex;align-items:center;gap:5px;
   padding:2px 10px 2px 4px;
@@ -985,7 +986,8 @@ body.light .header-cal-btn{background:#111;color:#fff;}
   </div>
 
   <div class="bio-block" id="bioText">
-    <p class="bio-text">I'm a Product Designer based in Lagos, Nigeria, building functional, accessible, and enjoyable digital products across fintech, agency, and brand work.</p>
+    <p class="bio-text">Obsessed with thoughtful interactions, clean interfaces, and products that feel effortless. I design experiences where every detail has a purpose.</p>
+    <p class="bio-text">I'm the co-founder of <a class="bio-chip bio-chip-link" href="https://www.functionstudioo.com/" target="_blank"><span class="chip-icon" style="background:#a5f3c4;color:#0a3d24;">F</span>Function Studio<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#a5f3c4;color:#0a3d24;">F</span>Function Studio</span>A product design studio building digital products for startups and ambitious businesses. Visit functionstudioo.com &rarr;</span></a>, where I design and build digital products for startups and ambitious businesses.</p>
     <p class="bio-text">Most recently, I led product design at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#f5c451;color:#3a2a00;">I</span>Ivory Finance<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#f5c451;color:#3a2a00;">I</span>Ivory Finance</span>AI-powered platform for portfolio management and investment research. Led design of IvoryMind 1.0 — an AI assistant for portfolio insights — shipped in under 12 weeks. Winner of the Ivory Design Excellence Award (2025).</span></span>, shaping the AI assistant behind its portfolio insights and research workflows.</p>
     <p class="bio-text">Earlier, I designed across e-commerce, real estate, and logistics products at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#7dd3fc;color:#0c3a52;">B</span>Big Field Digital<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#7dd3fc;color:#0c3a52;">B</span>Big Field Digital</span>Full-service digital agency. Supported UI/UX design for 5+ client-facing products, improving handoff speed by 20% and design-to-dev implementation accuracy to 95%.</span></span>, and started out in visual design at <span class="bio-chip" tabindex="0"><span class="chip-icon" style="background:#f0abfc;color:#4a0d5c;">T</span>TinklingD<span class="bio-chip-popover"><span class="chip-popover-title"><span class="chip-icon" style="background:#f0abfc;color:#4a0d5c;">T</span>TinklingD</span>Digital marketing and creative team. Designed print and digital campaign assets for SMEs, building strong fundamentals in layout, typography, and brand consistency.</span></span>.</p>
   </div>
@@ -1275,7 +1277,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   // Bio chip popovers (tap support for touch devices)
-  document.querySelectorAll('.bio-chip').forEach(function(chip){
+  document.querySelectorAll('.bio-chip:not(.bio-chip-link)').forEach(function(chip){
     chip.addEventListener('click', function(e){
       e.stopPropagation();
       var wasActive = chip.classList.contains('active');
