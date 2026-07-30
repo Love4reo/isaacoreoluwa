@@ -674,13 +674,16 @@ body.light .cal-card{background:#f4f4f5;}
 .pegboard-section{margin-bottom:52px;}
 .pegboard{
   position:relative;
+  width:100vw;
+  left:50%;
+  margin-left:-50vw;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-auto-rows:52px;
+  grid-template-columns:repeat(6,1fr);
+  grid-auto-rows:60px;
   gap:14px;
-  margin:0 -24px;
-  padding:30px 26px;
-  border-radius:18px;
+  margin-top:20px;
+  padding:30px 40px;
+  border-radius:0;
   box-sizing:border-box;
   background-color:#efece3;
   background-image:
@@ -691,25 +694,18 @@ body.light .cal-card{background:#f4f4f5;}
   background-position:0 0, 0 0, 0 0;
   box-shadow:
     inset 0 0 70px rgba(0,0,0,0.1),
-    inset 0 0 0 1px rgba(255,255,255,0.4),
-    0 30px 70px rgba(0,0,0,0.45);
-  border:10px solid #e2ddce;
+    inset 0 0 0 1px rgba(255,255,255,0.4);
+  border-top:10px solid #e2ddce;
+  border-bottom:10px solid #e2ddce;
   grid-template-areas:
-    "portrait quote1    quote1"
-    "portrait quote1    quote1"
-    "portrait quote1    quote1"
-    "portrait waterbottle dashboard"
-    "portrait waterbottle dashboard"
-    "portrait waterbottle dashboard"
-    "groupevent dumbbell calendar"
-    "groupevent dumbbell calendar"
-    "groupevent dumbbell calendar"
-    "quote2   redhoodie  calendar"
-    "quote2   redhoodie  calendar"
-    "quote2   redhoodie  calendar"
-    "clock    clock      calendar"
-    "clock    clock      calendar"
-    "footer   footer     footer";
+    "portrait quote1 quote1 waterbottle dashboard groupevent"
+    "portrait quote1 quote1 waterbottle dashboard groupevent"
+    "portrait quote1 quote1 waterbottle dashboard groupevent"
+    "portrait quote1 quote1 waterbottle dashboard groupevent"
+    "dumbbell quote2 redhoodie calendar calendar clock"
+    "dumbbell quote2 redhoodie calendar calendar clock"
+    "dumbbell quote2 redhoodie calendar calendar clock"
+    "footer footer footer footer footer footer";
 }
 .pegboard::before,
 .pegboard::after{
@@ -808,45 +804,50 @@ body.light .cal-card{background:#f4f4f5;}
 .quote-dash{font-size:20px;color:#999;margin:0 0 6px;font-family:'Space Grotesk',sans-serif;}
 .calendar-card{
   background:#fdfcf9;
-  padding:36px 16px 16px;
+  padding:16px 22px 16px 36px;
   box-sizing:border-box;
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:center;
+  gap:22px;
   overflow:hidden;
 }
 .cal-wood-top{
   position:absolute;
-  top:0;left:0;right:0;
-  height:22px;
+  top:0;left:0;bottom:0;
+  width:18px;
   background:
-    repeating-linear-gradient(100deg, rgba(255,255,255,0.08) 0px, transparent 2px, transparent 6px),
-    linear-gradient(180deg,#cb9d5f,#9c6f36);
-  border-radius:6px 6px 0 0;
-  box-shadow:inset 0 -2px 4px rgba(0,0,0,0.25);
+    repeating-linear-gradient(10deg, rgba(255,255,255,0.08) 0px, transparent 2px, transparent 6px),
+    linear-gradient(90deg,#cb9d5f,#9c6f36);
+  border-radius:6px 0 0 6px;
+  box-shadow:inset -2px 0 4px rgba(0,0,0,0.25);
 }
 .cal-month{
   font-family:'Space Grotesk',sans-serif;
   font-weight:700;
   font-size:15px;
   color:#1a1a1a;
-  margin:0 0 10px;
+  margin:0;
   letter-spacing:-0.01em;
+  white-space:nowrap;
+  flex-shrink:0;
+  writing-mode:horizontal-tb;
 }
 .cal-grid{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:4px;
-  width:100%;
+  gap:3px;
+  max-width:200px;
+  flex-shrink:1;
 }
 .cal-grid .cal-dow{
-  font-size:8px;font-family:var(--mono);color:#999;text-align:center;
+  font-size:7px;font-family:var(--mono);color:#999;text-align:center;
 }
 .cal-grid .cal-day{
-  font-size:10px;font-family:var(--mono);color:#444;
+  font-size:8.5px;font-family:var(--mono);color:#444;
   text-align:center;
-  width:18px;height:18px;
-  line-height:18px;
+  width:15px;height:15px;
+  line-height:15px;
   border-radius:50%;
   transition:background 0.2s ease;
 }
@@ -861,7 +862,7 @@ body.light .cal-card{background:#f4f4f5;}
   box-sizing:border-box;
   display:flex;align-items:center;justify-content:center;
 }
-.clock-face{width:100%;max-width:96px;height:auto;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.15));}
+.clock-face{width:100%;max-width:150px;height:auto;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.15));}
 .clock-tick{stroke:#2a2a2a;stroke-width:1.6;stroke-linecap:round;}
 .clock-tick.minor{stroke:#bbb;stroke-width:1;}
 .clock-hand{stroke:#1a1a1a;stroke-linecap:round;transform-origin:50px 50px;}
@@ -907,15 +908,12 @@ body.light .cal-card{background:#f4f4f5;}
       "quote2   redhoodie"
       "quote2   redhoodie"
       "quote2   redhoodie"
-      "calendar calendar"
-      "calendar calendar"
-      "calendar calendar"
-      "calendar calendar"
-      "calendar calendar"
-      "calendar calendar"
       "clock    clock"
       "clock    clock"
       "clock    clock"
+      "calendar calendar"
+      "calendar calendar"
+      "calendar calendar"
       "footer   footer";
   }
   .quote-note{font-size:16px;padding:14px;}
