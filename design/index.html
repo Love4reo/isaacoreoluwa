@@ -677,12 +677,9 @@ body.light .cal-card{background:#f4f4f5;}
   width:100vw;
   left:50%;
   margin-left:-50vw;
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  grid-auto-rows:60px;
-  gap:14px;
+  height:430px;
   margin-top:20px;
-  padding:30px 40px;
+  padding:0;
   border-radius:0;
   box-sizing:border-box;
   background-color:#efece3;
@@ -697,15 +694,6 @@ body.light .cal-card{background:#f4f4f5;}
     inset 0 0 0 1px rgba(255,255,255,0.4);
   border-top:10px solid #e2ddce;
   border-bottom:10px solid #e2ddce;
-  grid-template-areas:
-    "portrait quote1 quote1 waterbottle dashboard groupevent"
-    "portrait quote1 quote1 waterbottle dashboard groupevent"
-    "portrait quote1 quote1 waterbottle dashboard groupevent"
-    "portrait quote1 quote1 waterbottle dashboard groupevent"
-    "dumbbell quote2 redhoodie calendar calendar clock"
-    "dumbbell quote2 redhoodie calendar calendar clock"
-    "dumbbell quote2 redhoodie calendar calendar clock"
-    "footer footer footer footer footer footer";
 }
 .pegboard::before,
 .pegboard::after{
@@ -721,16 +709,21 @@ body.light .cal-card{background:#f4f4f5;}
 .pegboard::before{left:26px;}
 .pegboard::after{right:26px;}
 .peg-item{
-  position:relative;
   border-radius:6px;
   transform:rotate(var(--tilt,0deg));
   box-shadow:0 10px 22px rgba(0,0,0,0.28), 0 2px 5px rgba(0,0,0,0.15);
-  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  transition:box-shadow 0.3s ease;
+  cursor:grab;
+  touch-action:none;
+  z-index:2;
+}
+.peg-item.dragging{
+  cursor:grabbing;
+  transition:none;
+  box-shadow:0 26px 50px rgba(0,0,0,0.5);
 }
 .peg-item:hover{
-  transform:rotate(0deg) scale(1.035);
   box-shadow:0 16px 34px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.2);
-  z-index:10;
 }
 .peg-item.photo{overflow:hidden;background:#f7f5ef;padding:7px 7px 20px;box-sizing:border-box;}
 .peg-item.photo img{
@@ -869,14 +862,10 @@ body.light .cal-card{background:#f4f4f5;}
 .clock-hand.hour{stroke-width:3.5;}
 .clock-hand.minute{stroke-width:2.5;}
 .clock-hand.second{stroke:#b91c1c;stroke-width:1.1;}
-.footer-strip{
-  background:transparent;
-  box-shadow:none;
-  display:flex;align-items:center;gap:10px;
-  padding:4px 6px;
-  transform:none;
+.pegboard-footer{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 6px 0;
 }
-.footer-strip:hover{transform:none;box-shadow:none;}
 .peg-plant-vine{
   position:absolute;
   top:-6px;right:36px;
@@ -891,31 +880,7 @@ body.light .cal-card{background:#f4f4f5;}
   letter-spacing:0.03em;
 }
 @media(max-width:640px){
-  .pegboard{
-    grid-template-columns:repeat(2,1fr);
-    grid-auto-rows:44px;
-    grid-template-areas:
-      "portrait quote1"
-      "portrait quote1"
-      "portrait quote1"
-      "portrait quote1"
-      "waterbottle dashboard"
-      "waterbottle dashboard"
-      "waterbottle dashboard"
-      "groupevent dumbbell"
-      "groupevent dumbbell"
-      "groupevent dumbbell"
-      "quote2   redhoodie"
-      "quote2   redhoodie"
-      "quote2   redhoodie"
-      "clock    clock"
-      "clock    clock"
-      "clock    clock"
-      "calendar calendar"
-      "calendar calendar"
-      "calendar calendar"
-      "footer   footer";
-  }
+  .pegboard{height:820px;}
   .quote-note{font-size:16px;padding:14px;}
   .quote-note.alt{font-size:20px;}
 }
@@ -1386,56 +1351,55 @@ body.light .header-cal-btn{background:#111;color:#fff;}
 
 <section class="pegboard-section fade-up">
     <p class="section-label">Moodboard</p>
-    <div class="pegboard">
-      <div class="peg-item photo" style="grid-area:portrait;--tilt:-1.5deg;">
+    <div class="pegboard" id="pegboard">
+      <div class="peg-item photo" style="position:absolute;left:2%;top:6%;width:160px;height:300px;--tilt:-1.5deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391194/IMG_1929_tjy5hy.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item quote-note" style="grid-area:quote1;--tilt:1.2deg;">
+      <div class="peg-item quote-note alt" style="position:absolute;left:18%;top:4%;width:280px;height:170px;--tilt:1.2deg;font-size:19px;line-height:1.3;">
         <span class="clip-binder"></span>
-        <p class="quote-dash">&mdash;</p>
-        <p>Make it<br/>Simple,<br/>But<br/>Significant</p>
+        <p>The meaning of life is just to be alive. It is so plain and so obvious and so simple.</p>
       </div>
 
-      <div class="peg-item photo" style="grid-area:waterbottle;--tilt:-2.2deg;">
+      <div class="peg-item photo" style="position:absolute;left:40%;top:6%;width:160px;height:190px;--tilt:-2.2deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/27E0341F-6BB2-4807-9697-2A5425ECFE85_ftt673.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item photo" style="grid-area:dashboard;--tilt:1.8deg;">
+      <div class="peg-item photo" style="position:absolute;left:52%;top:4%;width:160px;height:190px;--tilt:1.8deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/IMG_1877_ljlkkw.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item photo" style="grid-area:groupevent;--tilt:1.4deg;">
+      <div class="peg-item photo" style="position:absolute;left:66%;top:6%;width:160px;height:190px;--tilt:1.4deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/22C6CF7F-5822-407C-B25E-FF1E94BB254E_ub5kwy.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item photo" style="grid-area:dumbbell;--tilt:-1.6deg;">
+      <div class="peg-item photo" style="position:absolute;left:84%;top:8%;width:160px;height:190px;--tilt:-1.6deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/DD843C48-E00E-4789-B723-F8CB92497EEA_gvi4zo.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item calendar-card" style="grid-area:calendar;--tilt:-0.8deg;">
+      <div class="peg-item calendar-card" style="position:absolute;left:48%;top:55%;width:320px;height:150px;--tilt:-0.8deg;">
         <span class="clip-metal"></span>
         <div class="cal-wood-top"></div>
         <p class="cal-month" id="pegCalMonth">&nbsp;</p>
         <div class="cal-grid" id="pegCalGrid"></div>
       </div>
 
-      <a class="peg-item quote-note alt" href="https://www.wildwide.wtf/" target="_blank" style="grid-area:quote2;--tilt:2.4deg;text-decoration:none;cursor:pointer;">
+      <a class="peg-item quote-note alt" href="https://www.wildwide.wtf/" target="_blank" style="position:absolute;left:4%;top:56%;width:190px;height:150px;--tilt:2.4deg;text-decoration:none;cursor:pointer;">
         <span class="clip-binder"></span>
         <p>It's leg<br/>day<br/>amigos</p>
       </a>
 
-      <div class="peg-item photo" style="grid-area:redhoodie;--tilt:-1.9deg;">
+      <div class="peg-item photo" style="position:absolute;left:20%;top:58%;width:160px;height:190px;--tilt:-1.9deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391464/IMG_2935_r3cttd.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item clock-card" style="grid-area:clock;--tilt:1.1deg;">
+      <div class="peg-item clock-card" style="position:absolute;left:76%;top:55%;width:170px;height:170px;--tilt:1.1deg;">
         <span class="clip-binder"></span>
         <svg class="clock-face" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="46" fill="none" stroke="#2a2a2a" stroke-width="2"/>
@@ -1458,10 +1422,6 @@ body.light .header-cal-btn{background:#111;color:#fff;}
         </svg>
       </div>
 
-      <div class="peg-item footer-strip" style="grid-area:footer;">
-        <span class="footer-label">currently designing &middot; Function Studio</span>
-      </div>
-
       <div class="peg-plant-vine">
         <svg viewBox="0 0 130 190" fill="none">
           <path d="M100 4c-4 30-2 55 8 70" stroke="#4d7a4c" stroke-width="3" stroke-linecap="round"/>
@@ -1478,6 +1438,9 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           <ellipse cx="46" cy="146" rx="8" ry="5.5" fill="#619060" transform="rotate(-135 46 146)"/>
         </svg>
       </div>
+    </div>
+    <div class="pegboard-footer">
+      <span class="footer-label">currently designing &middot; Function Studio</span>
     </div>
   </section>
 
@@ -1810,6 +1773,62 @@ document.addEventListener('DOMContentLoaded', function(){
       el.style.cursor = '';
     });
   });
+
+  // Draggable moodboard items
+  (function(){
+    var board = document.getElementById('pegboard');
+    if(!board) return;
+    var zTop = 10;
+    board.querySelectorAll('.peg-item').forEach(function(item){
+      var startX, startY, startLeft, startTop, dragging = false, moved = false;
+
+      item.addEventListener('pointerdown', function(e){
+        var boardRect = board.getBoundingClientRect();
+        var itemRect = item.getBoundingClientRect();
+        startLeft = itemRect.left - boardRect.left;
+        startTop = itemRect.top - boardRect.top;
+        item.style.left = startLeft + 'px';
+        item.style.top = startTop + 'px';
+        startX = e.clientX;
+        startY = e.clientY;
+        dragging = true;
+        moved = false;
+        item.classList.add('dragging');
+        item.style.zIndex = ++zTop;
+        item.setPointerCapture(e.pointerId);
+      });
+
+      item.addEventListener('pointermove', function(e){
+        if(!dragging) return;
+        var dx = e.clientX - startX;
+        var dy = e.clientY - startY;
+        if(Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+        var boardRect = board.getBoundingClientRect();
+        var maxLeft = boardRect.width - item.offsetWidth;
+        var maxTop = boardRect.height - item.offsetHeight;
+        var newLeft = Math.min(Math.max(startLeft + dx, -item.offsetWidth*0.3), maxLeft + item.offsetWidth*0.3);
+        var newTop = Math.min(Math.max(startTop + dy, 0), Math.max(maxTop, 0));
+        item.style.left = newLeft + 'px';
+        item.style.top = newTop + 'px';
+      });
+
+      function endDrag(e){
+        if(!dragging) return;
+        dragging = false;
+        item.classList.remove('dragging');
+        if(moved){
+          var suppressClick = function(ev){
+            ev.preventDefault();
+            ev.stopPropagation();
+            item.removeEventListener('click', suppressClick, true);
+          };
+          item.addEventListener('click', suppressClick, true);
+        }
+      }
+      item.addEventListener('pointerup', endDrag);
+      item.addEventListener('pointercancel', endDrag);
+    });
+  })();
 
   // Live calendar card
   (function(){
