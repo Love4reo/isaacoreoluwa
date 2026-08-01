@@ -773,6 +773,27 @@ body.light .cal-card{background:#f4f4f5;}
   z-index:5;
   box-shadow:0 3px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.6);
 }
+.love-photo{z-index:6;}
+.love-photo img{filter:none !important;}
+.clip-heart{
+  position:absolute;
+  top:-13px;left:50%;
+  transform:translateX(-50%) rotate(0deg);
+  width:20px;height:18px;
+  z-index:6;
+  filter:drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+}
+.clip-heart::before,
+.clip-heart::after{
+  content:'';
+  position:absolute;
+  top:0;
+  width:11px;height:16px;
+  background:#e0335c;
+  border-radius:11px 11px 0 0;
+}
+.clip-heart::before{left:0;transform:rotate(-45deg);transform-origin:0 100%;}
+.clip-heart::after{left:9px;transform:rotate(45deg);transform-origin:100% 100%;}
 .quote-note{
   background:#faf7ee;
   background-image:linear-gradient(rgba(0,0,0,0.015) 1px, transparent 1px);
@@ -862,6 +883,85 @@ body.light .cal-card{background:#f4f4f5;}
 .clock-hand.hour{stroke-width:3.5;}
 .clock-hand.minute{stroke-width:2.5;}
 .clock-hand.second{stroke:#b91c1c;stroke-width:1.1;}
+.love-particle{
+  position:fixed;
+  top:0;left:0;
+  pointer-events:none;
+  z-index:410;
+  color:#ff5c8a;
+  will-change:transform,opacity;
+}
+.love-overlay{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 38%, #4a0f22, #150408 78%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.45s ease;
+  z-index:400;
+  overflow:hidden;
+}
+.love-overlay.active{
+  opacity:1;
+  pointer-events:auto;
+}
+.love-content{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:26px;
+  padding:24px;
+  text-align:center;
+}
+.love-overlay-photo{
+  width:min(72vw,300px);
+  border-radius:18px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.55);
+  border:4px solid rgba(255,255,255,0.15);
+  transform:scale(0.85);
+  opacity:0;
+  transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1), opacity 0.5s ease;
+}
+.love-overlay.active .love-overlay-photo{
+  transform:scale(1);
+  opacity:1;
+  transition-delay:0.1s;
+}
+.love-overlay-message{
+  font-family:'Caveat',cursive;
+  font-size:clamp(28px,5vw,44px);
+  font-weight:700;
+  color:#fff;
+  max-width:80vw;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+  transition-delay:0.25s;
+}
+.love-overlay.active .love-overlay-message{
+  opacity:1;
+  transform:translateY(0);
+}
+.love-close{
+  position:absolute;
+  top:24px;right:24px;
+  width:42px;height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  z-index:3;
+  transition:background 0.15s ease,transform 0.15s ease;
+}
+.love-close:hover{background:rgba(255,255,255,0.18);transform:scale(1.08);}
+.love-close svg{width:18px;height:18px;}
 .pegboard-footer{
   display:flex;align-items:center;justify-content:center;gap:10px;
   padding:14px 6px 0;
@@ -1415,6 +1515,11 @@ body.light .header-cal-btn{background:#111;color:#fff;}
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/DD843C48-E00E-4789-B723-F8CB92497EEA_gvi4zo.jpg" alt="" loading="lazy"/>
       </div>
 
+      <div class="peg-item photo love-photo" style="position:absolute;left:56%;top:16%;width:150px;height:200px;--tilt:4deg;">
+        <span class="clip-heart"></span>
+        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785583937/IMG_3381_b7pfiz.jpg" alt="My love" loading="lazy"/>
+      </div>
+
       <div class="peg-item calendar-card" style="position:absolute;left:48%;top:55%;width:320px;height:150px;--tilt:-0.8deg;">
         <span class="clip-metal"></span>
         <div class="cal-wood-top"></div>
@@ -1654,7 +1759,7 @@ document.addEventListener('DOMContentLoaded', function(){
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.peg-item.photo').forEach(function(card){
+  document.querySelectorAll('.peg-item.photo:not(.love-photo)').forEach(function(card){
     var img = card.querySelector('img');
     if(!img) return;
     card.addEventListener('click', function(){
@@ -1806,6 +1911,156 @@ document.addEventListener('DOMContentLoaded', function(){
       el.style.cursor = '';
     });
   });
+
+  // Love blast celebration — full-screen experience
+  (function(){
+    var target = document.querySelector('.love-photo');
+    if(!target) return;
+    var photoImg = target.querySelector('img');
+
+    var overlay = document.createElement('div');
+    overlay.className = 'love-overlay';
+    overlay.innerHTML =
+      '<button class="love-close" aria-label="Close">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+      '</button>' +
+      '<div class="love-content">' +
+        '<video class="love-overlay-photo" src="https://res.cloudinary.com/dmqyultl0/video/upload/v1785583941/E8F375FF-A2DF-48D8-99B8-305C76F64AC7_hwduhw.mp4" autoplay loop muted playsinline></video>' +
+        '<p class="love-overlay-message">Every day with you \u2764</p>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var loveAudio = new Audio('https://cdn.freesound.org/previews/387/387588_9497060-lq.mp3');
+    loveAudio.loop = true;
+    loveAudio.volume = 0;
+    loveAudio.preload = 'auto';
+
+    var fadeTimer = null;
+    function fadeAudio(to, duration){
+      if(fadeTimer) clearInterval(fadeTimer);
+      var steps = 20;
+      var stepTime = duration / steps;
+      var from = loveAudio.volume;
+      var i = 0;
+      fadeTimer = setInterval(function(){
+        i++;
+        loveAudio.volume = Math.max(0, Math.min(1, from + (to - from) * (i / steps)));
+        if(i >= steps){
+          clearInterval(fadeTimer);
+          fadeTimer = null;
+          if(to === 0) loveAudio.pause();
+        }
+      }, stepTime);
+    }
+
+    function spawnParticle(x, y, opts){
+      opts = opts || {};
+      var particle = document.createElement('div');
+      particle.className = 'love-particle';
+      particle.textContent = Math.random() > 0.5 ? '\u2764' : '\u2764\uFE0F';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.fontSize = (opts.size || (14 + Math.random()*18)) + 'px';
+      overlay.appendChild(particle);
+
+      var dx = opts.dx !== undefined ? opts.dx : (Math.random()-0.5) * 260;
+      var dy = opts.dy !== undefined ? opts.dy : -(120 + Math.random()*220);
+      var rot = (Math.random() - 0.5) * 260;
+      var dur = opts.dur || (800 + Math.random() * 500);
+      var startScale = opts.startScale || 0.5;
+      var endScale = opts.endScale || 1.15;
+
+      var anim = particle.animate([
+        { transform: 'translate(-50%,-50%) translate(0,0) scale(' + startScale + ') rotate(0deg)', opacity: 1 },
+        { transform: 'translate(-50%,-50%) translate(' + dx + 'px,' + dy + 'px) scale(' + endScale + ') rotate(' + rot + 'deg)', opacity: 0 }
+      ], { duration: dur, easing: 'cubic-bezier(0.16,1,0.3,1)' });
+      anim.onfinish = function(){ particle.remove(); };
+    }
+
+    function burst(x, y){
+      for(var i = 0; i < 30; i++) spawnParticle(x, y);
+    }
+
+    function spawnFalling(){
+      var x = Math.random() * window.innerWidth;
+      spawnParticle(x, -30, {
+        dx: (Math.random()-0.5) * 120,
+        dy: window.innerHeight + 80,
+        dur: 3200 + Math.random() * 2200,
+        size: 16 + Math.random()*16,
+        startScale: 0.8,
+        endScale: 0.9
+      });
+    }
+
+    var fallTimer = null;
+    var heartsWereDragged = false;
+
+    function openOverlay(){
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      burst(window.innerWidth/2, window.innerHeight/2);
+      fallTimer = setInterval(spawnFalling, 220);
+      loveAudio.currentTime = 0;
+      loveAudio.play().catch(function(){});
+      fadeAudio(0.35, 900);
+    }
+    function closeOverlay(){
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      if(fallTimer){ clearInterval(fallTimer); fallTimer = null; }
+      fadeAudio(0, 500);
+    }
+
+    target.addEventListener('click', function(){
+      if(heartsWereDragged) return;
+      openOverlay();
+    });
+    overlay.querySelector('.love-close').addEventListener('click', closeOverlay);
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay) closeOverlay();
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+    });
+
+    // Continuous love-boom effect while hovering the thumbnail
+    var hoverTimer = null;
+
+    function spawnHoverHeart(){
+      var rect = target.getBoundingClientRect();
+      var x = rect.left + rect.width/2 + (Math.random()-0.5) * rect.width * 0.7;
+      var y = rect.top + rect.height/2 + (Math.random()-0.5) * rect.height * 0.5;
+      var particle = document.createElement('div');
+      particle.className = 'love-particle hover-love-particle';
+      particle.textContent = Math.random() > 0.5 ? '\u2764' : '\u2764\uFE0F';
+      particle.style.position = 'fixed';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.fontSize = (12 + Math.random()*12) + 'px';
+      particle.style.pointerEvents = 'none';
+      particle.style.zIndex = 40;
+      document.body.appendChild(particle);
+
+      var dx = (Math.random()-0.5) * 80;
+      var dy = -(60 + Math.random()*70);
+      var rot = (Math.random()-0.5) * 200;
+      var anim = particle.animate([
+        { transform: 'translate(-50%,-50%) translate(0,0) scale(0.5) rotate(0deg)', opacity: 1 },
+        { transform: 'translate(-50%,-50%) translate(' + dx + 'px,' + dy + 'px) scale(1.1) rotate(' + rot + 'deg)', opacity: 0 }
+      ], { duration: 850 + Math.random()*400, easing: 'cubic-bezier(0.16,1,0.3,1)' });
+      anim.onfinish = function(){ particle.remove(); };
+    }
+
+    target.addEventListener('mouseenter', function(){
+      if(hoverTimer) return;
+      spawnHoverHeart();
+      hoverTimer = setInterval(spawnHoverHeart, 150);
+    });
+    target.addEventListener('mouseleave', function(){
+      if(hoverTimer){ clearInterval(hoverTimer); hoverTimer = null; }
+    });
+  })();
 
   // Draggable moodboard items
   (function(){
