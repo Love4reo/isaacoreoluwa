@@ -883,6 +883,35 @@ body.light .cal-card{background:#f4f4f5;}
 .clock-hand.hour{stroke-width:3.5;}
 .clock-hand.minute{stroke-width:2.5;}
 .clock-hand.second{stroke:#b91c1c;stroke-width:1.1;}
+.digital-clock{
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:#1b1d1a;
+  border-radius:10px;
+  box-shadow:inset 0 2px 6px rgba(0,0,0,0.5), 0 2px 3px rgba(0,0,0,0.15);
+  padding:12px;
+}
+.digital-clock-time{
+  font-family:'Courier New',monospace;
+  font-weight:700;
+  font-size:19px;
+  letter-spacing:1px;
+  color:#8affc1;
+  text-shadow:0 0 6px rgba(138,255,193,0.65), 0 0 14px rgba(138,255,193,0.35);
+  white-space:nowrap;
+}
+.digital-clock-date{
+  font-family:'Courier New',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:rgba(138,255,193,0.55);
+}
 .love-particle{
   position:fixed;
   top:0;left:0;
@@ -944,6 +973,23 @@ body.light .cal-card{background:#f4f4f5;}
   transition-delay:0.25s;
 }
 .love-overlay.active .love-overlay-message{
+  opacity:1;
+  transform:translateY(0);
+}
+.love-overlay-submessage{
+  font-family:'Caveat',cursive;
+  font-size:clamp(16px,2.4vw,22px);
+  font-weight:600;
+  letter-spacing:0.5px;
+  color:#ffb3c6;
+  max-width:80vw;
+  margin-top:-6px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 0.5s ease, transform 0.5s ease;
+  transition-delay:0.4s;
+}
+.love-overlay.active .love-overlay-submessage{
   opacity:1;
   transform:translateY(0);
 }
@@ -1539,25 +1585,10 @@ body.light .header-cal-btn{background:#111;color:#fff;}
 
       <div class="peg-item clock-card" style="position:absolute;left:76%;top:55%;width:170px;height:170px;--tilt:1.1deg;">
         <span class="clip-binder"></span>
-        <svg class="clock-face" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="#2a2a2a" stroke-width="2"/>
-          <line class="clock-tick" x1="50" y1="6" x2="50" y2="13" transform="rotate(0 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(30 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(60 50 50)"/>
-          <line class="clock-tick" x1="50" y1="6" x2="50" y2="13" transform="rotate(90 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(120 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(150 50 50)"/>
-          <line class="clock-tick" x1="50" y1="6" x2="50" y2="13" transform="rotate(180 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(210 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(240 50 50)"/>
-          <line class="clock-tick" x1="50" y1="6" x2="50" y2="13" transform="rotate(270 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(300 50 50)"/>
-          <line class="clock-tick minor" x1="50" y1="6" x2="50" y2="11" transform="rotate(330 50 50)"/>
-          <circle cx="50" cy="50" r="2.4" fill="#2a2a2a"/>
-          <line class="clock-hand hour" id="pegClockHour" x1="50" y1="50" x2="50" y2="28"/>
-          <line class="clock-hand minute" id="pegClockMinute" x1="50" y1="50" x2="50" y2="18"/>
-          <line class="clock-hand second" id="pegClockSecond" x1="50" y1="50" x2="50" y2="15"/>
-        </svg>
+        <div class="digital-clock">
+          <div class="digital-clock-time" id="pegDigitalTime">00:00:00</div>
+          <div class="digital-clock-date" id="pegDigitalDate">&nbsp;</div>
+        </div>
       </div>
 
       <div class="peg-plant-vine">
@@ -1927,6 +1958,7 @@ document.addEventListener('DOMContentLoaded', function(){
       '<div class="love-content">' +
         '<video class="love-overlay-photo" src="https://res.cloudinary.com/dmqyultl0/video/upload/v1785583941/E8F375FF-A2DF-48D8-99B8-305C76F64AC7_hwduhw.mp4" autoplay loop muted playsinline></video>' +
         '<p class="love-overlay-message">Every day with you \u2764</p>' +
+        '<p class="love-overlay-submessage">Happy National Girlfriend Day</p>' +
       '</div>';
     document.body.appendChild(overlay);
 
@@ -2143,23 +2175,24 @@ document.addEventListener('DOMContentLoaded', function(){
     gridEl.innerHTML = html;
   })();
 
-  // Live analog clock
+  // Live digital clock
   (function(){
-    var hourHand = document.getElementById('pegClockHour');
-    var minuteHand = document.getElementById('pegClockMinute');
-    var secondHand = document.getElementById('pegClockSecond');
-    if(!hourHand || !minuteHand || !secondHand) return;
+    var timeEl = document.getElementById('pegDigitalTime');
+    var dateEl = document.getElementById('pegDigitalDate');
+    if(!timeEl || !dateEl) return;
+    var dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
     function updateClock(){
       var now = new Date();
-      var h = now.getHours() % 12;
+      var h = now.getHours();
       var m = now.getMinutes();
       var s = now.getSeconds();
-      var hourDeg = (h + m/60) * 30;
-      var minDeg = (m + s/60) * 6;
-      var secDeg = s * 6;
-      hourHand.style.transform = 'rotate(' + hourDeg + 'deg)';
-      minuteHand.style.transform = 'rotate(' + minDeg + 'deg)';
-      secondHand.style.transform = 'rotate(' + secDeg + 'deg)';
+      var ampm = h >= 12 ? 'PM' : 'AM';
+      var h12 = h % 12;
+      if(h12 === 0) h12 = 12;
+      timeEl.textContent = pad(h12) + ':' + pad(m) + ':' + pad(s) + ' ' + ampm;
+      dateEl.textContent = dayNames[now.getDay()] + ', ' + monthNames[now.getMonth()] + ' ' + now.getDate();
     }
     updateClock();
     setInterval(updateClock, 1000);
