@@ -533,22 +533,7 @@ body.light .work-title{color:#3f3f46;}
 .slide-card:hover::after{
   background:rgba(0,0,0,0.28);
 }
-/* Edge fades */
-.work-banner::before,
-.work-banner::after{
-  content:'';
-  position:absolute;
-  top:0;bottom:0;width:80px;
-  z-index:2;pointer-events:none;
-}
-.work-banner::before{
-  left:0;
-  background:linear-gradient(to right,var(--bg),transparent);
-}
-.work-banner::after{
-  right:0;
-  background:linear-gradient(to left,var(--bg),transparent);
-}
+/* Edge fades removed per request */
 
 .work-grid{position:relative;}
 .cursor-preview{
