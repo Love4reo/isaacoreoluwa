@@ -128,49 +128,54 @@ section{margin-bottom:52px;}
 .work-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
 .work-tag{font-size:10px;font-family:var(--mono);color:var(--muted2);padding:2px 7px;border:1px solid var(--border);border-radius:4px;}
 .work-arrow{color:var(--muted);opacity:0;transition:opacity 0.15s,transform 0.15s;font-size:12px;}
-.skills-tank{
-  position:relative;
-  height:300px;
-  margin:0 -24px;
-  border-radius:16px;
-  background:radial-gradient(ellipse at 50% 50%, var(--bg2) 0%, var(--bg) 75%);
-  overflow:hidden;
-  touch-action:none;
+.skills-portrait-section{margin-bottom:52px;}
+.skills-callout-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
 }
-.skill-bubble{
-  position:absolute;
-  width:104px;height:104px;
-  border-radius:50%;
+.skill-callout{
+  position:relative;
+  display:flex;align-items:center;gap:6px;
   background:var(--bg2);
   border:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:5px;
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:11.5px;
+  font-family:var(--mono);
+  color:var(--text);
+  white-space:nowrap;
   cursor:pointer;
-  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-  -webkit-user-select:none;user-select:none;
+  transition:border-color 0.25s ease, background 0.25s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bubble-icon{width:20px;height:20px;color:var(--muted);transition:color 0.25s ease;}
-.bubble-icon svg{width:100%;height:100%;}
-.bubble-label{
-  font-size:10.5px;font-family:var(--mono);color:var(--muted);
-  text-align:center;line-height:1.25;padding:0 10px;
-  transition:color 0.25s ease;
+.callout-check{
+  display:flex;align-items:center;justify-content:center;
+  width:15px;height:15px;
+  border-radius:50%;
+  background:var(--muted);
+  color:var(--bg);
+  font-size:9px;
+  flex-shrink:0;
+  transition:background 0.25s ease;
 }
-.skill-bubble:hover{
-  transform:scale(1.2);
+.skill-callout:hover,
+.skill-callout.active-callout{
   border-color:var(--text);
   background:var(--text);
-  box-shadow:0 14px 34px rgba(0,0,0,0.5);
-  z-index:20;
+  color:var(--bg);
+  transform:scale(1.05);
 }
-.skill-bubble:hover .bubble-icon,
-.skill-bubble:hover .bubble-label{color:var(--bg);}
-.bubble-pop{
+.skill-callout:hover .callout-check,
+.skill-callout.active-callout .callout-check{
+  background:var(--bg);
+  color:var(--text);
+}
+.callout-pop{
   position:absolute;
-  bottom:calc(100% + 14px);
-  left:50%;
-  transform:translateX(-50%) translateY(6px);
-  width:210px;
+  top:calc(100% + 10px);
+  left:0;
+  width:220px;
   background:var(--bg2);
   border:1px solid var(--border);
   border-radius:10px;
@@ -178,6 +183,7 @@ section{margin-bottom:52px;}
   box-shadow:0 16px 40px rgba(0,0,0,0.45);
   opacity:0;
   pointer-events:none;
+  transform:translateY(6px);
   transition:opacity 0.2s ease, transform 0.2s ease;
   z-index:30;
   font-family:var(--sans);
@@ -189,19 +195,15 @@ section{margin-bottom:52px;}
   text-align:left;
   cursor:default;
 }
-.bubble-pop strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px;font-weight:600;}
-.skill-bubble:hover .bubble-pop,
-.skill-bubble.active .bubble-pop{
+.callout-pop strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px;font-weight:600;}
+.skill-callout:hover .callout-pop,
+.skill-callout.active-callout .callout-pop{
   opacity:1;
-  transform:translateX(-50%) translateY(0);
+  transform:translateY(0);
   pointer-events:auto;
 }
-@media(max-width:640px){
-  .skills-tank{height:260px;}
-  .skill-bubble{width:82px;height:82px;}
-  .bubble-icon{width:16px;height:16px;}
-  .bubble-label{font-size:9px;}
-  .bubble-pop{width:170px;}
+@media(max-width:480px){
+  .callout-pop{width:180px;}
 }
 .about-block{display:flex;gap:20px;align-items:flex-start;}
 .about-img{width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid var(--border);filter:grayscale(0.2);}
@@ -212,6 +214,177 @@ footer{margin-top:0;padding-top:20px;display:flex;align-items:center;justify-con
 .footer-links{display:flex;gap:16px;}
 .footer-links a{font-size:11px;font-family:var(--mono);color:var(--muted);text-decoration:none;transition:color 0.15s;}
 .footer-links a:hover{color:var(--text);}
+.dramatic-cta{
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+  width:100vw;
+  margin-top:100px;
+  background:#08080a;
+  padding:0 0 32px;
+  overflow:hidden;
+}
+.cta-marquee{
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.08);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:12px 0;
+  background:#0c0c0e;
+}
+.cta-marquee-track{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  white-space:nowrap;
+  width:max-content;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.08em;
+  color:#71717a;
+  animation:cta-marquee-scroll 26s linear infinite;
+}
+.cta-marquee-track .dot{color:#f4f4f5;}
+@keyframes cta-marquee-scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+.dramatic-cta-inner{
+  max-width:900px;
+  margin:0 auto;
+  text-align:center;
+  padding:110px 24px 80px;
+}
+.dramatic-cta-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:#71717a;
+  margin-bottom:22px;
+}
+.dramatic-cta-heading{
+  font-family:var(--sans);
+  font-weight:800;
+  text-transform:uppercase;
+  font-size:clamp(28px,8.2vw,130px);
+  line-height:0.92;
+  letter-spacing:-0.03em;
+  color:#f4f4f5;
+  margin-bottom:36px;
+  white-space:nowrap;
+  display:inline-block;
+  cursor:default;
+  transition:transform 0.15s ease-out;
+  will-change:transform;
+}
+.dramatic-cta-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:var(--mono);
+  font-size:14px;
+  color:#f4f4f5;
+  text-decoration:none;
+  border-bottom:1px solid #f4f4f5;
+  padding-bottom:5px;
+  transition:opacity 0.2s,gap 0.2s;
+}
+.dramatic-cta-link:hover{opacity:0.6;gap:12px;}
+.cta-polaroid{
+  position:absolute;
+  top:70px;
+  right:7%;
+  width:130px;
+  background:#f4f4f5;
+  padding:10px 10px 30px;
+  border-radius:4px;
+  box-shadow:0 14px 30px rgba(0,0,0,0.45);
+  transform:rotate(var(--tilt,-6deg));
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  transition:transform 0.2s ease, box-shadow 0.2s ease;
+  z-index:5;
+}
+.cta-polaroid:hover{transform:rotate(0deg) scale(1.04);box-shadow:0 20px 40px rgba(0,0,0,0.55);}
+.cta-polaroid.dragging{cursor:grabbing;transition:none;box-shadow:0 24px 44px rgba(0,0,0,0.6);}
+.cta-polaroid img{width:100%;display:block;border-radius:2px;pointer-events:none;}
+.cta-polaroid-caption{
+  position:absolute;
+  bottom:8px;left:0;right:0;
+  text-align:center;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.04em;
+  color:#71717a;
+}
+.cta-sticker{
+  position:absolute;
+  top:130px;
+  left:6%;
+  width:112px;
+  height:112px;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.45));
+  z-index:5;
+  transition:box-shadow 0.2s ease;
+}
+.cta-sticker.dragging{cursor:grabbing;filter:drop-shadow(0 16px 28px rgba(0,0,0,0.55));}
+.cta-sticker-ring{
+  width:100%;
+  height:100%;
+  display:block;
+  animation:cta-sticker-spin 12s linear infinite;
+}
+.cta-sticker:hover .cta-sticker-ring,
+.cta-sticker.dragging .cta-sticker-ring{
+  animation-play-state:paused;
+}
+.cta-sticker-ring circle{fill:#f4f4f5;}
+.cta-sticker-ring text{
+  font-family:var(--mono);
+  font-size:8.6px;
+  letter-spacing:1.2px;
+  fill:#0a0a0a;
+}
+.cta-sticker-center{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-size:26px;
+  color:#0a0a0a;
+  pointer-events:none;
+}
+@keyframes cta-sticker-spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+.dramatic-footer{
+  max-width:640px;
+  margin:0 auto;
+  padding:24px 24px 0;
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.dramatic-footer .footer-left{color:#52525b;}
+.dramatic-footer .footer-links a{color:#a1a1aa;}
+.dramatic-footer .footer-links a:hover{color:#f4f4f5;}
+.dramatic-footer .theme-toggle{color:#a1a1aa;border-color:rgba(255,255,255,0.12);}
+@media(max-width:640px){
+  .dramatic-cta-inner{padding:70px 20px 56px;}
+  .dramatic-footer{flex-direction:column;align-items:flex-start;padding:24px 20px 0;}
+  .cta-polaroid{width:96px;right:5%;top:50px;}
+  .cta-sticker{width:76px;height:76px;left:5%;top:30px;}
+  .cta-sticker-center{font-size:18px;}
+}
 .fade-up{opacity:0;transform:translateY(10px);animation:fadeUp 0.5s ease forwards;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
 .fade-up:nth-child(1){animation-delay:0.05s;}
@@ -287,7 +460,7 @@ body.light .hero p{color:#52525b;}
 body.light .work-desc{color:#a1a1aa;}
 body.light .about-bts{color:#52525b;}
 body.light .footer-left{color:#d4d4d8;}
-body.light .skill-bubble{background:#e4e4e7;}
+body.light .skill-callout{background:#e4e4e7;}
 body.light .proj-wip{color:#a1a1aa;}
 body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
 body.light .work-title{color:#3f3f46;}
@@ -1481,135 +1654,41 @@ body.light .header-cal-btn{background:#111;color:#fff;}
     </div>
   </section>
 
-  <section class="fade-up">
+  <section class="skills-portrait-section fade-up">
     <p class="section-label">Core Competencies</p>
-    <div class="skills-tank" id="skillsTank">
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/></svg></span>
-        <span class="bubble-label">Strategy</span>
-        <div class="bubble-pop"><strong>Product Strategy</strong>Shaping MVP scope, roadmaps, and key product decisions balanced against user needs and business goals.</div>
+    <div class="skills-callout-list">
+      <div class="skill-callout" data-key="strategy" tabindex="0">
+        <span class="callout-check">&#10003;</span> Product Strategy
+        <div class="callout-pop"><strong>Product Strategy</strong>Shaping MVP scope, roadmaps, and key product decisions balanced against user needs and business goals.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></span>
-        <span class="bubble-label">UX Design</span>
-        <div class="bubble-pop"><strong>UX &amp; Interface Design</strong>Wireframes through to polished, implementation-ready interfaces across web and mobile.</div>
+      <div class="skill-callout" data-key="ux" tabindex="0">
+        <span class="callout-check">&#10003;</span> UX &amp; Interface Design
+        <div class="callout-pop"><strong>UX &amp; Interface Design</strong>Wireframes through to polished, implementation-ready interfaces across web and mobile.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5z"/></svg></span>
-        <span class="bubble-label">AI Design</span>
-        <div class="bubble-pop"><strong>AI Product Design</strong>Designing AI assistant interactions — prompt patterns, explainability, and conversational flows.</div>
+      <div class="skill-callout" data-key="ai" tabindex="0">
+        <span class="callout-check">&#10003;</span> AI Product Design
+        <div class="callout-pop"><strong>AI Product Design</strong>Designing AI assistant interactions &mdash; prompt patterns, explainability, and conversational flows.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
-        <span class="bubble-label">Growth</span>
-        <div class="bubble-pop"><strong>Growth &amp; Conversion Design</strong>Interfaces engineered to move the metrics that matter — signups, retention, activation.</div>
+      <div class="skill-callout" data-key="growth" tabindex="0">
+        <span class="callout-check">&#10003;</span> Growth &amp; Conversion
+        <div class="callout-pop"><strong>Growth &amp; Conversion Design</strong>Interfaces engineered to move the metrics that matter &mdash; signups, retention, activation.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
-        <span class="bubble-label">Design Systems</span>
-        <div class="bubble-pop"><strong>Design Systems</strong>Token-based systems, variants, and component libraries built for consistency at scale.</div>
+      <div class="skill-callout" data-key="systems" tabindex="0">
+        <span class="callout-check">&#10003;</span> Design Systems
+        <div class="callout-pop"><strong>Design Systems</strong>Token-based systems, variants, and component libraries built for consistency at scale.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12a3 3 0 0 0 3 3h9"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></svg></span>
-        <span class="bubble-label">Dev Collab</span>
-        <div class="bubble-pop"><strong>Designer&ndash;Developer Collaboration</strong>Dev-mode specs and close handoff work to keep design intent intact in production.</div>
+      <div class="skill-callout" data-key="devcollab" tabindex="0">
+        <span class="callout-check">&#10003;</span> Dev Collaboration
+        <div class="callout-pop"><strong>Designer&ndash;Developer Collaboration</strong>Dev-mode specs and close handoff work to keep design intent intact in production.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9l6 3-6 3z"/><circle cx="12" cy="12" r="9"/></svg></span>
-        <span class="bubble-label">Interaction</span>
-        <div class="bubble-pop"><strong>Interaction Design</strong>Micro-interactions and motion that make interfaces feel alive and responsive.</div>
+      <div class="skill-callout" data-key="interaction" tabindex="0">
+        <span class="callout-check">&#10003;</span> Interaction Design
+        <div class="callout-pop"><strong>Interaction Design</strong>Micro-interactions and motion that make interfaces feel alive and responsive.</div>
       </div>
-      <div class="skill-bubble">
-        <span class="bubble-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="M17 9l5-3v12l-5-3z"/></svg></span>
-        <span class="bubble-label">Video Edit</span>
-        <div class="bubble-pop"><strong>Video Editing</strong>Editing and motion work for product demos, social content, and campaign assets.</div>
+      <div class="skill-callout" data-key="video" tabindex="0">
+        <span class="callout-check">&#10003;</span> Video Editing
+        <div class="callout-pop"><strong>Video Editing</strong>Editing and motion work for product demos, social content, and campaign assets.</div>
       </div>
-    </div>
-  </section>
-
-
-<section class="pegboard-section fade-up">
-    <p class="section-label">Moodboard</p>
-    <div class="pegboard" id="pegboard">
-      <div class="peg-item photo" style="position:absolute;left:2%;top:6%;width:160px;height:300px;--tilt:-1.5deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391194/IMG_1929_tjy5hy.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item quote-note alt" style="position:absolute;left:18%;top:4%;width:280px;height:170px;--tilt:1.2deg;font-size:19px;line-height:1.3;">
-        <span class="clip-binder"></span>
-        <p>The meaning of life is just to be alive. It is so plain and so obvious and so simple.</p>
-      </div>
-
-      <div class="peg-item photo" style="position:absolute;left:40%;top:6%;width:160px;height:190px;--tilt:-2.2deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/27E0341F-6BB2-4807-9697-2A5425ECFE85_ftt673.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item photo" style="position:absolute;left:52%;top:4%;width:160px;height:190px;--tilt:1.8deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/IMG_1877_ljlkkw.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item photo" style="position:absolute;left:66%;top:6%;width:160px;height:190px;--tilt:1.4deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/22C6CF7F-5822-407C-B25E-FF1E94BB254E_ub5kwy.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item photo" style="position:absolute;left:84%;top:8%;width:160px;height:190px;--tilt:-1.6deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/DD843C48-E00E-4789-B723-F8CB92497EEA_gvi4zo.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item photo love-photo" style="position:absolute;left:56%;top:16%;width:150px;height:200px;--tilt:-90deg;">
-        <span class="clip-heart"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785586276/IMG_3386_vzaetl.jpg" alt="My love" loading="lazy"/>
-      </div>
-
-      <div class="peg-item calendar-card" style="position:absolute;left:48%;top:55%;width:320px;height:150px;--tilt:-0.8deg;">
-        <span class="clip-metal"></span>
-        <div class="cal-wood-top"></div>
-        <p class="cal-month" id="pegCalMonth">&nbsp;</p>
-        <div class="cal-grid" id="pegCalGrid"></div>
-      </div>
-
-      <a class="peg-item quote-note alt" href="https://www.wildwide.wtf/" target="_blank" style="position:absolute;left:4%;top:56%;width:190px;height:150px;--tilt:2.4deg;text-decoration:none;cursor:pointer;">
-        <span class="clip-binder"></span>
-        <p>It's leg<br/>day<br/>amigos</p>
-      </a>
-
-      <div class="peg-item photo" style="position:absolute;left:20%;top:58%;width:160px;height:190px;--tilt:-1.9deg;">
-        <span class="clip-binder"></span>
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391464/IMG_2935_r3cttd.jpg" alt="" loading="lazy"/>
-      </div>
-
-      <div class="peg-item clock-card" style="position:absolute;left:76%;top:55%;width:170px;height:170px;--tilt:1.1deg;">
-        <span class="clip-binder"></span>
-        <div class="digital-clock">
-          <div class="digital-clock-time" id="pegDigitalTime">00:00:00</div>
-          <div class="digital-clock-date" id="pegDigitalDate">&nbsp;</div>
-        </div>
-      </div>
-
-      <div class="peg-plant-vine">
-        <svg viewBox="0 0 130 190" fill="none">
-          <path d="M100 4c-4 30-2 55 8 70" stroke="#4d7a4c" stroke-width="3" stroke-linecap="round"/>
-          <path d="M100 4c-14 22-22 44-18 66" stroke="#4d7a4c" stroke-width="3" stroke-linecap="round"/>
-          <path d="M82 8c8 26 4 52-10 78-10 18-14 34-10 52" stroke="#548055" stroke-width="3" stroke-linecap="round"/>
-          <ellipse cx="107" cy="18" rx="11" ry="7" fill="#5b8a5a" transform="rotate(30 107 18)"/>
-          <ellipse cx="118" cy="42" rx="10" ry="6.5" fill="#5b8a5a" transform="rotate(60 118 42)"/>
-          <ellipse cx="108" cy="66" rx="9" ry="6" fill="#619060" transform="rotate(95 108 66)"/>
-          <ellipse cx="88" cy="14" rx="9" ry="6" fill="#4d7a4c" transform="rotate(-20 88 14)"/>
-          <ellipse cx="72" cy="30" rx="9" ry="6" fill="#5b8a5a" transform="rotate(-55 72 30)"/>
-          <ellipse cx="60" cy="56" rx="10" ry="6.5" fill="#619060" transform="rotate(-80 60 56)"/>
-          <ellipse cx="52" cy="86" rx="9" ry="6" fill="#4d7a4c" transform="rotate(-100 52 86)"/>
-          <ellipse cx="48" cy="116" rx="9" ry="6" fill="#5b8a5a" transform="rotate(-120 48 116)"/>
-          <ellipse cx="46" cy="146" rx="8" ry="5.5" fill="#619060" transform="rotate(-135 46 146)"/>
-        </svg>
-      </div>
-    </div>
-    <div class="pegboard-footer">
-      <span class="footer-label">currently designing &middot; Function Studio</span>
     </div>
   </section>
 
@@ -1689,21 +1768,63 @@ body.light .header-cal-btn{background:#111;color:#fff;}
 
   
 
-  <footer class="fade-up">
-    <span class="footer-left">&copy; 2026 Isaac Oreoluwa</span>
-    <div class="footer-links">
-      <a href="https://www.behance.net/isaacoreoluwa" target="_blank">Behance</a>
-      <a href="http://linkedin.com/in/oshideroore/" target="_blank">LinkedIn</a>
-      <a href="http://twitter.com/reoworx" target="_blank">Twitter</a>
-      <a href="https://contra.com/oshiderooreoluwa" target="_blank">Contra</a>
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
-        <svg id="themeIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <span id="themeLabel">Light</span>
-      </button>
+  <section class="dramatic-cta fade-up" id="dramaticCta">
+    <div class="cta-marquee" aria-hidden="true">
+      <div class="cta-marquee-track">
+        <span>AVAILABLE FOR NEW PROJECTS</span><span class="dot">&middot;</span>
+        <span>BASED IN LAGOS, NIGERIA</span><span class="dot">&middot;</span>
+        <span>LET'S BUILD SOMETHING GREAT</span><span class="dot">&middot;</span>
+        <span>AVAILABLE FOR NEW PROJECTS</span><span class="dot">&middot;</span>
+        <span>BASED IN LAGOS, NIGERIA</span><span class="dot">&middot;</span>
+        <span>LET'S BUILD SOMETHING GREAT</span><span class="dot">&middot;</span>
+      </div>
     </div>
-  </footer>
+
+    <div class="dramatic-cta-inner">
+      <p class="dramatic-cta-eyebrow">Got a project in mind?</p>
+      <h2 class="dramatic-cta-heading" id="dramaticHeading">LET'S WORK TOGETHER</h2>
+      <a href="mailto:oshiderooreoluwa@gmail.com" class="dramatic-cta-link">
+        Say hello
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
+    </div>
+
+    <div class="cta-polaroid" id="ctaPolaroid" style="--tilt:-6deg;">
+      <img src="https://picsum.photos/seed/reo-portfolio/260/320" alt="Placeholder — swap me" loading="lazy"/>
+      <span class="cta-polaroid-caption">drag me &#9995;</span>
+    </div>
+
+    <div class="cta-sticker" id="ctaSticker">
+      <svg class="cta-sticker-ring" viewBox="0 0 120 120">
+        <defs>
+          <path id="stickerCirclePath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
+        </defs>
+        <circle cx="60" cy="60" r="58"/>
+        <text>
+          <textPath href="#stickerCirclePath" startOffset="0%">AVAILABLE FOR WORK &#8226; AVAILABLE FOR WORK &#8226; </textPath>
+        </text>
+      </svg>
+      <span class="cta-sticker-center">&#9733;</span>
+    </div>
+
+    <footer class="dramatic-footer">
+      <span class="footer-left">&copy; 2026 Isaac Oreoluwa</span>
+      <div class="footer-links">
+        <a href="https://www.behance.net/isaacoreoluwa" target="_blank">Behance</a>
+        <a href="http://linkedin.com/in/oshideroore/" target="_blank">LinkedIn</a>
+        <a href="http://twitter.com/reoworx" target="_blank">Twitter</a>
+        <a href="https://contra.com/oshiderooreoluwa" target="_blank">Contra</a>
+        <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+          <svg id="themeIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <span id="themeLabel">Light</span>
+        </button>
+      </div>
+    </footer>
+  </section>
+
 
 </div>
+
 
 <script>
 (function(){
@@ -1819,86 +1940,22 @@ document.addEventListener('DOMContentLoaded', function(){
     document.querySelectorAll('.bio-chip.active').forEach(function(c){ c.classList.remove('active'); });
   });
 
-  // Skill bubble tank: drifting bubbles that scatter from the cursor
-  document.querySelectorAll('.skill-bubble').forEach(function(bubble){
-    bubble.addEventListener('click', function(e){
-      e.stopPropagation();
-      var wasActive = bubble.classList.contains('active');
-      document.querySelectorAll('.skill-bubble.active').forEach(function(c){ c.classList.remove('active'); });
-      if(!wasActive) bubble.classList.add('active');
-    });
-  });
-  document.addEventListener('click', function(){
-    document.querySelectorAll('.skill-bubble.active').forEach(function(c){ c.classList.remove('active'); });
-  });
-
+  // Skill callouts: tap-to-toggle popover for touch devices (hover handles desktop via CSS)
   (function(){
-    var tank = document.getElementById('skillsTank');
-    if(!tank) return;
-    var els = Array.prototype.slice.call(tank.querySelectorAll('.skill-bubble'));
-    var mouse = {x:-9999, y:-9999};
-    var hovered = null;
+    var callouts = Array.prototype.slice.call(document.querySelectorAll('.skill-callout'));
+    if(!callouts.length) return;
 
-    var state = els.map(function(el){
-      var size = el.offsetWidth || 104;
-      var w = tank.clientWidth, h = tank.clientHeight;
-      var x = Math.random() * Math.max(1, w - size);
-      var y = Math.random() * Math.max(1, h - size);
-      var angle = Math.random() * Math.PI * 2;
-      var speed = 0.15 + Math.random() * 0.15;
-      return {el:el, size:size, x:x, y:y, vx:Math.cos(angle)*speed, vy:Math.sin(angle)*speed};
-    });
-
-    tank.addEventListener('mousemove', function(e){
-      var rect = tank.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
-    tank.addEventListener('mouseleave', function(){ mouse.x = -9999; mouse.y = -9999; });
-    els.forEach(function(el, i){
-      el.addEventListener('mouseenter', function(){ hovered = state[i]; });
-      el.addEventListener('mouseleave', function(){ if(hovered === state[i]) hovered = null; });
-    });
-
-    function step(){
-      var w = tank.clientWidth, h = tank.clientHeight;
-      state.forEach(function(b){
-        if(b === hovered){
-          b.el.style.left = b.x + 'px';
-          b.el.style.top = b.y + 'px';
-          return;
-        }
-        var cx = b.x + b.size/2, cy = b.y + b.size/2;
-        var dx = cx - mouse.x, dy = cy - mouse.y;
-        var dist = Math.sqrt(dx*dx + dy*dy);
-        var repelRadius = 110;
-        if(dist < repelRadius && dist > 0.01){
-          var force = (repelRadius - dist) / repelRadius * 0.7;
-          b.vx += (dx/dist) * force;
-          b.vy += (dy/dist) * force;
-        }
-        b.x += b.vx;
-        b.y += b.vy;
-        b.vx *= 0.985;
-        b.vy *= 0.985;
-        if(b.x < 0){ b.x = 0; b.vx *= -1; }
-        if(b.x > w - b.size){ b.x = w - b.size; b.vx *= -1; }
-        if(b.y < 0){ b.y = 0; b.vy *= -1; }
-        if(b.y > h - b.size){ b.y = h - b.size; b.vy *= -1; }
-        var speed = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
-        var maxSpeed = 1.6;
-        if(speed > maxSpeed){ b.vx = b.vx/speed*maxSpeed; b.vy = b.vy/speed*maxSpeed; }
-        if(speed < 0.04){
-          var a = Math.random() * Math.PI * 2;
-          b.vx += Math.cos(a) * 0.03;
-          b.vy += Math.sin(a) * 0.03;
-        }
-        b.el.style.left = b.x + 'px';
-        b.el.style.top = b.y + 'px';
+    callouts.forEach(function(callout){
+      callout.addEventListener('click', function(e){
+        e.stopPropagation();
+        var wasActive = callout.classList.contains('active-callout');
+        callouts.forEach(function(c){ c.classList.remove('active-callout'); });
+        if(!wasActive) callout.classList.add('active-callout');
       });
-      requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+    });
+    document.addEventListener('click', function(){
+      callouts.forEach(function(c){ c.classList.remove('active-callout'); });
+    });
   })();
 
   // 3D tilt effect for testimonial bento cards
@@ -2150,7 +2207,110 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   })();
 
-  // Live calendar card
+  // Dramatic footer CTA: shrink heading to exactly fit available width (no guessing font metrics)
+  (function(){
+    var heading = document.getElementById('dramaticHeading');
+    var inner = document.querySelector('.dramatic-cta-inner');
+    if(!heading || !inner) return;
+
+    function fitHeading(){
+      heading.style.fontSize = '';
+      var style = getComputedStyle(inner);
+      var paddingX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+      var availableWidth = inner.clientWidth - paddingX;
+      var computedSize = parseFloat(getComputedStyle(heading).fontSize);
+      var textWidth = heading.scrollWidth;
+      if(!textWidth || !availableWidth) return;
+      var ratio = availableWidth / textWidth;
+      if(ratio < 1){
+        heading.style.fontSize = (computedSize * ratio * 0.98) + 'px';
+      }
+    }
+
+    fitHeading();
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(fitHeading);
+    }
+    window.addEventListener('resize', fitHeading);
+  })();
+
+  // Dramatic footer CTA: heading tilts toward the cursor
+  (function(){
+    var section = document.getElementById('dramaticCta');
+    var heading = document.getElementById('dramaticHeading');
+    if(!section || !heading) return;
+    section.addEventListener('mousemove', function(e){
+      var rect = section.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      heading.style.transform = 'perspective(700px) rotateX(' + (-y*8) + 'deg) rotateY(' + (x*8) + 'deg)';
+    });
+    section.addEventListener('mouseleave', function(){
+      heading.style.transform = '';
+    });
+  })();
+
+  // Dramatic footer CTA: magnetic "Say hello" link
+  (function(){
+    var link = document.querySelector('.dramatic-cta-link');
+    if(!link) return;
+    link.addEventListener('mousemove', function(e){
+      var r = link.getBoundingClientRect();
+      var x = e.clientX - r.left - r.width/2;
+      var y = e.clientY - r.top - r.height/2;
+      link.style.transform = 'translate(' + (x*0.25) + 'px,' + (y*0.25) + 'px)';
+    });
+    link.addEventListener('mouseleave', function(){
+      link.style.transform = '';
+    });
+  })();
+
+  // Draggable floating elements in the footer CTA (polaroid + sticker)
+  function makeCtaDraggable(el, boundsEl){
+    if(!el || !boundsEl) return;
+    var startX, startY, startLeft, startTop, dragging = false;
+
+    el.addEventListener('pointerdown', function(e){
+      var boundsRect = boundsEl.getBoundingClientRect();
+      var elRect = el.getBoundingClientRect();
+      startLeft = elRect.left - boundsRect.left;
+      startTop = elRect.top - boundsRect.top;
+      el.style.left = startLeft + 'px';
+      el.style.top = startTop + 'px';
+      el.style.right = 'auto';
+      startX = e.clientX;
+      startY = e.clientY;
+      dragging = true;
+      el.classList.add('dragging');
+      el.setPointerCapture(e.pointerId);
+    });
+
+    el.addEventListener('pointermove', function(e){
+      if(!dragging) return;
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      var boundsRect = boundsEl.getBoundingClientRect();
+      var maxLeft = boundsRect.width - el.offsetWidth;
+      var maxTop = boundsRect.height - el.offsetHeight;
+      var newLeft = Math.min(Math.max(startLeft + dx, 0), Math.max(maxLeft, 0));
+      var newTop = Math.min(Math.max(startTop + dy, 0), Math.max(maxTop, 0));
+      el.style.left = newLeft + 'px';
+      el.style.top = newTop + 'px';
+    });
+
+    function endDrag(){
+      dragging = false;
+      el.classList.remove('dragging');
+    }
+    el.addEventListener('pointerup', endDrag);
+    el.addEventListener('pointercancel', endDrag);
+  }
+  (function(){
+    var section = document.getElementById('dramaticCta');
+    if(!section) return;
+    makeCtaDraggable(document.getElementById('ctaPolaroid'), section);
+    makeCtaDraggable(document.getElementById('ctaSticker'), section);
+  })();
   (function(){
     var monthEl = document.getElementById('pegCalMonth');
     var gridEl = document.getElementById('pegCalGrid');
