@@ -24,8 +24,8 @@
 <style>
 :root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 .wrap{max-width:640px;margin:0 auto;padding:80px 24px 120px;}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:64px;}
 .name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.03em;}
@@ -789,6 +789,8 @@ body.light .cal-card{background:#f4f4f5;}
 @media (max-width:640px){
   .bento-grid{grid-template-columns:1fr;}
   .bento-pair{margin-bottom:8px;}
+  .slide-card{width:250px;}
+  .slider-track{gap:8px;}
 }
 
 /* Scanline overlay */
@@ -1185,9 +1187,20 @@ body.light .cal-card{background:#f4f4f5;}
   letter-spacing:0.03em;
 }
 @media(max-width:640px){
-  .pegboard{height:820px;}
+  .pegboard{
+    height:820px;
+    transform:scale(0.6);
+    transform-origin:top center;
+    margin-bottom:-328px;
+  }
   .quote-note{font-size:16px;padding:14px;}
   .quote-note.alt{font-size:20px;}
+}
+@media(max-width:400px){
+  .pegboard{
+    transform:scale(0.5);
+    margin-bottom:-410px;
+  }
 }
 
 /* Dev mode gallery */
@@ -2227,14 +2240,19 @@ document.addEventListener('DOMContentLoaded', function(){
     var board = document.getElementById('pegboard');
     if(!board) return;
     var zTop = 10;
+    function boardScale(){
+      var boardRect = board.getBoundingClientRect();
+      return (boardRect.width / board.offsetWidth) || 1;
+    }
     board.querySelectorAll('.peg-item').forEach(function(item){
       var startX, startY, startLeft, startTop, dragging = false, moved = false;
 
       item.addEventListener('pointerdown', function(e){
         var boardRect = board.getBoundingClientRect();
         var itemRect = item.getBoundingClientRect();
-        startLeft = itemRect.left - boardRect.left;
-        startTop = itemRect.top - boardRect.top;
+        var scale = boardScale();
+        startLeft = (itemRect.left - boardRect.left) / scale;
+        startTop = (itemRect.top - boardRect.top) / scale;
         item.style.left = startLeft + 'px';
         item.style.top = startTop + 'px';
         startX = e.clientX;
@@ -2248,12 +2266,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
       item.addEventListener('pointermove', function(e){
         if(!dragging) return;
-        var dx = e.clientX - startX;
-        var dy = e.clientY - startY;
+        var scale = boardScale();
+        var dx = (e.clientX - startX) / scale;
+        var dy = (e.clientY - startY) / scale;
         if(Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
-        var boardRect = board.getBoundingClientRect();
-        var maxLeft = boardRect.width - item.offsetWidth;
-        var maxTop = boardRect.height - item.offsetHeight;
+        var maxLeft = board.offsetWidth - item.offsetWidth;
+        var maxTop = board.offsetHeight - item.offsetHeight;
         var newLeft = Math.min(Math.max(startLeft + dx, -item.offsetWidth*0.3), maxLeft + item.offsetWidth*0.3);
         var newTop = Math.min(Math.max(startTop + dy, 0), Math.max(maxTop, 0));
         item.style.left = newLeft + 'px';
