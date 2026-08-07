@@ -411,11 +411,22 @@ footer{margin-top:0;padding-top:20px;display:flex;align-items:center;justify-con
 body.light .proj-card{background:#e4e4e7;border-color:rgba(0,0,0,0.06);}
 @media(max-width:400px){.projects-grid{grid-template-columns:repeat(3,1fr);}}
 
-.work-grid{display:grid;grid-template-columns:1fr;gap:12px;}
+.work-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+  width:100vw;
+  padding:0 24px;
+  box-sizing:border-box;
+}
 
 .work-grid .work-item{flex-direction:column;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:0;gap:0;overflow:hidden;transition:border-color 0.15s,background 0.15s;width:100%;}
 .work-grid .work-item:hover{border-color:rgba(255,255,255,0.16);background:rgba(255,255,255,0.02);}
-.work-grid .work-item:last-child{border-bottom:1px solid var(--border);}
 .work-thumb{width:100%;height:340px;overflow:hidden;background:var(--bg2);border-bottom:1px solid var(--border);}
 .work-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.4s ease;filter:grayscale(0.2);}
 .work-grid .work-item:hover .work-thumb img{transform:scale(1.04);}
@@ -423,6 +434,10 @@ body.light .proj-card{background:#e4e4e7;border-color:rgba(0,0,0,0.06);}
 .work-grid .work-meta{flex-direction:row;align-items:center;gap:6px;width:100%;}
 .work-grid .work-arrow{opacity:0.4;margin-left:auto;}
 .work-grid .work-item:hover .work-arrow{opacity:1;transform:translate(2px,-2px);}
+@media(max-width:640px){
+  .work-grid{grid-template-columns:1fr;padding:0 20px;gap:12px;}
+  .work-thumb{height:260px;}
+}
 .avatar-wrap{position:relative;display:inline-block;margin-bottom:14px;cursor:pointer;}
 .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--border);display:block;filter:grayscale(0.1);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),filter 0.3s ease,box-shadow 0.3s ease;}
 .avatar-wrap:hover .avatar{transform:scale(1.18) rotate(-4deg);filter:grayscale(0) brightness(1.05);box-shadow:0 6px 24px rgba(0,0,0,0.35);}
