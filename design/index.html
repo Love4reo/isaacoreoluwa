@@ -1624,7 +1624,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           </div>
         </div>
       </a>
-      <a class="work-item" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank">
+      <a class="work-item" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786104737/Desktop_-_34_1_lwweca.png">
         <div class="work-thumb">
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786079682/Untitled_design_5_akfrnd.gif" alt="Overflow Navigation"/>
         </div>
@@ -1639,7 +1639,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           </div>
         </div>
       </a>
-      <a class="work-item" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank">
+      <a class="work-item" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105045/Desktop_-_34_2_eub1lq.png">
         <div class="work-thumb">
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786080354/Untitled_design_6_fxjr9d.gif" alt="Suberra Website Revamp"/>
         </div>
@@ -1983,7 +1983,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var thumb = item.querySelector('.work-thumb img');
     if(!thumb) return;
     item.addEventListener('mouseenter', function(){
-      previewImg.src = thumb.src;
+      previewImg.src = item.getAttribute('data-cursor-img') || thumb.src;
       preview.classList.add('active');
       if(!rafId) tick();
     });
