@@ -425,20 +425,25 @@ body.light .proj-card{background:#e4e4e7;border-color:rgba(0,0,0,0.06);}
   box-sizing:border-box;
 }
 
-.work-grid .work-item{flex-direction:column;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:0;gap:0;overflow:hidden;transition:border-color 0.15s,background 0.15s;width:100%;}
+.work-grid .work-item{flex-direction:column;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:0;gap:0;overflow:hidden;transition:border-color 0.15s,background 0.15s;width:100%;aspect-ratio:4/3;}
 .work-grid .work-item:hover{border-color:rgba(255,255,255,0.16);background:rgba(255,255,255,0.02);}
-.work-thumb{width:100%;height:340px;overflow:hidden;background:var(--bg2);border-bottom:1px solid var(--border);}
-.work-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(0.2);transition:transform 0.4s ease,opacity 0.25s ease;will-change:opacity;}
+.work-thumb{width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--bg2);}
+.work-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(0.2);transition:transform 0.2s cubic-bezier(0.4,0,0.2,1),opacity 0.2s ease;will-change:opacity;}
 .work-grid .work-item:hover .work-thumb img{transform:scale(1.04);}
 .work-grid .work-item.is-defocused .work-thumb img{opacity:0.6;}
 .work-grid .work-item.is-defocused{border-color:var(--border);background:transparent;}
-.work-body{padding:14px;}
-.work-grid .work-meta{flex-direction:row;align-items:center;gap:6px;width:100%;}
-.work-grid .work-arrow{opacity:0.4;margin-left:auto;}
-.work-grid .work-item:hover .work-arrow{opacity:1;transform:translate(2px,-2px);}
+.work-body{width:100%;flex:0 0 auto;padding:0 14px;}
+.work-collapse{display:grid;grid-template-rows:minmax(0,0fr);transition:grid-template-rows 0.28s cubic-bezier(0.16,1,0.3,1);}
+.work-grid .work-item:hover .work-collapse{grid-template-rows:minmax(0,1fr);}
+.work-collapse-inner{overflow:hidden;min-height:0;padding:14px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.work-grid .work-desc,.work-grid .work-arrow{display:none;}
+.work-grid .work-title{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1),filter 0.3s ease;}
+.work-grid .work-item:hover .work-title{opacity:1;transform:translateY(0);filter:blur(0);transition-delay:0.06s;}
+.work-grid .work-meta{margin-top:0!important;flex:0 0 auto;}
+.work-grid .work-tag{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1),filter 0.3s ease;white-space:nowrap;}
+.work-grid .work-item:hover .work-tag{opacity:1;transform:translateY(0);filter:blur(0);transition-delay:0.1s;}
 @media(max-width:640px){
   .work-grid{grid-template-columns:1fr;padding:0 20px;gap:12px;}
-  .work-thumb{height:260px;}
 }
 .avatar-wrap{position:relative;display:inline-block;margin-bottom:14px;cursor:pointer;}
 .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--border);display:block;filter:grayscale(0.1);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),filter 0.3s ease,box-shadow 0.3s ease;}
@@ -1628,6 +1633,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786033030/Untitled_design_4_ytsiig.gif" alt="mykommune"/>
         </div>
         <div class="work-body">
+          <div class="work-collapse"><div class="work-collapse-inner">
           <div class="work-left">
             <p class="work-title">Simplifying Community Engagement and Event Discovery</p>
             <p class="work-desc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
@@ -1636,6 +1642,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
             <span class="work-tag">Product &middot; Community</span>
             <span class="work-arrow">&#8599;</span>
           </div>
+          </div></div>
         </div>
       </a>
       <a class="work-item" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786104737/Desktop_-_34_1_lwweca.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785232722/Desktop_-_15_2_uhhkxg.png">
@@ -1643,6 +1650,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786079682/Untitled_design_5_akfrnd.gif" alt="Overflow Navigation"/>
         </div>
         <div class="work-body">
+          <div class="work-collapse"><div class="work-collapse-inner">
           <div class="work-left">
             <p class="work-title">Optimizing Navigation with Side Navs</p>
             <p class="work-desc">A navigation redesign focused on improving wayfinding, reducing friction, and helping users move through the product more efficiently. The solution introduces a scalable side navigation system that creates a clearer, more organized user experience.</p>
@@ -1651,6 +1659,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
             <span class="work-tag">UX &middot; Navigation</span>
             <span class="work-arrow">&#8599;</span>
           </div>
+          </div></div>
         </div>
       </a>
       <a class="work-item" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105045/Desktop_-_34_2_eub1lq.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231944/Desktop_-_68_vp7um2.png">
@@ -1658,6 +1667,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786080354/Untitled_design_6_fxjr9d.gif" alt="Suberra Website Revamp"/>
         </div>
         <div class="work-body">
+          <div class="work-collapse"><div class="work-collapse-inner">
           <div class="work-left">
             <p class="work-title">Redesigning Suberra&rsquo;s Website for Clarity and Conversion</p>
             <p class="work-desc">A full website redesign for Suberra &mdash; a web3 payments platform. Rebuilt the visual language, information architecture, and brand presence to communicate trust and clarity to a new audience.</p>
@@ -1666,6 +1676,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
             <span class="work-tag">Web Design &middot; Brand</span>
             <span class="work-arrow">&#8599;</span>
           </div>
+          </div></div>
         </div>
       </a>
       <a class="work-item" href="https://www.behance.net/gallery/198485845/All-in-one-train-schedule-app-and-more-Case-study" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786116716/Desktop_-_34_5_a1xolo.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231948/One_ztnqkd.png">
@@ -1673,6 +1684,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786081034/Untitled_design_7_d5pvnu.gif" alt="Train Schedule App"/>
         </div>
         <div class="work-body">
+          <div class="work-collapse"><div class="work-collapse-inner">
           <div class="work-left">
             <p class="work-title">Simplifying the Rail Travel Experience</p>
             <p class="work-desc">A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience &mdash; built for commuters navigating Nigeria&rsquo;s rail network.</p>
@@ -1681,6 +1693,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
             <span class="work-tag">Mobile &middot; UX</span>
             <span class="work-arrow">&#8599;</span>
           </div>
+          </div></div>
         </div>
       </a>
       
@@ -1998,6 +2011,19 @@ document.addEventListener('DOMContentLoaded', function(){
   items.forEach(function(item){
     var thumbImg = item.querySelector('.work-thumb img');
     if(thumbImg) thumbImg.dataset.gifSrc = thumbImg.src;
+  });
+
+  // Match each card's aspect ratio to its gif's real dimensions, so the
+  // thumbnail shows uncropped at rest instead of a fixed generic ratio.
+  items.forEach(function(item){
+    var thumbImg = item.querySelector('.work-thumb img');
+    if(!thumbImg) return;
+    var applyRatio = function(){
+      if(thumbImg.naturalWidth && thumbImg.naturalHeight){
+        item.style.aspectRatio = thumbImg.naturalWidth + ' / ' + thumbImg.naturalHeight;
+      }
+    };
+    if(thumbImg.complete){ applyRatio(); } else { thumbImg.addEventListener('load', applyRatio, {once:true}); }
   });
 
   // Preload the static/focus images ahead of time so the first hover doesn't
