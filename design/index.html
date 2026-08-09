@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -22,12 +22,61 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;}
+:root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;--nav-bg:rgba(9,9,11,0.72);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;overflow-x:hidden;}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 .wrap{max-width:640px;margin:0 auto;padding:80px 24px 120px;}
-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:64px;}
+header{
+  position:relative;
+  z-index:50;
+  margin-bottom:64px;
+  padding:16px 0;
+  background:transparent;
+  border-bottom:1px solid transparent;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  transition:border-color 0.2s ease;
+}
+header.is-fixed{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  max-width:640px;
+  margin:0 auto;
+  padding:16px 24px;
+  box-sizing:border-box;
+  transition:max-width 0.55s cubic-bezier(0.16,1,0.3,1),padding 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+header.is-fixed.is-expanded{
+  max-width:100%;
+  padding:16px 44px;
+}
+header.scrolled{border-bottom-color:transparent;}
+.header-spacer{display:none;}
+.header-spacer.active{display:block;}
+.nav-avatar{
+  width:0;
+  height:26px;
+  border-radius:50%;
+  object-fit:cover;
+  opacity:0;
+  margin-right:0;
+  transform:scale(0.6);
+  transition:width 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1),margin-right 0.35s cubic-bezier(0.16,1,0.3,1);
+  flex-shrink:0;
+  vertical-align:middle;
+}
+.nav-avatar.visible{
+  width:26px;
+  opacity:1;
+  transform:scale(1);
+  margin-right:9px;
+}
+.nav-name-row{display:flex;align-items:center;}
 .name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.03em;}
 .availability{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);font-family:var(--mono);}
 .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e88;animation:pulse 2s ease-in-out infinite;}
@@ -276,7 +325,7 @@ body.light .cta2-grid{background-image:radial-gradient(circle,rgba(0,0,0,0.07) 1
 .fade-up:nth-child(5){animation-delay:0.30s;}
 .fade-up:nth-child(6){animation-delay:0.36s;}
 .fade-up:nth-child(7){animation-delay:0.42s;}
-@media(max-width:480px){.wrap{padding:48px 20px 80px;}header{margin-bottom:40px;}.hero{margin-bottom:40px;}.about-block{flex-direction:column;}footer{flex-direction:column;align-items:flex-start;}}
+@media(max-width:480px){.wrap{padding:48px 20px 80px;}header{margin-bottom:40px;}header.is-fixed{padding:12px 20px;}.hero{margin-bottom:40px;}.about-block{flex-direction:column;}footer{flex-direction:column;align-items:flex-start;}}
 
 .projects-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 .proj-card{display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:var(--bg2);border:1px solid rgba(255,255,255,0.06);text-decoration:none;transition:transform 0.18s ease,box-shadow 0.18s ease;cursor:pointer;}
@@ -364,6 +413,7 @@ body.light{
   --muted2:#d4d4d8;
   --link:#52525b;
   --link-hov:#09090b;
+  --nav-bg:rgba(250,250,250,0.72);
 }
 body.light .dot{background:#16a34a;box-shadow:0 0 6px #16a34a88;}
 body.light .tagline{color:#a1a1aa;}
@@ -1284,23 +1334,93 @@ body.light .header-cal-btn{background:#111;color:#fff;}
   opacity:1;
   transform:translate(-50%,-50%) scale(1);
 }
-#preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 0.6s ease,visibility 0.6s ease;}
+#preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity 0.6s ease,visibility 0.6s ease;overflow:hidden;}
 #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.preloader-grid{
+  position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1.4px);
+  background-size:28px 28px;
+  -webkit-mask-image:radial-gradient(circle at center,rgba(0,0,0,0.9) 0%,transparent 72%);
+  mask-image:radial-gradient(circle at center,rgba(0,0,0,0.9) 0%,transparent 72%);
+  animation:preloaderGridDrift 8s linear infinite;
+}
+@keyframes preloaderGridDrift{from{background-position:0 0;}to{background-position:28px 28px;}}
+body.light .preloader-grid{background-image:radial-gradient(rgba(0,0,0,0.07) 1px,transparent 1.4px);}
+.preloader-avatar-wrap{
+  position:relative;
+  width:64px;height:64px;
+  border-radius:50%;
+  opacity:0;
+  transform:scale(0.85);
+  animation:preloaderAvatarIn 0.5s ease forwards 0.1s;
+}
+.preloader-avatar-wrap::before{
+  content:'';
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  animation:preloaderRingPulse 1.8s ease-in-out infinite;
+}
+@keyframes preloaderRingPulse{0%,100%{transform:scale(1);opacity:0.55;}50%{transform:scale(1.12);opacity:0.1;}}
+.preloader-avatar{
+  display:block;
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  filter:grayscale(1);
+  border:1px solid var(--border);
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 0.15s linear,filter 0.5s ease;
+}
+.preloader-avatar-wrap.loaded .preloader-avatar{filter:grayscale(0);}
+@keyframes preloaderAvatarIn{to{opacity:1;transform:scale(1);}}
 .preloader-name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);font-size:clamp(20px,5.5vw,48px);line-height:1.05;text-align:center;white-space:nowrap;}
-.preloader-pct{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:0.04em;}
+.preloader-status{
+  font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.03em;
+  min-height:14px;
+}
+.preloader-status::after{
+  content:'_';
+  animation:preloaderCursorBlink 0.9s step-end infinite;
+}
+@keyframes preloaderCursorBlink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+.preloader-track{
+  width:160px;height:2px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:hidden;
+  margin-top:4px;
+}
+.preloader-fill{
+  height:100%;width:0%;
+  background:var(--text);
+  border-radius:2px;
+  transition:width 0.1s linear;
+}
+.preloader-pct{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.04em;}
 body.preloading{overflow:hidden;height:100vh;}
 </style>
 </head>
 <body>
 <script>document.body.classList.add('preloading');</script>
 <div id="preloader">
+  <div class="preloader-grid"></div>
+  <div class="preloader-avatar-wrap" id="preloaderAvatarWrap">
+    <img id="preloaderAvatar" class="preloader-avatar" alt="Isaac Oreoluwa"/>
+  </div>
   <div class="preloader-name">Isaac Oreoluwa</div>
+  <div class="preloader-status" id="preloaderStatus">// initializing</div>
+  <div class="preloader-track"><div class="preloader-fill" id="preloaderFill"></div></div>
   <div class="preloader-pct">[<span id="preloaderPct">0</span>%]</div>
 </div>
 <div class="wrap">
 
   <header class="fade-up">
-    <a class="name" href="https://www.isaacoreoluwa.xyz/" style="text-decoration:none;color:inherit;">Isaac Oreoluwa</a>
+    <div class="nav-name-row">
+      <img class="nav-avatar" id="navAvatar" alt="Isaac Oreoluwa"/>
+      <a class="name" href="https://www.isaacoreoluwa.xyz/" style="text-decoration:none;color:inherit;">Isaac Oreoluwa</a>
+    </div>
     <div class="header-right">
       <div class="header-icons">
         <a href="https://www.functionstudioo.com/Isaac_Oreoluwa_CV.pdf" target="_blank" data-tooltip="CV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></a>
@@ -1324,6 +1444,7 @@ body.preloading{overflow:hidden;height:100vh;}
       </button>
     </div>
   </header>
+  <div class="header-spacer" id="headerSpacer"></div>
 
   <div class="hero fade-up">
     <div class="avatar-wrap" onclick="deployOreoluwa()" style="cursor:pointer;">
@@ -1855,6 +1976,65 @@ body.preloading{overflow:hidden;height:100vh;}
       localStorage.setItem('theme','light');
     }
   };
+})();
+
+(function(){
+  var navAvatar = document.getElementById('navAvatar');
+  var heroAvatar = document.querySelector('.avatar-wrap .avatar');
+  var siteHeader = document.querySelector('header');
+  var spacer = document.getElementById('headerSpacer');
+  if(!siteHeader) return;
+
+  var triggerY = 0;
+  function measure(){
+    if(siteHeader.classList.contains('is-fixed')) return; // don't measure while detached
+    triggerY = siteHeader.offsetTop;
+  }
+  measure();
+  window.addEventListener('resize', measure);
+
+  function onScroll(){
+    var shouldFix = window.scrollY >= triggerY;
+    if(shouldFix && !siteHeader.classList.contains('is-fixed')){
+      spacer.style.height = siteHeader.offsetHeight + 'px';
+      spacer.classList.add('active');
+      siteHeader.classList.add('is-fixed');
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          siteHeader.classList.add('is-expanded');
+        });
+      });
+    } else if(!shouldFix && siteHeader.classList.contains('is-fixed')){
+      siteHeader.classList.remove('is-fixed');
+      siteHeader.classList.remove('is-expanded');
+      spacer.classList.remove('active');
+      measure();
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  if(!navAvatar || !heroAvatar) return;
+
+  navAvatar.src = heroAvatar.src;
+
+  var preloaderAvatar = document.getElementById('preloaderAvatar');
+  if(preloaderAvatar) preloaderAvatar.src = heroAvatar.src;
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          navAvatar.classList.remove('visible');
+          siteHeader.classList.remove('scrolled');
+        } else {
+          navAvatar.classList.add('visible');
+          siteHeader.classList.add('scrolled');
+        }
+      });
+    }, {threshold:0, rootMargin:'-64px 0px 0px 0px'});
+    io.observe(heroAvatar);
+  }
 })();
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -2646,7 +2826,31 @@ document.addEventListener('keydown', function(e){
 (function(){
   var loader = document.getElementById('preloader');
   var pctEl = document.getElementById('preloaderPct');
+  var fillEl = document.getElementById('preloaderFill');
+  var avatarWrap = document.getElementById('preloaderAvatarWrap');
+  var avatarImg = document.getElementById('preloaderAvatar');
+  var statusEl = document.getElementById('preloaderStatus');
   if(!loader || !pctEl) return;
+
+  var statuses = [
+    [0, '// initializing'],
+    [25, '// loading assets'],
+    [55, '// arranging pixels'],
+    [80, '// almost there'],
+    [98, '// welcome']
+  ];
+  var lastStatus = '';
+  function updateStatus(pct){
+    if(!statusEl) return;
+    var msg = statuses[0][1];
+    for(var i=0;i<statuses.length;i++){
+      if(pct >= statuses[i][0]) msg = statuses[i][1];
+    }
+    if(msg !== lastStatus){
+      lastStatus = msg;
+      statusEl.textContent = msg;
+    }
+  }
 
   var pct = 0;
   var counterDone = false;
@@ -2668,11 +2872,19 @@ document.addEventListener('keydown', function(e){
     if(pct >= 100){
       pct = 100;
       pctEl.textContent = 100;
+      if(fillEl) fillEl.style.width = '100%';
+      if(avatarImg) avatarImg.style.clipPath = 'inset(0 0% 0 0)';
+      if(avatarWrap) avatarWrap.classList.add('loaded');
+      updateStatus(100);
       counterDone = true;
       maybeReveal();
       return;
     }
-    pctEl.textContent = Math.floor(pct);
+    var displayPct = Math.floor(pct);
+    pctEl.textContent = displayPct;
+    if(fillEl) fillEl.style.width = pct + '%';
+    if(avatarImg) avatarImg.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+    updateStatus(displayPct);
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
