@@ -1403,9 +1403,19 @@ body.light .header-cal-btn{background:#111;color:#fff;}
   opacity:1;
   transform:translate(-50%,-50%) scale(1);
 }
+#preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 0.6s ease,visibility 0.6s ease;}
+#preloader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+.preloader-name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);font-size:clamp(28px,6vw,48px);line-height:1.05;text-align:center;}
+.preloader-pct{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:0.04em;}
+body.preloading{overflow:hidden;height:100vh;}
 </style>
 </head>
 <body>
+<script>document.body.classList.add('preloading');</script>
+<div id="preloader">
+  <div class="preloader-name">Isaac<br/>Oreoluwa</div>
+  <div class="preloader-pct">[<span id="preloaderPct">0</span>%]</div>
+</div>
 <div class="wrap">
 
   <header class="fade-up">
@@ -2816,6 +2826,56 @@ document.addEventListener('keydown', function(e){
   }
   render();
   setInterval(render, 60000);
+})();
+
+// Preloader: animate the percentage counter, then reveal the page once
+// both the counter finishes AND the window has actually finished loading
+// (whichever takes longer) — this gives image preloads breathing room.
+(function(){
+  var loader = document.getElementById('preloader');
+  var pctEl = document.getElementById('preloaderPct');
+  if(!loader || !pctEl) return;
+
+  var pct = 0;
+  var counterDone = false;
+  var pageLoaded = false;
+
+  function maybeReveal(){
+    if(counterDone && pageLoaded){
+      loader.classList.add('hidden');
+      document.body.classList.remove('preloading');
+      setTimeout(function(){ loader.remove(); }, 650);
+    }
+  }
+
+  function tick(){
+    // Ease toward 100 — quick at first, slower near the end so it never
+    // feels like it's stalling right before reveal.
+    var remaining = 100 - pct;
+    pct += Math.max(1, remaining * 0.09);
+    if(pct >= 100){
+      pct = 100;
+      pctEl.textContent = 100;
+      counterDone = true;
+      maybeReveal();
+      return;
+    }
+    pctEl.textContent = Math.floor(pct);
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  if(document.readyState === 'complete'){
+    pageLoaded = true;
+    maybeReveal();
+  } else {
+    window.addEventListener('load', function(){
+      pageLoaded = true;
+      maybeReveal();
+    });
+  }
+  // Safety net: never let the preloader block the page for more than 5s.
+  setTimeout(function(){ pageLoaded = true; counterDone = true; maybeReveal(); }, 5000);
 })();
 </script>
 
