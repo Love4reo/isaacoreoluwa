@@ -210,181 +210,29 @@ section{margin-bottom:52px;}
 .about-img{width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid var(--border);filter:grayscale(0.2);}
 .about-text p{font-size:13px;color:#71717a;line-height:1.75;}
 .about-text p+p{margin-top:10px;}
-footer{margin-top:0;padding-top:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.footer-left{font-size:11px;font-family:var(--mono);color:var(--muted2);}
-.footer-links{display:flex;gap:16px;}
-.footer-links a{font-size:11px;font-family:var(--mono);color:var(--muted);text-decoration:none;transition:color 0.15s;}
-.footer-links a:hover{color:var(--text);}
-.dramatic-cta{
-  position:relative;
-  left:50%;
-  right:50%;
-  margin-left:-50vw;
-  margin-right:-50vw;
-  width:100vw;
-  margin-top:100px;
-  background:#08080a;
-  padding:0 0 32px;
-  overflow:hidden;
-}
-.cta-marquee{
-  overflow:hidden;
-  border-top:1px solid rgba(255,255,255,0.08);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  padding:12px 0;
-  background:#0c0c0e;
-}
-.cta-marquee-track{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  white-space:nowrap;
-  width:max-content;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.08em;
-  color:#71717a;
-  animation:cta-marquee-scroll 26s linear infinite;
-}
-.cta-marquee-track .dot{color:#f4f4f5;}
-@keyframes cta-marquee-scroll{
-  from{transform:translateX(0);}
-  to{transform:translateX(-50%);}
-}
-.dramatic-cta-inner{
-  max-width:900px;
-  margin:0 auto;
-  text-align:center;
-  padding:110px 24px 80px;
-}
-.dramatic-cta-eyebrow{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  color:#71717a;
-  margin-bottom:22px;
-}
-.dramatic-cta-heading{
-  font-family:var(--sans);
-  font-weight:800;
-  text-transform:uppercase;
-  font-size:clamp(28px,8.2vw,130px);
-  line-height:0.92;
-  letter-spacing:-0.03em;
-  color:#f4f4f5;
-  margin-bottom:36px;
-  white-space:nowrap;
-  display:inline-block;
-  cursor:default;
-  transition:transform 0.15s ease-out;
-  will-change:transform;
-}
-.dramatic-cta-link{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  font-family:var(--mono);
-  font-size:14px;
-  color:#f4f4f5;
-  text-decoration:none;
-  border-bottom:1px solid #f4f4f5;
-  padding-bottom:5px;
-  transition:opacity 0.2s,gap 0.2s;
-}
-.dramatic-cta-link:hover{opacity:0.6;gap:12px;}
-.cta-polaroid{
-  position:absolute;
-  top:70px;
-  right:7%;
-  width:130px;
-  background:#f4f4f5;
-  padding:10px 10px 30px;
-  border-radius:4px;
-  box-shadow:0 14px 30px rgba(0,0,0,0.45);
-  transform:rotate(var(--tilt,-6deg));
-  cursor:grab;
-  touch-action:none;
-  user-select:none;
-  transition:transform 0.2s ease, box-shadow 0.2s ease;
-  z-index:5;
-}
-.cta-polaroid:hover{transform:rotate(0deg) scale(1.04);box-shadow:0 20px 40px rgba(0,0,0,0.55);}
-.cta-polaroid.dragging{cursor:grabbing;transition:none;box-shadow:0 24px 44px rgba(0,0,0,0.6);}
-.cta-polaroid img{width:100%;display:block;border-radius:2px;pointer-events:none;}
-.cta-polaroid-caption{
-  position:absolute;
-  bottom:8px;left:0;right:0;
-  text-align:center;
-  font-family:var(--mono);
-  font-size:10px;
-  letter-spacing:0.04em;
-  color:#71717a;
-}
-.cta-sticker{
-  position:absolute;
-  top:130px;
-  left:6%;
-  width:112px;
-  height:112px;
-  cursor:grab;
-  touch-action:none;
-  user-select:none;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,0.45));
-  z-index:5;
-  transition:box-shadow 0.2s ease;
-}
-.cta-sticker.dragging{cursor:grabbing;filter:drop-shadow(0 16px 28px rgba(0,0,0,0.55));}
-.cta-sticker-ring{
-  width:100%;
-  height:100%;
-  display:block;
-  animation:cta-sticker-spin 12s linear infinite;
-}
-.cta-sticker:hover .cta-sticker-ring,
-.cta-sticker.dragging .cta-sticker-ring{
-  animation-play-state:paused;
-}
-.cta-sticker-ring circle{fill:#f4f4f5;}
-.cta-sticker-ring text{
-  font-family:var(--mono);
-  font-size:8.6px;
-  letter-spacing:1.2px;
-  fill:#0a0a0a;
-}
-.cta-sticker-center{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  font-size:26px;
-  color:#0a0a0a;
-  pointer-events:none;
-}
-@keyframes cta-sticker-spin{
-  from{transform:rotate(0deg);}
-  to{transform:rotate(360deg);}
-}
-.dramatic-footer{
-  max-width:640px;
-  margin:0 auto;
-  padding:24px 24px 0;
-  border-top:1px solid rgba(255,255,255,0.08);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.dramatic-footer .footer-left{color:#52525b;}
-.dramatic-footer .footer-links a{color:#a1a1aa;}
-.dramatic-footer .footer-links a:hover{color:#f4f4f5;}
-.dramatic-footer .theme-toggle{color:#a1a1aa;border-color:rgba(255,255,255,0.12);}
+.cta2{position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;margin-top:100px;background:#08080a;overflow:hidden;}
+.cta2-grid{background-image:radial-gradient(circle,rgba(255,255,255,0.08) 1px,transparent 1px);background-size:22px 22px;padding:90px 24px 60px;}
+.cta2-inner{max-width:900px;margin:0 auto;text-align:left;}
+.cta2-avatar{width:52px;height:52px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.12);margin-bottom:26px;box-shadow:0 10px 24px rgba(0,0,0,0.5);}
+.cta2-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.cta2-heading{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4.6vw,46px);line-height:1.15;letter-spacing:-0.02em;color:#f4f4f5;margin-bottom:32px;max-width:600px;}
+.cta2-btn{display:inline-flex;align-items:center;gap:8px;background:#f4f4f5;color:#0a0a0a;font-family:var(--sans);font-weight:600;font-size:14px;padding:14px 22px;border-radius:999px;text-decoration:none;transition:transform 0.2s ease,box-shadow 0.2s ease;}
+.cta2-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(244,244,245,0.18);}
+.cta2-btn svg{transition:transform 0.2s ease;}
+.cta2-btn:hover svg{transform:translate(2px,-2px);}
+.cta2-divider{border-top:1px solid rgba(255,255,255,0.08);}
+.cta2-bottom{max-width:900px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.cta2-social{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:#a1a1aa;flex-wrap:wrap;}
+.cta2-icon{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#f4f4f5;color:#0a0a0a;transition:transform 0.2s ease;flex:0 0 auto;}
+.cta2-icon:hover{transform:scale(1.12);}
+.cta2-meta{display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:11px;color:#52525b;}
+.cta2-meta .theme-toggle{color:#a1a1aa;border-color:rgba(255,255,255,0.12);}
+.cta2-giant-wrap{height:clamp(70px,14vw,170px);overflow:hidden;position:relative;}
+.cta2-giant{position:absolute;left:24px;bottom:-0.12em;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10vw;line-height:1;letter-spacing:-0.02em;color:#f4f4f5;opacity:0.07;white-space:nowrap;pointer-events:none;user-select:none;}
 @media(max-width:640px){
-  .dramatic-cta-inner{padding:70px 20px 56px;}
-  .dramatic-footer{flex-direction:column;align-items:flex-start;padding:24px 20px 0;}
-  .cta-polaroid{width:96px;right:5%;top:50px;}
-  .cta-sticker{width:76px;height:76px;left:5%;top:30px;}
-  .cta-sticker-center{font-size:18px;}
+  .cta2-grid{padding:60px 20px 40px;}
+  .cta2-bottom{flex-direction:column;align-items:flex-start;padding:20px 20px;}
+  .cta2-giant-wrap{height:clamp(50px,20vw,90px);}
 }
 .fade-up{opacity:0;transform:translateY(10px);animation:fadeUp 0.5s ease forwards;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
@@ -1916,58 +1764,38 @@ body.preloading{overflow:hidden;height:100vh;}
 
   
 
-  <section class="dramatic-cta fade-up" id="dramaticCta">
-    <div class="cta-marquee" aria-hidden="true">
-      <div class="cta-marquee-track">
-        <span>AVAILABLE FOR NEW PROJECTS</span><span class="dot">&middot;</span>
-        <span>BASED IN LAGOS, NIGERIA</span><span class="dot">&middot;</span>
-        <span>LET'S BUILD SOMETHING GREAT</span><span class="dot">&middot;</span>
-        <span>AVAILABLE FOR NEW PROJECTS</span><span class="dot">&middot;</span>
-        <span>BASED IN LAGOS, NIGERIA</span><span class="dot">&middot;</span>
-        <span>LET'S BUILD SOMETHING GREAT</span><span class="dot">&middot;</span>
+  <section class="cta2 fade-up" id="cta2Section">
+    <div class="cta2-grid">
+      <div class="cta2-inner">
+        <div class="cta2-avatar"><img src="data:image/jpeg;base64,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" alt="Isaac Oreoluwa"/></div>
+        <h2 class="cta2-heading">Let's discuss how<br/>I can make your<br/>product better!</h2>
+        <a href="mailto:oshiderooreoluwa@gmail.com" class="cta2-btn">
+          Get in touch
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8l4 4-4 4"/></svg>
+        </a>
       </div>
     </div>
 
-    <div class="dramatic-cta-inner">
-      <p class="dramatic-cta-eyebrow">Got a project in mind?</p>
-      <h2 class="dramatic-cta-heading" id="dramaticHeading">LET'S WORK TOGETHER</h2>
-      <a href="mailto:oshiderooreoluwa@gmail.com" class="dramatic-cta-link">
-        Say hello
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-      </a>
-    </div>
+    <div class="cta2-divider"></div>
 
-    <div class="cta-polaroid" id="ctaPolaroid" style="--tilt:-6deg;">
-      <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785962685/IMG_1798_av0ghd.jpg" alt="Isaac Oreoluwa" loading="lazy"/>
-      <span class="cta-polaroid-caption">drag me &#9995;</span>
-    </div>
-
-    <div class="cta-sticker" id="ctaSticker">
-      <svg class="cta-sticker-ring" viewBox="0 0 120 120">
-        <defs>
-          <path id="stickerCirclePath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/>
-        </defs>
-        <circle cx="60" cy="60" r="58"/>
-        <text>
-          <textPath href="#stickerCirclePath" startOffset="0%">AVAILABLE FOR WORK &#8226; AVAILABLE FOR WORK &#8226; </textPath>
-        </text>
-      </svg>
-      <span class="cta-sticker-center">&#9733;</span>
-    </div>
-
-    <footer class="dramatic-footer">
-      <span class="footer-left">&copy; 2026 Isaac Oreoluwa</span>
-      <div class="footer-links">
-        <a href="https://www.behance.net/isaacoreoluwa" target="_blank">Behance</a>
-        <a href="http://linkedin.com/in/oshideroore/" target="_blank">LinkedIn</a>
-        <a href="http://twitter.com/reoworx" target="_blank">Twitter</a>
-        <a href="https://contra.com/oshiderooreoluwa" target="_blank">Contra</a>
+    <div class="cta2-bottom">
+      <div class="cta2-social">
+        Follow me on
+        <a class="cta2-icon" href="http://twitter.com/reoworx" target="_blank" aria-label="Twitter"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+        or get in touch on
+        <a class="cta2-icon" href="http://linkedin.com/in/oshideroore/" target="_blank" aria-label="LinkedIn"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      </div>
+      <div class="cta2-meta">
+        <span>&copy;2026 Isaac Oreoluwa.</span>
+        <span id="cta2Date"></span>
         <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
           <svg id="themeIcon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           <span id="themeLabel">Light</span>
         </button>
       </div>
-    </footer>
+    </div>
+
+    <div class="cta2-giant-wrap" aria-hidden="true"><span class="cta2-giant">Isaac Oreoluwa</span></div>
   </section>
 
 
@@ -2419,109 +2247,42 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   })();
 
-  // Dramatic footer CTA: shrink heading to exactly fit available width (no guessing font metrics)
+  // Live date for the footer CTA (e.g. "Sunday, 8/9/2026").
   (function(){
-    var heading = document.getElementById('dramaticHeading');
-    var inner = document.querySelector('.dramatic-cta-inner');
-    if(!heading || !inner) return;
+    var el = document.getElementById('cta2Date');
+    if(!el) return;
+    function render(){
+      var d = new Date();
+      var weekday = d.toLocaleDateString('en-US',{weekday:'long'});
+      el.textContent = weekday + ', ' + (d.getMonth()+1) + '/' + d.getDate() + '/' + d.getFullYear();
+    }
+    render();
+    setInterval(render, 60000);
+  })();
 
-    function fitHeading(){
-      heading.style.fontSize = '';
-      var style = getComputedStyle(inner);
-      var paddingX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-      var availableWidth = inner.clientWidth - paddingX;
-      var computedSize = parseFloat(getComputedStyle(heading).fontSize);
-      var textWidth = heading.scrollWidth;
+  // Footer CTA: scale the giant name to fill the full section width exactly.
+  (function(){
+    var wrap = document.querySelector('.cta2-giant-wrap');
+    var name = document.querySelector('.cta2-giant');
+    if(!wrap || !name) return;
+
+    function fit(){
+      name.style.fontSize = '10vw';
+      var style = getComputedStyle(name);
+      var leftPad = parseFloat(style.left) || 0;
+      var availableWidth = wrap.clientWidth - (leftPad * 2);
+      var computedSize = parseFloat(style.fontSize);
+      var textWidth = name.getBoundingClientRect().width;
       if(!textWidth || !availableWidth) return;
       var ratio = availableWidth / textWidth;
-      if(ratio < 1){
-        heading.style.fontSize = (computedSize * ratio * 0.98) + 'px';
-      }
+      name.style.fontSize = (computedSize * ratio) + 'px';
     }
 
-    fitHeading();
+    fit();
     if(document.fonts && document.fonts.ready){
-      document.fonts.ready.then(fitHeading);
+      document.fonts.ready.then(fit);
     }
-    window.addEventListener('resize', fitHeading);
-  })();
-
-  // Dramatic footer CTA: heading tilts toward the cursor
-  (function(){
-    var section = document.getElementById('dramaticCta');
-    var heading = document.getElementById('dramaticHeading');
-    if(!section || !heading) return;
-    section.addEventListener('mousemove', function(e){
-      var rect = section.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width - 0.5;
-      var y = (e.clientY - rect.top) / rect.height - 0.5;
-      heading.style.transform = 'perspective(700px) rotateX(' + (-y*8) + 'deg) rotateY(' + (x*8) + 'deg)';
-    });
-    section.addEventListener('mouseleave', function(){
-      heading.style.transform = '';
-    });
-  })();
-
-  // Dramatic footer CTA: magnetic "Say hello" link
-  (function(){
-    var link = document.querySelector('.dramatic-cta-link');
-    if(!link) return;
-    link.addEventListener('mousemove', function(e){
-      var r = link.getBoundingClientRect();
-      var x = e.clientX - r.left - r.width/2;
-      var y = e.clientY - r.top - r.height/2;
-      link.style.transform = 'translate(' + (x*0.25) + 'px,' + (y*0.25) + 'px)';
-    });
-    link.addEventListener('mouseleave', function(){
-      link.style.transform = '';
-    });
-  })();
-
-  // Draggable floating elements in the footer CTA (polaroid + sticker)
-  function makeCtaDraggable(el, boundsEl){
-    if(!el || !boundsEl) return;
-    var startX, startY, startLeft, startTop, dragging = false;
-
-    el.addEventListener('pointerdown', function(e){
-      var boundsRect = boundsEl.getBoundingClientRect();
-      var elRect = el.getBoundingClientRect();
-      startLeft = elRect.left - boundsRect.left;
-      startTop = elRect.top - boundsRect.top;
-      el.style.left = startLeft + 'px';
-      el.style.top = startTop + 'px';
-      el.style.right = 'auto';
-      startX = e.clientX;
-      startY = e.clientY;
-      dragging = true;
-      el.classList.add('dragging');
-      el.setPointerCapture(e.pointerId);
-    });
-
-    el.addEventListener('pointermove', function(e){
-      if(!dragging) return;
-      var dx = e.clientX - startX;
-      var dy = e.clientY - startY;
-      var boundsRect = boundsEl.getBoundingClientRect();
-      var maxLeft = boundsRect.width - el.offsetWidth;
-      var maxTop = boundsRect.height - el.offsetHeight;
-      var newLeft = Math.min(Math.max(startLeft + dx, 0), Math.max(maxLeft, 0));
-      var newTop = Math.min(Math.max(startTop + dy, 0), Math.max(maxTop, 0));
-      el.style.left = newLeft + 'px';
-      el.style.top = newTop + 'px';
-    });
-
-    function endDrag(){
-      dragging = false;
-      el.classList.remove('dragging');
-    }
-    el.addEventListener('pointerup', endDrag);
-    el.addEventListener('pointercancel', endDrag);
-  }
-  (function(){
-    var section = document.getElementById('dramaticCta');
-    if(!section) return;
-    makeCtaDraggable(document.getElementById('ctaPolaroid'), section);
-    makeCtaDraggable(document.getElementById('ctaSticker'), section);
+    window.addEventListener('resize', fit);
   })();
   (function(){
     var monthEl = document.getElementById('pegCalMonth');
