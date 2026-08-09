@@ -1405,7 +1405,7 @@ body.light .header-cal-btn{background:#111;color:#fff;}
 }
 #preloader{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;transition:opacity 0.6s ease,visibility 0.6s ease;}
 #preloader.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-.preloader-name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);font-size:clamp(28px,6vw,48px);line-height:1.05;text-align:center;}
+.preloader-name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);font-size:clamp(20px,5.5vw,48px);line-height:1.05;text-align:center;white-space:nowrap;}
 .preloader-pct{font-family:var(--mono);font-size:13px;color:var(--muted);letter-spacing:0.04em;}
 body.preloading{overflow:hidden;height:100vh;}
 </style>
@@ -1413,7 +1413,7 @@ body.preloading{overflow:hidden;height:100vh;}
 <body>
 <script>document.body.classList.add('preloading');</script>
 <div id="preloader">
-  <div class="preloader-name">Isaac<br/>Oreoluwa</div>
+  <div class="preloader-name">Isaac Oreoluwa</div>
   <div class="preloader-pct">[<span id="preloaderPct">0</span>%]</div>
 </div>
 <div class="wrap">
