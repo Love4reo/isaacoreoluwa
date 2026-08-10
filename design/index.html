@@ -166,38 +166,6 @@ header.scrolled{border-bottom-color:transparent;}
 .links-row a svg{opacity:0.5;}
 section{margin-bottom:52px;}
 .section-label{font-size:11px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;}
-.cs-hint{
-  position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%) scale(0.85);
-  z-index:30;
-  display:flex;align-items:center;gap:8px;
-  background:var(--text);
-  color:var(--bg);
-  font-family:var(--sans);
-  font-size:13px;
-  font-weight:500;
-  padding:10px 18px;
-  border-radius:999px;
-  box-shadow:0 12px 30px rgba(0,0,0,0.35);
-  pointer-events:none;
-  opacity:0;
-  white-space:nowrap;
-}
-.cs-hint-icon{font-style:normal;font-size:15px;display:inline-block;animation:csHintTap 1.1s ease-in-out infinite;}
-@keyframes csHintTap{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-2px) rotate(-8deg);}}
-.cs-hint.pop-in{animation:csHintPopIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards;}
-.cs-hint.pop-out{animation:csHintPopOut 0.4s ease forwards;}
-@keyframes csHintPopIn{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(0.7);}
-  60%{opacity:1;transform:translate(-50%,-50%) scale(1.06);}
-  100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
-}
-@keyframes csHintPopOut{
-  0%{opacity:1;transform:translate(-50%,-50%) scale(1);}
-  100%{opacity:0;transform:translate(-50%,-50%) scale(0.85);}
-}
-@media(max-width:640px){.cs-hint{display:none;}}
 .work-list{display:flex;flex-direction:column;gap:2px;}
 .work-item{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:background 0.15s;border-radius:6px;}
 .work-item:last-child{border-bottom:none;}
@@ -258,15 +226,11 @@ section{margin-bottom:52px;}
   bottom:calc(100% + 10px);
   top:auto;
   left:0;
-  width:260px;
-  display:flex;
-  align-items:stretch;
-  gap:0;
+  width:220px;
   background:var(--bg2);
   border:1px solid var(--border);
   border-radius:10px;
-  padding:0;
-  overflow:hidden;
+  padding:12px 14px;
   box-shadow:0 16px 40px rgba(0,0,0,0.45);
   opacity:0;
   pointer-events:none;
@@ -282,14 +246,6 @@ section{margin-bottom:52px;}
   text-align:left;
   cursor:default;
 }
-.callout-pop-icon{
-  display:block;
-  width:74px;
-  align-self:stretch;
-  flex-shrink:0;
-}
-.callout-pop-icon img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
-.callout-pop-text{min-width:0;padding:12px 14px 12px 12px;}
 .callout-pop strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px;font-weight:600;}
 .skill-callout:hover .callout-pop,
 .skill-callout.active-callout .callout-pop{
@@ -1800,7 +1756,6 @@ body.preloading{overflow:hidden;height:100vh;}
   <section class="fade-up">
     <p class="section-label">Case Studies</p>
     <div class="work-list work-grid">
-      <div class="cs-hint" id="csHint"><i class="cs-hint-icon">&#128070;</i>hover any card for focus mode</div>
       <a class="work-item" href="https://www.behance.net/gallery/242100717/Simplifying-Community-Engagement-and-Event-Discovery" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231946/Desktop_-_81_uvgbkb.png">
         <div class="work-thumb">
           <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786033030/Untitled_design_4_ytsiig.gif" alt="mykommune"/>
@@ -1884,56 +1839,48 @@ body.preloading{overflow:hidden;height:100vh;}
       <div class="skill-callout" data-key="strategy" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></span> Product Strategy
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186108/Frame_1000003561_azpuoj.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Product Strategy</strong>Shaping MVP scope, roadmaps, and key product decisions balanced against user needs and business goals.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="ux" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></span> UX &amp; Interface Design
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186109/Frame_1000003570_welcio.png" alt=""/></span>
           <div class="callout-pop-text"><strong>UX &amp; Interface Design</strong>Wireframes through to polished, implementation-ready interfaces across web and mobile.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="ai" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg></span> AI Product Design
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186112/Frame_1000003574_lsdgp3.png" alt=""/></span>
           <div class="callout-pop-text"><strong>AI Product Design</strong>Designing AI assistant interactions &mdash; prompt patterns, explainability, and conversational flows.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="growth" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></svg></span> Growth &amp; Conversion
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186109/Frame_1000003587_d8qt6l.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Growth &amp; Conversion Design</strong>Interfaces engineered to move the metrics that matter &mdash; signups, retention, activation.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="systems" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span> Design Systems
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186109/Frame_1000003588_1_a9t8s3.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Design Systems</strong>Token-based systems, variants, and component libraries built for consistency at scale.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="devcollab" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg></span> Dev Collaboration
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186112/Frame_1000003596_ioqerw.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Designer&ndash;Developer Collaboration</strong>Dev-mode specs and close handoff work to keep design intent intact in production.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="interaction" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 16 2.5-6.5L20 11z"/></svg></span> Interaction Design
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186112/Frame_1000003598_ozufcb.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Interaction Design</strong>Micro-interactions and motion that make interfaces feel alive and responsive.</div>
         </div>
       </div>
       <div class="skill-callout" data-key="video" tabindex="0">
         <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></span> Video Editing
         <div class="callout-pop">
-          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,c_fill,ar_1:1,w_160,g_auto/v1785186116/Frame_1000003591_b3f6af.png" alt=""/></span>
           <div class="callout-pop-text"><strong>Video Editing</strong>Editing and motion work for product demos, social content, and campaign assets.</div>
         </div>
       </div>
@@ -2003,7 +1950,7 @@ body.preloading{overflow:hidden;height:100vh;}
 
   <section class="spotify-section fade-up">
     <iframe
-      src="https://open.spotify.com/embed/track/0bqZiCxLGqeftnqRKlV1jn?utm_source=generator&theme=0"
+      src="https://open.spotify.com/embed/album/52MSmRTqhXGreoS9ty2WHO?utm_source=generator&theme=0"
       width="100%"
       height="152"
       frameborder="0"
@@ -2277,31 +2224,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
   var items = document.querySelectorAll('.work-grid .work-item');
   var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  var csHint = document.getElementById('csHint');
-  if(csHint && supportsHover){
-    var csHintShown = false;
-    var dismissCsHint = function(){
-      if(!csHintShown || csHint.classList.contains('pop-out')) return;
-      csHint.classList.remove('pop-in');
-      csHint.classList.add('pop-out');
-    };
-    var csObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting && !csHintShown){
-          csHintShown = true;
-          csHint.classList.add('pop-in');
-          csObserver.disconnect();
-        }
-      });
-    }, {threshold:0.4});
-    var csGrid = document.querySelector('.work-grid');
-    if(csGrid) csObserver.observe(csGrid);
-
-    items.forEach(function(item){
-      item.addEventListener('mouseenter', dismissCsHint, {once:true});
-    });
-  }
 
   // Remember each thumbnail's animated (gif) source so we can restore it later.
   items.forEach(function(item){
@@ -3018,6 +2940,10 @@ document.addEventListener('keydown', function(e){
 
 // Slider trackpad gesture support — two-finger horizontal swipe scrolls the
 // track left/right manually, same resync logic as the drag handler above.
+// Wheel events fire in uneven, sometimes chunky bursts depending on
+// browser/trackpad, so raw deltaX applied 1:1 looks batchy — instead we feed
+// deltas into a target value and lerp the actual rendered position toward it
+// every frame (same smoothing technique used for the cursor-follow preview).
 (function(){
   var banner = document.querySelector('.work-banner');
   var track  = document.querySelector('.slider-track');
@@ -3028,10 +2954,24 @@ document.addEventListener('keydown', function(e){
     var matrix = new DOMMatrix(style.transform);
     return matrix.m41;
   }
+  function lerp(a,b,t){ return a + (b - a) * t; }
 
   var isWheeling = false;
-  var wheelTranslate = 0;
+  var targetX = 0;
+  var currentX = 0;
   var wheelEndTimer = null;
+  var settleTimer = null;
+  var rafId = null;
+
+  function frame(){
+    currentX = lerp(currentX, targetX, 0.2);
+    track.style.transform = 'translateX(' + currentX + 'px)';
+    if(isWheeling || Math.abs(targetX - currentX) > 0.05){
+      rafId = requestAnimationFrame(frame);
+    } else {
+      rafId = null;
+    }
+  }
 
   banner.addEventListener('wheel', function(e){
     // Only take over for genuinely horizontal gestures (trackpad swipe or
@@ -3041,23 +2981,29 @@ document.addEventListener('keydown', function(e){
 
     if(!isWheeling){
       isWheeling = true;
-      wheelTranslate = getAnimX();
+      currentX = getAnimX();
+      targetX = currentX;
       banner.classList.add('wheeling');
+      if(!rafId) rafId = requestAnimationFrame(frame);
     }
-    wheelTranslate -= e.deltaX;
-    track.style.transform = 'translateX(' + wheelTranslate + 'px)';
+    targetX -= e.deltaX;
 
     clearTimeout(wheelEndTimer);
+    clearTimeout(settleTimer);
     wheelEndTimer = setTimeout(function(){
       isWheeling = false;
       banner.classList.remove('wheeling');
-      track.style.transform = '';
-      var totalWidth = track.scrollWidth / 2;
-      var duration = 30;
-      var pct = (-wheelTranslate % totalWidth) / totalWidth;
-      if(pct < 0) pct += 1;
-      track.style.animationDelay = -(pct * duration) + 's';
-      track.style.removeProperty('animation-play-state');
+      // Give the lerp a moment to glide to a stop before handing control
+      // back to the CSS animation, so the resync doesn't cut it short.
+      settleTimer = setTimeout(function(){
+        track.style.transform = '';
+        var totalWidth = track.scrollWidth / 2;
+        var duration = 30;
+        var pct = (-targetX % totalWidth) / totalWidth;
+        if(pct < 0) pct += 1;
+        track.style.animationDelay = -(pct * duration) + 's';
+        track.style.removeProperty('animation-play-state');
+      }, 260);
     }, 150);
   }, {passive:false});
 })();
