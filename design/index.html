@@ -240,6 +240,7 @@ section{margin-bottom:52px;}
   flex-shrink:0;
   transition:background 0.25s ease;
 }
+.callout-check svg{width:9px;height:9px;}
 .skill-callout:hover,
 .skill-callout.active-callout{
   border-color:var(--text);
@@ -257,11 +258,14 @@ section{margin-bottom:52px;}
   bottom:calc(100% + 10px);
   top:auto;
   left:0;
-  width:220px;
+  width:260px;
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
   background:var(--bg2);
   border:1px solid var(--border);
   border-radius:10px;
-  padding:12px 14px;
+  padding:12px;
   box-shadow:0 16px 40px rgba(0,0,0,0.45);
   opacity:0;
   pointer-events:none;
@@ -277,6 +281,15 @@ section{margin-bottom:52px;}
   text-align:left;
   cursor:default;
 }
+.callout-pop-icon{
+  display:block;
+  width:56px;height:56px;
+  border-radius:8px;
+  overflow:hidden;
+  flex-shrink:0;
+}
+.callout-pop-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.callout-pop-text{min-width:0;}
 .callout-pop strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px;font-weight:600;}
 .skill-callout:hover .callout-pop,
 .skill-callout.active-callout .callout-pop{
@@ -285,7 +298,7 @@ section{margin-bottom:52px;}
   pointer-events:auto;
 }
 @media(max-width:480px){
-  .callout-pop{width:180px;}
+  .callout-pop{width:220px;}
 }
 .about-block{display:flex;gap:20px;align-items:flex-start;}
 .about-img{width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:top;flex-shrink:0;border:1px solid var(--border);filter:grayscale(0.2);}
@@ -1795,36 +1808,60 @@ body.preloading{overflow:hidden;height:100vh;}
     <p class="section-label">Core Competencies</p>
     <div class="skills-callout-list">
       <div class="skill-callout" data-key="strategy" tabindex="0">
-        <span class="callout-check">&#10003;</span> Product Strategy
-        <div class="callout-pop"><strong>Product Strategy</strong>Shaping MVP scope, roadmaps, and key product decisions balanced against user needs and business goals.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg></span> Product Strategy
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186108/Frame_1000003561_azpuoj.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Product Strategy</strong>Shaping MVP scope, roadmaps, and key product decisions balanced against user needs and business goals.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="ux" tabindex="0">
-        <span class="callout-check">&#10003;</span> UX &amp; Interface Design
-        <div class="callout-pop"><strong>UX &amp; Interface Design</strong>Wireframes through to polished, implementation-ready interfaces across web and mobile.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></span> UX &amp; Interface Design
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186109/Frame_1000003570_welcio.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>UX &amp; Interface Design</strong>Wireframes through to polished, implementation-ready interfaces across web and mobile.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="ai" tabindex="0">
-        <span class="callout-check">&#10003;</span> AI Product Design
-        <div class="callout-pop"><strong>AI Product Design</strong>Designing AI assistant interactions &mdash; prompt patterns, explainability, and conversational flows.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg></span> AI Product Design
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186112/Frame_1000003574_lsdgp3.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>AI Product Design</strong>Designing AI assistant interactions &mdash; prompt patterns, explainability, and conversational flows.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="growth" tabindex="0">
-        <span class="callout-check">&#10003;</span> Growth &amp; Conversion
-        <div class="callout-pop"><strong>Growth &amp; Conversion Design</strong>Interfaces engineered to move the metrics that matter &mdash; signups, retention, activation.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="15,7 21,7 21,13"/></svg></span> Growth &amp; Conversion
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186109/Frame_1000003587_d8qt6l.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Growth &amp; Conversion Design</strong>Interfaces engineered to move the metrics that matter &mdash; signups, retention, activation.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="systems" tabindex="0">
-        <span class="callout-check">&#10003;</span> Design Systems
-        <div class="callout-pop"><strong>Design Systems</strong>Token-based systems, variants, and component libraries built for consistency at scale.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span> Design Systems
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186109/Frame_1000003588_1_a9t8s3.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Design Systems</strong>Token-based systems, variants, and component libraries built for consistency at scale.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="devcollab" tabindex="0">
-        <span class="callout-check">&#10003;</span> Dev Collaboration
-        <div class="callout-pop"><strong>Designer&ndash;Developer Collaboration</strong>Dev-mode specs and close handoff work to keep design intent intact in production.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg></span> Dev Collaboration
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186112/Frame_1000003596_ioqerw.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Designer&ndash;Developer Collaboration</strong>Dev-mode specs and close handoff work to keep design intent intact in production.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="interaction" tabindex="0">
-        <span class="callout-check">&#10003;</span> Interaction Design
-        <div class="callout-pop"><strong>Interaction Design</strong>Micro-interactions and motion that make interfaces feel alive and responsive.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 16 2.5-6.5L20 11z"/></svg></span> Interaction Design
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186112/Frame_1000003598_ozufcb.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Interaction Design</strong>Micro-interactions and motion that make interfaces feel alive and responsive.</div>
+        </div>
       </div>
       <div class="skill-callout" data-key="video" tabindex="0">
-        <span class="callout-check">&#10003;</span> Video Editing
-        <div class="callout-pop"><strong>Video Editing</strong>Editing and motion work for product demos, social content, and campaign assets.</div>
+        <span class="callout-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polygon points="10,9 15,12 10,15" fill="currentColor" stroke="none"/></svg></span> Video Editing
+        <div class="callout-pop">
+          <span class="callout-pop-icon"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_120/v1785186116/Frame_1000003591_b3f6af.png" alt=""/></span>
+          <div class="callout-pop-text"><strong>Video Editing</strong>Editing and motion work for product demos, social content, and campaign assets.</div>
+        </div>
       </div>
     </div>
   </section>
