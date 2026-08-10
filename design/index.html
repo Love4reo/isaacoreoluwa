@@ -3113,7 +3113,10 @@ document.addEventListener('keydown', function(e){
     return matrix.m41;
   }
 
+  var isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
   banner.addEventListener('mousedown', function(e){
+    if(isCoarsePointer) return;
     // Don't intercept clicks on slide-card
     isDragging = true;
     startX = e.clientX;
@@ -3155,7 +3158,10 @@ document.addEventListener('keydown', function(e){
     offsetX = 0;
   });
 
-  // Touch support
+  // Touch support — skipped on touch/coarse-pointer devices so slides are
+  // just tap-to-expand there instead of drag-to-scroll (the CSS marquee
+  // still auto-scrolls; this only disables the manual swipe-drag).
+  if(!isCoarsePointer){
   banner.addEventListener('touchstart', function(e){
     isDragging = true;
     startX = e.touches[0].clientX;
@@ -3186,6 +3192,7 @@ document.addEventListener('keydown', function(e){
     track.style.removeProperty('animation-play-state');
     offsetX = 0;
   });
+  }
 })();
 
 // Slider trackpad gesture support — two-finger horizontal swipe scrolls the
