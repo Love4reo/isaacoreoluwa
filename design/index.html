@@ -491,7 +491,8 @@ body.light .work-title{color:#3f3f46;}
   user-select:none;
 }
 .work-banner.dragging{cursor:grabbing;}
-.work-banner.dragging .slider-track{animation-play-state:paused;}
+.work-banner.dragging .slider-track,
+.work-banner.wheeling .slider-track{animation-play-state:paused;}
 .work-banner:hover .slider-track{animation-play-state:paused;}
 /* Slider track */
 .slider-track{
@@ -2940,6 +2941,52 @@ document.addEventListener('keydown', function(e){
     track.style.removeProperty('animation-play-state');
     offsetX = 0;
   });
+})();
+
+// Slider trackpad gesture support — two-finger horizontal swipe scrolls the
+// track left/right manually, same resync logic as the drag handler above.
+(function(){
+  var banner = document.querySelector('.work-banner');
+  var track  = document.querySelector('.slider-track');
+  if(!banner || !track) return;
+
+  function getAnimX(){
+    var style = window.getComputedStyle(track);
+    var matrix = new DOMMatrix(style.transform);
+    return matrix.m41;
+  }
+
+  var isWheeling = false;
+  var wheelTranslate = 0;
+  var wheelEndTimer = null;
+
+  banner.addEventListener('wheel', function(e){
+    // Only take over for genuinely horizontal gestures (trackpad swipe or
+    // shift+wheel) — let normal vertical page scroll pass through untouched.
+    if(Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault();
+
+    if(!isWheeling){
+      isWheeling = true;
+      wheelTranslate = getAnimX();
+      banner.classList.add('wheeling');
+    }
+    wheelTranslate -= e.deltaX;
+    track.style.transform = 'translateX(' + wheelTranslate + 'px)';
+
+    clearTimeout(wheelEndTimer);
+    wheelEndTimer = setTimeout(function(){
+      isWheeling = false;
+      banner.classList.remove('wheeling');
+      track.style.transform = '';
+      var totalWidth = track.scrollWidth / 2;
+      var duration = 30;
+      var pct = (-wheelTranslate % totalWidth) / totalWidth;
+      if(pct < 0) pct += 1;
+      track.style.animationDelay = -(pct * duration) + 's';
+      track.style.removeProperty('animation-play-state');
+    }, 150);
+  }, {passive:false});
 })();
 
 // Muhsl Pro launch countdown — live, updates every minute.
