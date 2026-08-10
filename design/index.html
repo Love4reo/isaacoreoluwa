@@ -407,6 +407,7 @@ body.light .proj-card{background:#e4e4e7;border-color:rgba(0,0,0,0.06);}
 }
 
 .work-grid .work-item{flex-direction:column;align-items:flex-start;border:1px solid var(--border);border-radius:10px;padding:0;gap:0;overflow:hidden;transition:border-color 0.15s,background 0.15s;width:100%;aspect-ratio:4/3;}
+.work-grid .work-item-wide{grid-column:1 / -1;}
 .work-thumb{width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--bg2);}
 .work-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(0.2);transition:transform 0.2s cubic-bezier(0.4,0,0.2,1),opacity 0.2s ease;will-change:opacity;}
 .work-grid .work-item.is-defocused .work-thumb img{opacity:0.6;}
@@ -1433,13 +1434,14 @@ body.light .preloader-grid{background-image:radial-gradient(rgba(0,0,0,0.07) 1px
   transform:scale(0.85);
   animation:preloaderAvatarIn 0.5s ease forwards 0.1s;
 }
-.preloader-avatar-wrap::before{
+.preloader-ring{
   content:'';
   position:absolute;
   inset:-6px;
   border-radius:50%;
   border:1px solid var(--border);
   animation:preloaderRingPulse 1.8s ease-in-out infinite;
+  pointer-events:none;
 }
 @keyframes preloaderRingPulse{0%,100%{transform:scale(1);opacity:0.55;}50%{transform:scale(1.12);opacity:0.1;}}
 .preloader-avatar{
@@ -1449,11 +1451,56 @@ body.light .preloader-grid{background-image:radial-gradient(rgba(0,0,0,0.07) 1px
   object-fit:cover;
   filter:grayscale(1);
   border:1px solid var(--border);
-  clip-path:inset(0 100% 0 0);
-  transition:clip-path 0.15s linear,filter 0.5s ease;
+  position:relative;
+  z-index:1;
+  transition:filter 0.3s ease;
 }
 .preloader-avatar-wrap.loaded .preloader-avatar{filter:grayscale(0);}
 @keyframes preloaderAvatarIn{to{opacity:1;transform:scale(1);}}
+/* RGB-split glitch: two color-tinted duplicates of the same photo, jittering
+   behind the grayscale base image, screen-blended for that split-channel look. */
+.preloader-avatar-wrap::before,
+.preloader-avatar-wrap::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background-image:var(--pf-bg);
+  background-size:cover;
+  background-position:center;
+  mix-blend-mode:screen;
+  opacity:0.75;
+  pointer-events:none;
+  z-index:2;
+}
+.preloader-avatar-wrap::before{
+  filter:sepia(1) saturate(10) hue-rotate(-52deg) brightness(0.9);
+  animation:glitchShiftR 0.5s steps(3) infinite;
+}
+.preloader-avatar-wrap::after{
+  filter:sepia(1) saturate(10) hue-rotate(150deg) brightness(0.9);
+  animation:glitchShiftC 0.42s steps(3) infinite;
+}
+@keyframes glitchShiftR{
+  0%{transform:translate(2px,0);}
+  30%{transform:translate(-1.5px,0.5px);}
+  55%{transform:translate(1.5px,-1px);}
+  80%{transform:translate(-2px,0.5px);}
+  100%{transform:translate(1px,0);}
+}
+@keyframes glitchShiftC{
+  0%{transform:translate(-2px,0);}
+  30%{transform:translate(1.5px,-0.5px);}
+  55%{transform:translate(-1.5px,1px);}
+  80%{transform:translate(2px,-0.5px);}
+  100%{transform:translate(-1px,0);}
+}
+.preloader-avatar-wrap.loaded::before,
+.preloader-avatar-wrap.loaded::after{
+  opacity:0;
+  animation-play-state:paused;
+  transition:opacity 0.2s ease;
+}
 .preloader-name{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.03em;color:var(--text);font-size:clamp(20px,5.5vw,48px);line-height:1.05;text-align:center;white-space:nowrap;}
 .preloader-status{
   font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.03em;
@@ -1486,6 +1533,7 @@ body.preloading{overflow:hidden;height:100vh;}
 <div id="preloader">
   <div class="preloader-grid"></div>
   <div class="preloader-avatar-wrap" id="preloaderAvatarWrap">
+    <span class="preloader-ring" aria-hidden="true"></span>
     <img id="preloaderAvatar" class="preloader-avatar" alt="Isaac Oreoluwa"/>
   </div>
   <div class="preloader-name">Isaac Oreoluwa</div>
@@ -1802,7 +1850,12 @@ body.preloading{overflow:hidden;height:100vh;}
           </div></div>
         </div>
       </a>
-      
+      <div class="work-item work-item-wide" style="aspect-ratio:21/7;" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786386211/Desktop_-_260_rtc72i.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786386211/Desktop_-_260_rtc72i.png">
+        <div class="work-thumb">
+          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png" alt="Coming soon"/>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -2158,7 +2211,11 @@ body.preloading{overflow:hidden;height:100vh;}
   navAvatar.src = heroAvatar.src;
 
   var preloaderAvatar = document.getElementById('preloaderAvatar');
-  if(preloaderAvatar) preloaderAvatar.src = heroAvatar.src;
+  if(preloaderAvatar){
+    preloaderAvatar.src = heroAvatar.src;
+    var preloaderAvatarWrap = document.getElementById('preloaderAvatarWrap');
+    if(preloaderAvatarWrap) preloaderAvatarWrap.style.setProperty('--pf-bg', 'url(' + heroAvatar.src + ')');
+  }
 
   if('IntersectionObserver' in window){
     var io = new IntersectionObserver(function(entries){
@@ -2272,9 +2329,11 @@ document.addEventListener('DOMContentLoaded', function(){
         preview.classList.add('active');
         if(!rafId) tick();
 
-        // Hovered card stays on its gif. Every other card switches to its dedicated static image.
+        // Hovered card stays on its gif. Every other card switches to its dedicated static image
+        // — except the wide 5th card, which stays untouched regardless of what else is hovered.
         items.forEach(function(other){
           if(other === item) return;
+          if(other.classList.contains('work-item-wide')) return;
           var otherThumb = other.querySelector('.work-thumb img');
           var focusSrc = other.getAttribute('data-focus-img');
           if(otherThumb && focusSrc && otherThumb.src !== focusSrc) otherThumb.src = focusSrc;
@@ -3017,7 +3076,6 @@ document.addEventListener('keydown', function(e){
   var pctEl = document.getElementById('preloaderPct');
   var fillEl = document.getElementById('preloaderFill');
   var avatarWrap = document.getElementById('preloaderAvatarWrap');
-  var avatarImg = document.getElementById('preloaderAvatar');
   var statusEl = document.getElementById('preloaderStatus');
   if(!loader || !pctEl) return;
 
@@ -3062,7 +3120,6 @@ document.addEventListener('keydown', function(e){
       pct = 100;
       pctEl.textContent = 100;
       if(fillEl) fillEl.style.width = '100%';
-      if(avatarImg) avatarImg.style.clipPath = 'inset(0 0% 0 0)';
       if(avatarWrap) avatarWrap.classList.add('loaded');
       updateStatus(100);
       counterDone = true;
@@ -3072,7 +3129,6 @@ document.addEventListener('keydown', function(e){
     var displayPct = Math.floor(pct);
     pctEl.textContent = displayPct;
     if(fillEl) fillEl.style.width = pct + '%';
-    if(avatarImg) avatarImg.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
     updateStatus(displayPct);
     requestAnimationFrame(tick);
   }
