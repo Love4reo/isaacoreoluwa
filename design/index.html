@@ -327,6 +327,30 @@ section{margin-bottom:52px;}
 .cta2-giant:focus{opacity:0.14;}
 .cta2-giant:empty::before{content:attr(data-placeholder);pointer-events:none;}
 .cta2-giant:empty:focus::before{opacity:0.5;}
+.cta2-giant-send{
+  position:absolute;
+  top:10px;right:24px;
+  z-index:5;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;
+  background:var(--text);color:var(--bg);
+  border:none;border-radius:999px;cursor:pointer;
+  opacity:0;
+  transform:translateY(-6px) scale(0.94);
+  pointer-events:none;
+  transition:opacity 0.25s ease,transform 0.25s ease,background 0.2s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+.cta2-giant-send.visible{opacity:0.92;transform:translateY(0) scale(1);pointer-events:auto;}
+.cta2-giant-send:hover{opacity:1;}
+.cta2-giant-send:active{transform:scale(0.95);}
+.cta2-giant-send:disabled{cursor:default;opacity:0.6 !important;pointer-events:none;}
+.cta2-giant-send.sent{background:#22c55e;color:#fff;}
+.cta2-giant-send.errored{background:#ef4444;color:#fff;}
+@media(max-width:640px){
+  .cta2-giant-send{top:4px;right:16px;padding:6px 11px;font-size:10px;}
+}
 .cta2-giant-hint{
   position:absolute;
   right:24px;bottom:8px;
@@ -2141,6 +2165,10 @@ body.preloading{overflow:hidden;height:100vh;}
     </div>
 
     <div class="cta2-giant-wrap">
+      <button type="button" class="cta2-giant-send" id="ctaGiantSend">
+        <span class="cta2-giant-send-label">Send</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
       <span class="cta2-giant" id="ctaGiant" contenteditable="true" spellcheck="false" role="textbox" aria-label="Editable text — type anything" data-placeholder="Type Something Here"></span>
       <span class="cta2-giant-hint" id="ctaGiantHint">click to type something</span>
       <span class="cta2-giant-watch" id="ctaGiantWatch">
@@ -2163,7 +2191,10 @@ body.preloading{overflow:hidden;height:100vh;}
   var hint = document.getElementById('ctaGiantHint');
   var watch = document.getElementById('ctaGiantWatch');
   var watchAvatar = document.getElementById('ctaGiantWatchAvatar');
+  var sendBtn = document.getElementById('ctaGiantSend');
   if(!giant) return;
+
+  var FORMSPREE_URL = 'https://formspree.io/f/xyegerje';
 
   var heroAvatar = document.querySelector('.avatar-wrap .avatar');
   if(watchAvatar && heroAvatar) watchAvatar.src = heroAvatar.src;
@@ -2208,10 +2239,58 @@ body.preloading{overflow:hidden;height:100vh;}
     }, 1400);
   }
 
+  function syncSendBtn(){
+    if(!sendBtn) return;
+    var hasContent = giant.textContent.trim().length > 0;
+    sendBtn.classList.toggle('visible', hasContent);
+    if(hasContent){
+      sendBtn.classList.remove('sent','errored');
+      sendBtn.disabled = false;
+      var label = sendBtn.querySelector('.cta2-giant-send-label');
+      if(label) label.textContent = 'Send';
+    }
+  }
+  syncSendBtn();
+
+  if(sendBtn){
+    sendBtn.addEventListener('click', function(){
+      var text = giant.textContent.trim();
+      if(!text || sendBtn.disabled) return;
+      var label = sendBtn.querySelector('.cta2-giant-send-label');
+      sendBtn.disabled = true;
+      sendBtn.classList.remove('sent','errored');
+      if(label) label.textContent = 'Sending…';
+
+      fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify({
+          message: text,
+          page: location.href,
+          sentAt: new Date().toISOString()
+        })
+      }).then(function(res){
+        if(!res.ok) throw new Error('bad status');
+        sendBtn.classList.add('sent');
+        if(label) label.textContent = 'Sent ✓';
+        setTimeout(function(){
+          sendBtn.disabled = false;
+          sendBtn.classList.remove('sent');
+          if(label) label.textContent = 'Send';
+        }, 2200);
+      }).catch(function(){
+        sendBtn.classList.add('errored');
+        if(label) label.textContent = 'Failed — retry';
+        sendBtn.disabled = false;
+      });
+    });
+  }
+
   giant.addEventListener('input', function(){
     sanitize();
     try{ localStorage.setItem(STORAGE_KEY, giant.textContent); }catch(e){}
     pokeWatch();
+    syncSendBtn();
   });
 
   giant.addEventListener('keydown', function(e){
