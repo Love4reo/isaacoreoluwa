@@ -1409,8 +1409,15 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   transition:opacity 0.3s ease;
 }
 #sliderLightbox.on{opacity:1;pointer-events:all;}
+#sliderMediaWrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  max-width:92vw;
+  max-height:90vh;
+}
 #sliderLightbox img{
-  max-width:92vw;max-height:90vh;
+  max-width:92vw;max-height:calc(90vh - 54px);
   object-fit:contain;
   border-radius:10px;
   transform:scale(0.92);
@@ -1455,6 +1462,40 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
 }
 @media(hover:hover) and (pointer:fine){
   .slide-card{cursor:zoom-in;}
+}
+#sliderQualityBar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.16);
+  border-radius:999px;
+  padding:7px 8px 7px 16px;
+  margin-top:14px;
+  backdrop-filter:blur(8px);
+}
+#sliderQualityText{
+  font-family:var(--mono);
+  font-size:11px;
+  color:rgba(255,255,255,0.65);
+  white-space:nowrap;
+}
+#sliderQualityBtn{
+  font-family:var(--mono);
+  font-size:11px;
+  color:#fff;
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.24);
+  border-radius:999px;
+  padding:6px 14px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background 0.15s,transform 0.15s;
+}
+#sliderQualityBtn:hover{background:rgba(255,255,255,0.24);}
+#sliderQualityBtn:disabled{opacity:0.5;cursor:default;}
+#sliderQualityBtn.is-loading{opacity:0.6;cursor:wait;}
+@media(max-width:640px){
+  #sliderQualityBar{margin-top:10px;padding:6px 6px 6px 12px;}
+  #sliderQualityText{display:none;}
 }
 #expandCursor{
   position:fixed;
@@ -3044,14 +3085,61 @@ function deployOreoluwa(){
 // Slider lightbox
 var sliderImages = [];
 var sliderIndex = 0;
+var sliderHDLoaded = {}; // cache: index -> true once full-quality has been fetched
+var sliderShowingHD = false;
+
+// Derive a full-quality Cloudinary URL from the optimized thumbnail URL.
+// Thumbnails are served at f_auto,q_auto:best,w_800 — full quality bumps
+// the width cap and quality flag while keeping f_auto (still no fat PNGs).
+function toHDUrl(src){
+  return src.replace('f_auto,q_auto:best,w_800', 'f_auto,q_auto:best,w_2400');
+}
+
+// Best-effort network check (Chrome/Android/Edge support this; Safari/iOS
+// silently skip it — those users just see the manual toggle, no auto-guess).
+function hasFastConnection(){
+  var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if(!c) return null; // unknown — API unsupported
+  if(c.saveData) return false;
+  if(c.effectiveType) return c.effectiveType === '4g';
+  return null;
+}
+
+function setQualityBarState(){
+  var text = document.getElementById('sliderQualityText');
+  var btn = document.getElementById('sliderQualityBtn');
+  if(!text || !btn) return;
+  btn.classList.remove('is-loading');
+  btn.disabled = false;
+  if(sliderShowingHD){
+    text.textContent = 'Full quality';
+    btn.textContent = 'Back to optimized';
+    return;
+  }
+  var fast = hasFastConnection();
+  if(fast === true){
+    text.textContent = 'Fast connection detected';
+  } else if(fast === false){
+    text.textContent = 'Optimized for speed';
+  } else {
+    text.textContent = 'Optimized for speed';
+  }
+  btn.textContent = 'View full quality';
+}
+
 function showSliderImage(i){
   var len = sliderImages.length;
   if(len === 0) return;
   sliderIndex = (i + len) % len;
-  document.getElementById('sliderLBImg').src = sliderImages[sliderIndex];
+  sliderShowingHD = false;
+  document.getElementById('sliderLBImg').src = sliderImages[sliderIndex].thumb;
+  setQualityBarState();
 }
+
 document.addEventListener('DOMContentLoaded', function(){
-  sliderImages = Array.prototype.map.call(document.querySelectorAll('.slide-card img'), function(img){ return img.src; });
+  sliderImages = Array.prototype.map.call(document.querySelectorAll('.slide-card img'), function(img){
+    return { thumb: img.src, full: toHDUrl(img.src) };
+  });
   document.querySelectorAll('.slide-card').forEach(function(card, idx){
     card.addEventListener('click', function(){
       showSliderImage(idx);
@@ -3059,6 +3147,37 @@ document.addEventListener('DOMContentLoaded', function(){
       document.body.style.overflow = 'hidden';
     });
   });
+  var qualityBtn = document.getElementById('sliderQualityBtn');
+  if(qualityBtn){
+    qualityBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var lbImg = document.getElementById('sliderLBImg');
+      var current = sliderImages[sliderIndex];
+      if(!current) return;
+      if(sliderShowingHD){
+        // Switch back to the fast version — already cached by the browser.
+        sliderShowingHD = false;
+        lbImg.src = current.thumb;
+        setQualityBarState();
+        return;
+      }
+      qualityBtn.classList.add('is-loading');
+      qualityBtn.disabled = true;
+      qualityBtn.textContent = 'Loading…';
+      var hdImg = new Image();
+      hdImg.onload = function(){
+        lbImg.src = current.full;
+        sliderShowingHD = true;
+        setQualityBarState();
+      };
+      hdImg.onerror = function(){
+        qualityBtn.classList.remove('is-loading');
+        qualityBtn.disabled = false;
+        qualityBtn.textContent = 'View full quality';
+      };
+      hdImg.src = current.full;
+    });
+  }
   document.getElementById('sliderPrev').addEventListener('click', function(e){
     e.stopPropagation();
     showSliderImage(sliderIndex - 1);
@@ -3381,7 +3500,13 @@ document.addEventListener('keydown', function(e){
   <button id="sliderClose" onclick="closeSliderLB()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
   <button id="sliderPrev" class="slider-nav-btn" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
   <button id="sliderNext" class="slider-nav-btn" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-  <img id="sliderLBImg" src="" alt="Design work"/>
+  <div id="sliderMediaWrap">
+    <img id="sliderLBImg" src="" alt="Design work"/>
+    <div id="sliderQualityBar" onclick="event.stopPropagation()">
+      <span id="sliderQualityText">Optimized for speed</span>
+      <button id="sliderQualityBtn" type="button">View full quality</button>
+    </div>
+  </div>
 </div>
 <!-- Cloudflare Web Analytics -->
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "6de13c7d586f4d6897b51b5478942d94"}'></script>
