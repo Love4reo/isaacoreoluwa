@@ -2565,15 +2565,24 @@ document.addEventListener('DOMContentLoaded', function(){
     items.forEach(function(item){
       var thumb = item.querySelector('.work-thumb img');
       if(!thumb) return;
+      var isWide = item.classList.contains('work-item-wide');
+
       item.addEventListener('mouseenter', function(){
         previewImg.src = item.getAttribute('data-cursor-img') || thumb.src;
         preview.classList.add('active');
-        if(previewTicker) previewTicker.classList.toggle('active', item.classList.contains('work-item-wide'));
+        if(previewTicker) previewTicker.classList.toggle('active', isWide);
         if(!rafId) tick();
 
-        // Defocus every other card, and swap this card's own thumbnail to
-        // its higher-quality focus image while it's the one being hovered.
+        // The wide "coming soon" card keeps the cursor-preview magnifier
+        // but is excluded from the focus-mode interaction — hovering it
+        // never dims siblings, and its own thumbnail never swaps to a
+        // focus image (it has none to swap between).
+        if(isWide) return;
+
+        // Defocus every other (non-wide) card, and swap this card's own
+        // thumbnail to its higher-quality focus image while hovered.
         items.forEach(function(other){
+          if(other.classList.contains('work-item-wide')) return;
           if(other === item){
             other.classList.remove('is-defocused');
             var focusSrc = other.getAttribute('data-focus-img');
@@ -2590,9 +2599,12 @@ document.addEventListener('DOMContentLoaded', function(){
         cancelAnimationFrame(rafId);
         rafId = null;
 
+        if(isWide) return;
+
         // Restore every card: clear defocus and swap thumbnails back to
         // their original animated (gif) source.
         items.forEach(function(other){
+          if(other.classList.contains('work-item-wide')) return;
           other.classList.remove('is-defocused');
           var otherThumb = other.querySelector('.work-thumb img');
           if(otherThumb && otherThumb.dataset.gifSrc) otherThumb.src = otherThumb.dataset.gifSrc;
