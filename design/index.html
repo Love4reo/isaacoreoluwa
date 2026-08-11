@@ -567,9 +567,15 @@ body.light .work-title{color:#3f3f46;}
   transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
   cursor:pointer;
 }
-.slide-card:hover{
-  transform:scale(1.02) translateY(-3px);
-  box-shadow:0 12px 40px rgba(0,0,0,0.4);
+@media(hover:hover) and (pointer:fine){
+  .slide-card:hover{
+    transform:scale(1.02) translateY(-3px);
+    box-shadow:0 12px 40px rgba(0,0,0,0.4);
+  }
+  .slide-card:hover img{ filter:grayscale(0); transform:scale(1.04); }
+  .slide-card:hover::after{
+    background:rgba(0,0,0,0.28);
+  }
 }
 .slide-card img{
   width:100%;
@@ -579,7 +585,6 @@ body.light .work-title{color:#3f3f46;}
   filter:grayscale(0.05);
   transition:filter 0.3s, transform 0.4s ease;
 }
-.slide-card:hover img{ filter:grayscale(0); transform:scale(1.04); }
 .slide-card::after{
   content:'';
   position:absolute;
@@ -588,9 +593,6 @@ body.light .work-title{color:#3f3f46;}
   transition:background 0.3s ease;
   pointer-events:none;
   z-index:2;
-}
-.slide-card:hover::after{
-  background:rgba(0,0,0,0.28);
 }
 /* Edge fades removed per request */
 
@@ -1449,7 +1451,9 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   #sliderPrev{left:10px;}
   #sliderNext{right:10px;}
 }
-.slide-card{cursor:zoom-in;}
+@media(hover:hover) and (pointer:fine){
+  .slide-card{cursor:zoom-in;}
+}
 #expandCursor{
   position:fixed;
   top:0;left:0;
@@ -2622,7 +2626,10 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  // Custom "Expand +" cursor-follow badge for slider images
+  // Custom "Expand +" cursor-follow badge for slider images — mouse/trackpad only.
+  // Touch devices synthesize a mouseenter right at tap time, which would
+  // otherwise flash this badge at the exact moment a card is tapped/opened.
+  if(window.matchMedia('(hover: hover) and (pointer: fine)').matches){
   var expandCursor = document.createElement('div');
   expandCursor.id = 'expandCursor';
   expandCursor.innerHTML = 'Expand<span>+</span>';
@@ -2643,6 +2650,7 @@ document.addEventListener('DOMContentLoaded', function(){
       el.style.cursor = '';
     });
   });
+  }
 
   // Love blast celebration — full-screen experience
   (function(){
