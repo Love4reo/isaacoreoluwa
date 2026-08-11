@@ -2571,15 +2571,32 @@ document.addEventListener('DOMContentLoaded', function(){
         if(previewTicker) previewTicker.classList.toggle('active', item.classList.contains('work-item-wide'));
         if(!rafId) tick();
 
-        // Sibling defocus/swap-to-focus-img disabled for now — re-enable by
-        // restoring the forEach loop that was here (swaps other cards to
-        // their data-focus-img and adds .is-defocused).
+        // Defocus every other card, and swap this card's own thumbnail to
+        // its higher-quality focus image while it's the one being hovered.
+        items.forEach(function(other){
+          if(other === item){
+            other.classList.remove('is-defocused');
+            var focusSrc = other.getAttribute('data-focus-img');
+            var otherThumb = other.querySelector('.work-thumb img');
+            if(focusSrc && otherThumb) otherThumb.src = focusSrc;
+          } else {
+            other.classList.add('is-defocused');
+          }
+        });
       });
       item.addEventListener('mouseleave', function(){
         preview.classList.remove('active');
         if(previewTicker) previewTicker.classList.remove('active');
         cancelAnimationFrame(rafId);
         rafId = null;
+
+        // Restore every card: clear defocus and swap thumbnails back to
+        // their original animated (gif) source.
+        items.forEach(function(other){
+          other.classList.remove('is-defocused');
+          var otherThumb = other.querySelector('.work-thumb img');
+          if(otherThumb && otherThumb.dataset.gifSrc) otherThumb.src = otherThumb.dataset.gifSrc;
+        });
       });
     });
   }
