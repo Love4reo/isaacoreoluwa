@@ -45,6 +45,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 }
 @keyframes csFadeUp{to{opacity:1;transform:translateY(0);}}
 
+/* ---------- scroll-triggered reveal ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .cs-title,.cs-tags,.cs-hero-img-wrap{animation:none;opacity:1;transform:none;}
+}
+
 /* ---------- layout ---------- */
 .wrap{max-width:100%;margin:0 auto;padding:0 clamp(20px,5vw,64px);}
 .wrap-wide{max-width:100%;margin:0 auto;padding:0 clamp(20px,5vw,64px);}
@@ -206,7 +218,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   // ---------------------------------------------------------------
   var CASE_STUDIES = {
     "05": {
-      title: "Making nightlife discovery more engaging",
+      title: "Transforming how nightlife is discovered, managed, and experienced",
       tags: ["Product Design", "2026", "SortMyScene"],
       hero: "https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png",
       comingSoon: true,
@@ -300,13 +312,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     }).join('');
 
     var sectionsHtml = data.sections.map(function(s){
-      return '<div class="cs-section">'+
+      return '<div class="cs-section reveal">'+
         '<span class="cs-label">'+ escapeHtml(s.heading) +'</span>'+
         '<p>'+ escapeHtml(s.body) +'</p>'+
         '</div>';
     }).join('');
 
-    var statsHtml = '<div class="cs-section"><span class="cs-label">Numbers</span>'+
+    var statsHtml = '<div class="cs-section reveal"><span class="cs-label">Numbers</span>'+
       '<div class="cs-stats">'+
       data.stats.map(function(s){
         return '<div class="cs-stat"><div class="num">'+ escapeHtml(s.num) +'</div><div class="label">'+ escapeHtml(s.label) +'</div></div>';
@@ -317,7 +329,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
     var galleryHtml = '';
     if(data.gallery && data.gallery.length){
-      galleryHtml = '<div class="cs-gallery">'+
+      galleryHtml = '<div class="cs-gallery reveal">'+
         data.gallery.map(function(src){ return '<img src="'+src+'" alt="'+escapeHtml(data.title)+' detail"/>'; }).join('')+
         '</div>';
     }
@@ -341,7 +353,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       var col1 = bg.paragraphs.slice(0, half);
       var col2 = bg.paragraphs.slice(half);
       detailsHtml =
-        '<div class="cs-details-grid">'+
+        '<div class="cs-details-grid reveal">'+
           '<div class="cs-details-col">'+
             '<span class="cs-label" style="display:block;margin-bottom:14px;">'+ escapeHtml(bg.label) +'</span>'+
             col1.map(function(p){ return '<p>'+ escapeHtml(p) +'</p>'; }).join('')+
@@ -357,7 +369,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     if(data.intro){
       introHtml =
         '<div class="cs-intro">'+
-          '<div class="cs-intro-row">'+
+          '<div class="cs-intro-row reveal">'+
             '<span class="cs-label">'+ escapeHtml(data.intro.label) +'</span>'+
             '<h2 class="cs-intro-heading">'+ escapeHtml(data.intro.heading) +'</h2>'+
           '</div>'+
@@ -374,7 +386,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     var bodyHtml;
     if(data.comingSoon){
       bodyHtml =
-        '<div class="cs-coming-soon">'+
+        '<div class="cs-coming-soon reveal">'+
           '<span class="tag">Full case study coming soon</span>'+
         '</div>';
     } else {
@@ -385,7 +397,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
           statsHtml +
           galleryHtml +
         '</div>'+
-        '<div class="cs-footer">'+
+        '<div class="cs-footer reveal">'+
           '<a class="cs-footer-link" href="/design/index.html">&larr; Back to all work</a>'+
           '<a class="cs-footer-link" href="mailto:hello@isaacoreoluwa.xyz">Get in touch &rarr;</a>'+
         '</div>';
@@ -406,6 +418,24 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       '</div>';
   }
 
+  function initScrollReveal(){
+    var items = document.querySelectorAll('.reveal');
+    if(!items.length) return;
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+    items.forEach(function(el){ observer.observe(el); });
+  }
+
   function updateClock(){
     var el = document.getElementById('topbarClockText');
     if(!el) return;
@@ -418,6 +448,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   setInterval(updateClock, 1000);
 
   render();
+  initScrollReveal();
 </script>
 
 </body>
