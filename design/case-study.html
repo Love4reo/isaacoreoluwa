@@ -246,8 +246,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         {num:"—", label:"Metric three"},
         {num:"—", label:"Metric four"}
       ],
+      problem: {
+        heading: "Problem",
+        body: "Most community events still get organized inside WhatsApp groups — RSVPs buried in chat threads, payments handled through screenshots and bank transfers, and no single place to see who's actually coming. Ditch the WhatsApp chaos: myKommune set out to replace that with one structured space to plan events, handle payments, and keep everything within the circle."
+      },
       sections: [
-        {heading:"Problem", body:"Most community events still get organized inside WhatsApp groups — RSVPs buried in chat threads, payments handled through screenshots and bank transfers, and no single place to see who's actually coming. Ditch the WhatsApp chaos: myKommune set out to replace that with one structured space to plan events, handle payments, and keep everything within the circle."},
         {heading:"Goal", body:"The work explores how myKommune can make participation feel more natural and intentional, without adding unnecessary friction — designing a clearer, more intuitive way for people to discover, create, and engage with community-driven events."},
         {heading:"Solution", body:[
           "We focused on creating a clear and simple platform experience that makes it easy for people to create, discover, and join community-driven events.",
@@ -288,8 +291,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         {num:"—", label:"Metric three"},
         {num:"—", label:"Metric four"}
       ],
+      problem: {
+        heading: "Problem",
+        body: "Placeholder problem statement. What wasn't working, and why did it matter?"
+      },
       sections: [
-        {heading:"Problem", body:"Placeholder problem statement. What wasn't working, and why did it matter?"},
         {heading:"Solution", body:"Placeholder solution summary. What did you design or build, and why that approach?"},
         {heading:"Impact", body:"Placeholder impact summary. What changed as a result — for users, the business, or the team?"}
       ],
@@ -321,8 +327,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         {num:"—", label:"Metric three"},
         {num:"—", label:"Metric four"}
       ],
+      problem: {
+        heading: "Problem",
+        body: "Placeholder problem statement. What wasn't working, and why did it matter?"
+      },
       sections: [
-        {heading:"Problem", body:"Placeholder problem statement. What wasn't working, and why did it matter?"},
         {heading:"Solution", body:"Placeholder solution summary. What did you design or build, and why that approach?"},
         {heading:"Impact", body:"Placeholder impact summary. What changed as a result — for users, the business, or the team?"}
       ],
@@ -354,6 +363,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     var tagsHtml = (data.tags || []).map(function(t){
       return '<span class="cs-tag">'+ escapeHtml(t) +'</span>';
     }).join('');
+
+    var problemHtml = '';
+    if(data.problem && !data.comingSoon){
+      var pParas = Array.isArray(data.problem.body) ? data.problem.body : [data.problem.body];
+      problemHtml =
+        '<div class="cs-section reveal" style="border-top:none;padding-top:0;margin-bottom:0;max-width:820px;">'+
+          '<span class="cs-label">'+ escapeHtml(data.problem.heading) +'</span>'+
+          pParas.map(function(p){ return '<p>'+ escapeHtml(p) +'</p>'; }).join('')+
+        '</div>';
+    }
 
     var sectionsHtml = data.sections.map(function(s){
       var paras = Array.isArray(s.body) ? s.body : [s.body];
@@ -461,6 +480,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
           '<h1 class="cs-title">'+ escapeHtml(data.title) +'</h1>'+
           '<div class="cs-tags">'+ tagsHtml +'</div>'+
         '</div>'+
+        problemHtml +
       '</div>'+
       '<div class="wrap-wide">'+
         '<div class="cs-hero-img-wrap"><img src="'+ data.hero +'" alt="'+ escapeHtml(data.title) +'"/></div>'+
