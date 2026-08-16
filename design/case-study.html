@@ -111,7 +111,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 }
 
 /* ---------- generic full-width text section ---------- */
-.cs-block{padding:96px 0;border-top:1px solid var(--border);}
+.cs-block{padding:76px 0;border-top:1px solid var(--border);}
 .cs-block:first-of-type{border-top:none;}
 .cs-block p{font-size:16px;line-height:1.85;color:var(--body);max-width:none;}
 .cs-block p + p{margin-top:16px;}
@@ -140,7 +140,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .cs-decision-reasoning{font-size:15px;line-height:1.8;color:var(--body);max-width:none;}
 
 /* ---------- design: big visual moment ---------- */
-.cs-design-block{padding:96px 0;}
+.cs-design-block{padding:76px 0;}
 .cs-design-images{display:flex;flex-direction:column;gap:20px;}
 .cs-design-caption{
   margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;
@@ -185,7 +185,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .cs-next{
   border-top:1px solid var(--border);
   display:block;text-decoration:none;
-  padding:64px 0;
+  padding:52px clamp(20px,5vw,64px);
   transition:background 0.2s;
 }
 .cs-next:hover{background:rgba(255,255,255,0.015);}
@@ -193,8 +193,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);
   display:block;margin-bottom:14px;
 }
-.cs-next-row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+.cs-next-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
 .cs-next-title{
+  flex:1;min-width:0;
   font-family:var(--sans);font-weight:700;
   font-size:clamp(24px,4.5vw,46px);line-height:1.1;letter-spacing:-0.02em;color:var(--text);
   transition:transform 0.2s cubic-bezier(0.16,1,0.3,1);
@@ -205,6 +206,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   display:flex;align-items:center;justify-content:center;
   border:1px solid var(--border);border-radius:50%;color:var(--link);
   transition:border-color 0.2s,color 0.2s,transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  margin-bottom:6px;
 }
 .cs-next:hover .cs-next-arrow{border-color:rgba(255,255,255,0.22);color:var(--link-hov);transform:translateX(4px);}
 .cs-next-arrow svg{width:16px;height:16px;}
@@ -229,8 +231,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
 @media(max-width:640px){
   .cs-decision{grid-template-columns:1fr;gap:8px;}
-  .cs-block{padding:64px 0;}
-  .cs-design-block{padding:64px 0;}
+  .cs-block{padding:52px 0;}
+  .cs-design-block{padding:52px 0;}
 }
 </style>
 </head>
@@ -269,7 +271,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       timeline: "2–4 weeks",
       platform: "App · Web",
       hero: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png",
-      link: {label:"View on Behance ↗", url:"https://www.behance.net/gallery/242100717/Simplifying-Community-Engagement-and-Event-Discovery"},
+      link: {label:"Visit myKommune ↗", url:"https://www.behance.net/gallery/242100717/Simplifying-Community-Engagement-and-Event-Discovery"},
 
       context: "myKommune is a community-driven platform that helps people, brands, and organizations connect, collaborate, and grow within shared spaces — both online and in person. It's built to reduce the friction of forming and sustaining communities, whether they're organized around work, interests, culture, or shared goals.",
 
@@ -462,7 +464,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     var nextHtml = '';
     if(nextData && nextId !== id){
       nextHtml =
-        '<a class="wrap cs-next" href="/design/case-study.html?id='+ nextId +'">'+
+        '<a class="cs-next" href="/design/case-study.html?id='+ nextId +'">'+
           '<span class="cs-next-label">Next case study</span>'+
           '<div class="cs-next-row">'+
             '<span class="cs-next-title">'+ escapeHtml(nextData.title) +'</span>'+
