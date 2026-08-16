@@ -102,7 +102,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .cs-intro-heading{
   font-family:var(--sans);font-weight:700;
   font-size:clamp(24px,4vw,42px);line-height:1.18;letter-spacing:-0.02em;
-  color:var(--text);max-width:920px;
+  color:var(--text);
 }
 .cs-label{
   font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);
@@ -368,7 +368,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     if(data.problem && !data.comingSoon){
       var pParas = Array.isArray(data.problem.body) ? data.problem.body : [data.problem.body];
       problemHtml =
-        '<div class="cs-section reveal" style="border-top:none;padding-top:0;margin-bottom:0;max-width:820px;">'+
+        '<div class="cs-section reveal" style="border-top:none;padding-top:0;margin-bottom:0;">'+
           '<span class="cs-label">'+ escapeHtml(data.problem.heading) +'</span>'+
           pParas.map(function(p){ return '<p>'+ escapeHtml(p) +'</p>'; }).join('')+
         '</div>';
