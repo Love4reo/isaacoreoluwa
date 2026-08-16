@@ -54,7 +54,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .reveal.in-view{opacity:1;transform:translateY(0);}
 @media(prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none;}
-  .cs-title,.cs-oneliner,.cs-meta,.cs-hero-img-wrap{animation:none;opacity:1;transform:none;}
+  .cs-title,.cs-meta,.cs-hero-img-wrap{animation:none;opacity:1;transform:none;}
 }
 
 /* ---------- layout ---------- */
@@ -72,12 +72,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   color:var(--text);margin-bottom:20px;max-width:1000px;margin-left:auto;margin-right:auto;
   opacity:0;transform:translateY(10px);
   animation:csFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
-}
-.cs-oneliner{
-  font-size:clamp(15px,1.6vw,18px);line-height:1.6;color:var(--body);
-  max-width:640px;margin:0 auto 32px;
-  opacity:0;transform:translateY(10px);
-  animation:csFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.06s forwards;
 }
 .cs-meta{
   display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;
@@ -266,7 +260,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   var CASE_STUDIES = {
     "01": {
       title: "Simplifying community engagement and event discovery",
-      oneLiner: "A community platform that makes discovering, hosting, and joining events effortless — instead of scattered across WhatsApp groups.",
       role: "Product Designer",
       timeline: "2–4 weeks",
       platform: "App · Web",
@@ -278,6 +271,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       problem: "Most community events still get organized inside WhatsApp groups — RSVPs buried in chat threads, payments handled through screenshots and bank transfers, and no single place to see who's actually coming. Ditch the WhatsApp chaos: that was the brief.",
 
       insight: "The opportunity wasn't to build another events app — it was to give communities a single, structured space to plan, host, and join events, instead of relying on scattered chat threads. That reframing shaped every decision that followed: from how events get created to how people discover and commit to them.",
+
+      insightMedia: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786905615/539bd3242100717.6966450c2d615_xrsy3p.gif",
 
       decisions: [
         {
@@ -308,7 +303,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
     "05": {
       title: "Transforming how nightlife is discovered, managed, and experienced",
-      oneLiner: "Placeholder one-line summary — what SortMyScene is, who it's for, and the core problem it solves.",
       role: "Product Designer",
       timeline: "Placeholder — Present",
       platform: "Placeholder",
@@ -319,7 +313,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
     "06": {
       title: "Case Study 06",
-      oneLiner: "Placeholder one-line summary — what this project is, who it was for, and the core problem it solved.",
       role: "Product Designer",
       timeline: "Placeholder — Present",
       platform: "Placeholder",
@@ -365,7 +358,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       '<div class="wrap">'+
         '<div class="cs-hero">'+
           '<h1 class="cs-title">'+ escapeHtml(data.title) +'</h1>'+
-          (data.oneLiner ? '<p class="cs-oneliner">'+ escapeHtml(data.oneLiner) +'</p>' : '')+
           (metaHtml ? '<div class="cs-meta">'+ metaHtml +'</div>' : '')+
           (data.link ? '<a class="cs-hero-link" href="'+ data.link.url +'" target="_blank" rel="noopener">'+ escapeHtml(data.link.label) +'</a>' : '')+
         '</div>'+
@@ -399,6 +391,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         blocks += '<div class="wrap"><div class="cs-block reveal">'+
           '<span class="section-label">The Insight</span>'+
           '<div class="cs-insight">'+ paragraphsHtml(data.insight) +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.insightMedia){
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          '<div class="cs-img-wrap"><img src="'+ data.insightMedia +'" alt="'+ escapeHtml(data.title) +' — in action"/></div>'+
         '</div></div>';
       }
 
