@@ -136,9 +136,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 /* ---------- design: big visual moment ---------- */
 .cs-design-block{padding:76px 0;}
 .cs-design-images{display:flex;flex-direction:column;gap:20px;}
-.cs-design-caption{
-  margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;
-}
 
 /* ---------- outcome: callout box ---------- */
 .cs-outcome-box{
@@ -268,6 +265,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
       context: "myKommune is a community-driven platform that helps people, brands, and organizations connect, collaborate, and grow within shared spaces — both online and in person. It's built to reduce the friction of forming and sustaining communities, whether they're organized around work, interests, culture, or shared goals.",
 
+      contextMedia: "https://res.cloudinary.com/dmqyultl0/image/upload/v1787029494/Desktop_-_17_kbaadf.png",
+
       problem: "Most community events still get organized inside WhatsApp groups — RSVPs buried in chat threads, payments handled through screenshots and bank transfers, and no single place to see who's actually coming. Ditch the WhatsApp chaos: that was the brief.",
 
       insight: "The opportunity wasn't to build another events app — it was to give communities a single, structured space to plan, host, and join events, instead of relying on scattered chat threads. That reframing shaped every decision that followed: from how events get created to how people discover and commit to them.",
@@ -290,11 +289,25 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       ],
 
       design: {
-        images: ["https://res.cloudinary.com/dmqyultl0/image/upload/v1786868812/Desktop_-_87_k7t9km.png"],
-        caption: "Discovering, hosting, and managing events — inside myKommune's app and web experience."
+        intro: "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030208/Desktop_-_6_1_ncfgkl.png",
+        paragraphs: [
+          "The visual direction leans warm and expressive — a cream base, bold display type, and candid photography that feels closer to a community zine than a typical SaaS product. It's built to feel human first, software second.",
+          "Playful details — hand-drawn stickers, loose sticker-style callouts, an oversized wordmark — carry that same energy across the app, the website, and the marketing pages, so the brand feels consistent no matter where someone encounters it."
+        ],
+        images: [
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1786868812/Desktop_-_87_k7t9km.png",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1786984386/Desktop_-_27_1_p9ihqy.png",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1787005674/Desktop_-_33_htuyqp.png",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1787029500/Home_Have_event_1_yovt23.png"
+        ]
       },
 
       outcome: "myKommune is still in active development, so this is a look at the work so far rather than a finished-product story. What exists today: a consistent interface across the app and website, and a discovery flow designed specifically to replace ad-hoc WhatsApp planning. More of the product — and more of this case study — will follow as it takes shape.",
+
+      outcomeMedia: [
+        "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030702/Desktop_-_20_1_d2ipkd.png",
+        "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030700/Desktop_-_88_sithaw.png"
+      ],
 
       // No genuine personal reflection written yet — left as an
       // explicit placeholder rather than an invented one.
@@ -380,6 +393,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         '</div></div>';
       }
 
+      if(data.contextMedia){
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          '<div class="cs-img-wrap"><img src="'+ data.contextMedia +'" alt="'+ escapeHtml(data.title) +'"/></div>'+
+        '</div></div>';
+      }
+
       if(data.problem){
         blocks += '<div class="wrap"><div class="cs-block cs-problem reveal">'+
           '<span class="section-label">The Problem</span>'+
@@ -416,14 +435,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         '</div></div>';
       }
 
-      if(data.design && data.design.images && data.design.images.length){
-        var imgsHtml = data.design.images.map(function(src){
+      if(data.design && ((data.design.images && data.design.images.length) || data.design.intro)){
+        var introImgHtml = data.design.intro
+          ? '<div class="cs-img-wrap" style="margin-bottom:32px;"><img src="'+ data.design.intro +'" alt="'+ escapeHtml(data.title) +' — design overview"/></div>'
+          : '';
+        var designParasHtml = (data.design.paragraphs && data.design.paragraphs.length)
+          ? '<div class="cs-block" style="border-top:none;padding:0 0 40px;">'+ paragraphsHtml(data.design.paragraphs) +'</div>'
+          : '';
+        var imgsHtml = (data.design.images || []).map(function(src){
           return '<div class="cs-img-wrap"><img src="'+ src +'" alt="'+ escapeHtml(data.title) +' — product screens"/></div>';
         }).join('');
         blocks += '<div class="wrap"><div class="cs-design-block reveal">'+
           '<span class="section-label">The Design</span>'+
+          introImgHtml +
+          designParasHtml +
           '<div class="cs-design-images">'+ imgsHtml +'</div>'+
-          (data.design.caption ? '<div class="cs-design-caption">'+ escapeHtml(data.design.caption) +'</div>' : '')+
         '</div></div>';
       }
 
@@ -439,6 +465,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         blocks += '<div class="wrap"><div class="cs-block reveal">'+
           '<span class="section-label">Outcome</span>'+
           '<div class="cs-outcome-box">'+ paragraphsHtml(data.outcome) + outcomeStatsHtml +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.outcomeMedia && data.outcomeMedia.length){
+        var outcomeMediaHtml = data.outcomeMedia.map(function(src){
+          return '<div class="cs-img-wrap"><img src="'+ src +'" alt="'+ escapeHtml(data.title) +'"/></div>';
+        }).join('<div style="height:20px;"></div>');
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          outcomeMediaHtml +
         '</div></div>';
       }
 
