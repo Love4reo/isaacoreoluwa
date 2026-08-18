@@ -221,9 +221,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 #csRoot{min-height:60vh;}
 
 @media(max-width:640px){
-  .cs-decision{grid-template-columns:1fr;gap:8px;}
+  .cs-hero{padding-top:64px;}
+  .cs-hero-img-wrap{margin-top:36px;}
+  .cs-decision{grid-template-columns:1fr;gap:8px;padding:24px 0;}
   .cs-block{padding:52px 0;}
   .cs-design-block{padding:52px 0;}
+  .cs-design-images{gap:14px;}
+  .cs-outcome-box{margin-top:0;}
+  .cs-next{padding:40px clamp(20px,5vw,64px);}
+  .cs-coming-soon{padding:56px 0 88px;}
+}
+@media(max-width:400px){
+  .cs-hero{padding-top:48px;}
+  .cs-title{margin-bottom:16px;}
 }
 </style>
 </head>
@@ -311,7 +321,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
       // No genuine personal reflection written yet — left as an
       // explicit placeholder rather than an invented one.
-      reflection: null
+      reflection: [
+        "Building myKommune made it clear this is less a \"new app\" problem and more a chaos-migration problem — people aren't choosing between products, they're being asked to leave a workflow they already trust. The real design challenge wasn't the interface, it was earning that switch.",
+        "If I were starting over, I'd spend more time on the specific moment someone moves a group from WhatsApp into myKommune — that handoff is where most of the friction, and the trust, actually gets won or lost. It's a good reminder that the strongest product decisions usually come from naming the real problem precisely, not from adding more screens."
+      ]
     },
 
     "05": {
