@@ -27,8 +27,8 @@
 :root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;--nav-bg:rgba(9,9,11,0.72);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--link-hov);outline-offset:2px;border-radius:4px;}
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+html{scroll-behavior:smooth;overflow-x:clip;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:clip;}
 .wrap{max-width:640px;margin:0 auto;padding:80px 24px 120px;}
 header{
   position:relative;
@@ -171,19 +171,17 @@ header.scrolled{border-bottom-color:transparent;}
 .links-row a svg{opacity:0.5;}
 section{margin-bottom:52px;}
 .section-label{font-size:11px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;}
-.work-list{display:flex;flex-direction:column;gap:2px;}
-.work-item{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:background 0.15s;border-radius:6px;}
-.work-item:last-child{border-bottom:none;}
-.work-item:hover .work-title{color:var(--text);}
-.work-item:hover .work-arrow{opacity:1;transform:translate(2px,-2px);}
-.work-left{flex:1;}
-.work-title{font-size:13px;font-weight:500;color:#a1a1aa;transition:color 0.15s;margin-bottom:3px;}
-.work-desc{font-size:12px;color:var(--muted);line-height:1.5;}
-.work-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
-.work-tag{font-size:10px;font-family:var(--mono);color:var(--muted2);padding:2px 7px;border:1px solid var(--border);border-radius:4px;}
-.work-arrow{color:var(--muted);opacity:0;transition:opacity 0.15s,transform 0.15s;font-size:12px;}
-.skills-portrait-section{margin-bottom:52px;}
-.track-record-section{margin-bottom:52px;}
+.skills-portrait-section{
+  position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+  padding:0 24px;box-sizing:border-box;margin-bottom:52px;
+}
+.skills-portrait-section .section-label,
+.skills-portrait-section .skills-callout-list{max-width:1280px;margin-left:auto;margin-right:auto;}
+.track-record-section{
+  position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+  padding:0 24px;box-sizing:border-box;margin-bottom:52px;
+}
+.track-record-header,.track-record-list{max-width:1280px;margin-left:auto;margin-right:auto;}
 .track-record-header{
   display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;
   margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);
@@ -459,8 +457,7 @@ body.light .cta2-grid{background-image:radial-gradient(circle,rgba(0,0,0,0.07) 1
 .fade-up:nth-child(5){animation-delay:0.30s;}
 .fade-up:nth-child(6){animation-delay:0.36s;}
 .fade-up:nth-child(7){animation-delay:0.42s;}
-@media(max-width:480px){.wrap{padding:48px 20px 80px;}header{margin-bottom:40px;}header.is-fixed{padding:12px 20px;}.hero{margin-bottom:40px;}.about-block{flex-direction:column;}footer{flex-direction:column;align-items:flex-start;}}
-
+@media(max-width:480px){.wrap{padding:48px 20px 80px;}header{margin-bottom:40px;}header.is-fixed{padding:12px 20px;}.hero{margin-bottom:40px;}.about-block{flex-direction:column;}footer{flex-direction:column;align-items:flex-start;}.skills-portrait-section,.track-record-section,.testimonials-section{padding:0 20px;}}
 .projects-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
 .proj-card{display:flex;flex-direction:column;border-radius:18px;overflow:hidden;background:var(--bg2);border:1px solid rgba(255,255,255,0.06);text-decoration:none;transition:transform 0.18s ease,box-shadow 0.18s ease;cursor:pointer;}
 .proj-card:hover{transform:scale(1.03);box-shadow:0 10px 36px rgba(0,0,0,0.45);}
@@ -480,49 +477,90 @@ body.light .cta2-grid{background-image:radial-gradient(circle,rgba(0,0,0,0.07) 1
 body.light .proj-card{background:#e4e4e7;border-color:rgba(0,0,0,0.06);}
 @media(max-width:400px){.projects-grid{grid-template-columns:repeat(3,1fr);}}
 
-.work-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
+.cs-gallery{
   position:relative;
-  left:50%;
-  right:50%;
-  margin-left:-50vw;
-  margin-right:-50vw;
+  left:50%;right:50%;
+  margin-left:-50vw;margin-right:-50vw;
   width:100vw;
   padding:0 24px;
   box-sizing:border-box;
 }
-
-.work-grid .work-item{flex-direction:column;align-items:flex-start;border:1px solid transparent;border-radius:10px;padding:0;gap:0;overflow:hidden;transition:border-color 0.15s,background 0.15s,transform 0.15s cubic-bezier(0.16,1,0.3,1);width:100%;aspect-ratio:4/3;}
-@media(hover:hover) and (pointer:fine){.work-grid .work-item:active{transform:scale(0.985);}}
-.work-grid .work-item-wide{grid-column:1 / -1;position:relative;}
-.work-thumb{width:100%;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--bg2);}
-.work-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(0.2);transition:transform 0.2s cubic-bezier(0.4,0,0.2,1),opacity 0.2s ease;will-change:opacity;}
-.work-grid .work-item-wide .work-thumb img{object-fit:contain;}
-.work-grid .work-item.is-defocused .work-thumb img{opacity:0.6;}
-.work-grid .work-item.is-defocused{border-color:var(--border);background:transparent;}
-.work-body{width:100%;flex:0 0 auto;padding:0 14px;}
-.work-collapse{display:grid;grid-template-rows:minmax(0,0fr);transition:grid-template-rows 0.28s cubic-bezier(0.16,1,0.3,1);}
-.work-collapse-inner{overflow:hidden;min-height:0;padding:14px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-.work-grid .work-desc,.work-grid .work-arrow{display:none;}
-.work-grid .work-title{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1),filter 0.3s ease;}
-.work-grid .work-meta{margin-top:0!important;flex:0 0 auto;}
-.work-grid .work-tag{opacity:0;transform:translateY(12px);filter:blur(4px);transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1),filter 0.3s ease;white-space:nowrap;}
-/* Hover-only interactions: gated so a tap on touch devices can never trigger
-   or get "stuck" in the focus/reveal state — mobile always shows just the gif. */
+.cs-gallery-inner{
+  max-width:1280px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:48px;
+  align-items:start;
+}
+.cs-sticky{position:sticky;top:100px;padding-bottom:40px;}
+.cs-eyebrow{font-size:11px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;}
+.cs-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(20px,2.2vw,27px);letter-spacing:-0.02em;color:var(--text);line-height:1.25;margin-bottom:16px;min-height:2.5em;}
+.cs-desc{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:26px;max-width:300px;}
+.cs-fade{transition:opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1);opacity:0;transform:translateY(8px);}
+.cs-fade.cs-in{opacity:1;transform:translateY(0);}
+.cs-chip{
+  display:inline-flex;align-items:center;gap:10px;
+  text-decoration:none;
+  padding:7px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  transition:border-color 0.15s,opacity 0.3s ease,transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  max-width:280px;
+}
+.cs-chip:hover{border-color:rgba(255,255,255,0.2);}
+.cs-chip-icon{
+  width:32px;height:32px;border-radius:8px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:#0a0a0a;
+  overflow:hidden;
+}
+.cs-chip-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.cs-chip-text{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.cs-chip-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cs-chip-meta{font-size:10px;font-family:var(--mono);color:var(--muted);white-space:nowrap;}
+.cs-panels{display:flex;flex-direction:column;gap:20px;}
+.cs-panel{position:relative;height:min(76vh,620px);border-radius:14px;overflow:hidden;background:var(--bg2);border:1px solid var(--border);}
+.cs-panel-media{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.85) brightness(0.55);opacity:0.65;transform:scale(1.015);transition:filter 0.6s ease,opacity 0.6s ease,transform 0.6s ease;}
+.cs-panel.is-active .cs-panel-media{filter:grayscale(0) brightness(1);opacity:1;transform:scale(1);}
+.cs-panel.is-defocused .cs-panel-media{filter:grayscale(0.85) brightness(0.5);opacity:0.5;}
+.cs-panel-link{position:absolute;inset:0;z-index:2;}
+.cs-panel-caption{display:none;}
 @media(hover:hover) and (pointer:fine){
-  .work-grid .work-item:hover{background:rgba(255,255,255,0.02);}
-  .work-grid .work-item:hover .work-thumb img{transform:scale(1.04);}
-  .work-grid .work-item:hover .work-collapse{grid-template-rows:minmax(0,1fr);}
-  .work-grid .work-item:hover .work-title{opacity:1;transform:translateY(0);filter:blur(0);transition-delay:0.06s;}
-  .work-grid .work-item:hover .work-tag{opacity:1;transform:translateY(0);filter:blur(0);transition-delay:0.1s;}
+  .cs-panel{cursor:none;}
+  .cs-panel:hover .cs-panel-media{transform:scale(1.03);}
 }
-@media(max-width:640px){
-  .work-grid{grid-template-columns:1fr;padding:0 20px;gap:12px;}
-  .work-grid .work-item-wide{aspect-ratio:4/3 !important;}
-  .work-grid .work-item-wide .work-thumb img{object-fit:cover;}
+@media(max-width:900px){
+  .cs-gallery-inner{grid-template-columns:1fr;gap:28px;}
+  .cs-sticky{position:static;padding-bottom:0;}
+  .cs-panel{height:62vh;}
+  .cs-panel-caption{
+    display:block;margin-top:12px;
+  }
+  .cs-panel-caption .cs-title,.cs-panel-caption .cs-desc{min-height:0;max-width:none;margin-bottom:8px;}
 }
+/* Cursor-follow preview + "Coming Soon" ticker for the wide panels, restored
+   alongside the scroll-driven active/dim states above. */
+.cursor-preview{
+  position:fixed;
+  width:200px;height:130px;
+  border-radius:10px;
+  overflow:hidden;
+  pointer-events:none;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(0.88) rotate(-2deg);
+  transition:opacity 0.22s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  z-index:999;
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+}
+.cursor-preview.active{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0deg);}
+.cursor-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+.cursor-preview-ticker{position:absolute;left:0;right:0;bottom:0;height:30px;overflow:hidden;display:flex;align-items:center;opacity:0;transition:opacity 0.2s ease;}
+.cursor-preview-ticker.active{opacity:1;}
+.cursor-preview-ticker-track{display:flex;align-items:center;gap:12px;white-space:nowrap;width:max-content;font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:#f4f4f5;animation:cursorTickerScroll 7s linear infinite;}
+.cursor-preview-ticker-dot{color:#D00A83;font-size:5px;}
+@keyframes cursorTickerScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 .avatar-wrap{position:relative;display:inline-block;margin-bottom:14px;cursor:pointer;}
 .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--border);display:block;filter:grayscale(0.1);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),filter 0.3s ease,box-shadow 0.3s ease;}
 .avatar-wrap:hover .avatar{transform:scale(1.18) rotate(-4deg);filter:grayscale(0) brightness(1.05);box-shadow:0 6px 24px rgba(0,0,0,0.35);}
@@ -559,13 +597,12 @@ body.light{
 body.light .dot{background:#16a34a;box-shadow:0 0 6px #16a34a88;}
 body.light .tagline{color:#a1a1aa;}
 body.light .hero p{color:#52525b;}
-body.light .work-desc{color:#a1a1aa;}
+body.light .cs-desc{color:#71717a;}
 body.light .about-bts{color:#52525b;}
 body.light .footer-left{color:#d4d4d8;}
 body.light .skill-callout{background:#e4e4e7;}
 body.light .proj-wip{color:#a1a1aa;}
 body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
-body.light .work-title{color:#3f3f46;}
 
 /* Toggle button */
 .theme-toggle{display:inline-flex;align-items:center;gap:5px;background:var(--bg2);border:1px solid var(--border);border-radius:999px;padding:3px 10px 3px 8px;cursor:pointer;font-family:var(--mono);font-size:10px;color:var(--muted);transition:color 0.2s,border-color 0.2s,background 0.2s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);vertical-align:middle;}
@@ -641,47 +678,20 @@ body.light .work-title{color:#3f3f46;}
 }
 /* Edge fades removed per request */
 
-.work-grid{position:relative;}
-.cursor-preview{
+/* PiP "shrink to corner" element for the case-study gallery's outgoing panel */
+.cs-pip{
   position:fixed;
-  width:200px;
-  height:130px;
+  z-index:60;
   border-radius:10px;
   overflow:hidden;
   pointer-events:none;
-  opacity:0;
-  transform:translate(-50%,-50%) scale(0.88) rotate(-2deg);
-  transition:opacity 0.22s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
-  z-index:999;
-  border:1px solid rgba(255,255,255,0.1);
-  box-shadow:0 12px 40px rgba(0,0,0,0.5);
-}
-.cursor-preview.active{
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.12);
+  display:none;
   opacity:1;
-  transform:translate(-50%,-50%) scale(1) rotate(0deg);
 }
-.cursor-preview img{
-  width:100%;height:100%;object-fit:cover;display:block;
-}
-.cursor-preview-ticker{
-  position:absolute;left:0;right:0;bottom:0;
-  height:30px;
-  overflow:hidden;
-  display:flex;align-items:center;
-  opacity:0;
-  transition:opacity 0.2s ease;
-}
-.cursor-preview-ticker.active{opacity:1;}
-.cursor-preview-ticker-track{
-  display:flex;align-items:center;gap:12px;
-  white-space:nowrap;width:max-content;
-  font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;
-  color:#f4f4f5;
-  animation:cursorTickerScroll 7s linear infinite;
-}
-.cursor-preview-ticker-dot{color:#D00A83;font-size:5px;}
-@keyframes cursorTickerScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.work-grid .work-item{cursor:none;}
+.cs-pip img{width:100%;height:100%;object-fit:cover;display:block;}
+@media(max-width:900px){.cs-pip{display:none !important;}}
 
 /* Lightbox for gallery images */
 .lightbox{
@@ -743,34 +753,37 @@ body.light .work-title{color:#3f3f46;}
   transform:scale(1.02);
 }
 
-.cal-section{margin-bottom:0;}
-.spotify-section{margin-top:32px;margin-bottom:32px;}
+.cal-section{margin-top:100px;margin-bottom:100px;display:flex;justify-content:center;}
 .cal-card{
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:24px;
+  border:none;
+  border-radius:0;
+  padding:0;
   display:flex;
+  flex-direction:column;
   align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  background:var(--bg2);
-  flex-wrap:wrap;
+  text-align:center;
+  gap:22px;
+  background:transparent;
+  max-width:420px;
+  margin:0 auto;
 }
-.cal-left{}
+.cal-left{display:flex;flex-direction:column;align-items:center;}
 .cal-eyebrow{
   font-size:10px;
   font-family:var(--mono);
   letter-spacing:0.18em;
   text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:6px;
+  margin-bottom:14px;
 }
 .cal-heading{
-  font-size:16px;
-  font-weight:500;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(24px,3.6vw,34px);
+  font-weight:700;
   color:var(--text);
-  letter-spacing:-0.01em;
-  margin-bottom:4px;
+  letter-spacing:-0.02em;
+  margin-bottom:10px;
+  line-height:1.2;
 }
 .cal-sub{
   font-size:12px;
@@ -781,7 +794,7 @@ body.light .work-title{color:#3f3f46;}
   display:inline-flex;
   align-items:center;
   gap:6px;
-  padding:11px 22px;
+  padding:14px 28px;
   font-size:11px;
   font-family:var(--mono);
   letter-spacing:0.12em;
@@ -798,12 +811,19 @@ body.light .work-title{color:#3f3f46;}
 }
 .cal-btn:hover{opacity:0.85;transform:translateY(-1px);}
 .cal-btn:active{transform:translateY(0) scale(0.97);}
-body.light .cal-card{background:#f4f4f5;}
+@media(max-width:480px){.cal-section{margin-top:64px;margin-bottom:64px;}}
+.testimonials-section{
+  position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;
+  padding:0 24px;box-sizing:border-box;margin-bottom:52px;
+}
 .bento-grid{
   display:grid;
   grid-template-columns:1fr 1.35fr;
   grid-auto-rows:min-content;
   gap:16px;
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
 }
 .bento-pair{
   position:relative;
@@ -812,6 +832,7 @@ body.light .cal-card{background:#f4f4f5;}
   border-radius:16px;
   padding:22px;
   height:100%;
+  min-height:240px;
   box-sizing:border-box;
   cursor:default;
   transform-style:preserve-3d;
@@ -834,34 +855,35 @@ body.light .cal-card{background:#f4f4f5;}
 .stat-card.lavender{background:#e6e0f5;}
 .stat-number{
   font-family:'Space Grotesk',sans-serif;
-  font-size:44px;
+  font-size:76px;
   font-weight:700;
-  letter-spacing:-0.02em;
+  letter-spacing:-0.03em;
   line-height:1;
   display:inline-block;
   transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), letter-spacing 0.35s ease;
 }
 .bento-card:hover .stat-number{
-  transform:scale(1.08) translateX(2px);
-  letter-spacing:0;
+  transform:scale(1.06) translateX(2px);
+  letter-spacing:-0.01em;
 }
 .stat-caption{
-  font-size:12.5px;
+  font-size:14px;
   line-height:1.55;
   color:#33402f;
+  max-width:230px;
 }
 .bento-badge{
   position:absolute;
-  bottom:-14px;
-  left:-14px;
-  width:52px;height:52px;
-  border-radius:14px;
+  bottom:-16px;
+  left:-16px;
+  width:64px;height:64px;
+  border-radius:16px;
   display:flex;align-items:center;justify-content:center;
   z-index:2;
   box-shadow:0 8px 24px rgba(0,0,0,0.35);
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
-.bento-badge svg{width:22px;height:22px;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);}
+.bento-badge svg{width:27px;height:27px;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);}
 .bento-badge.lime{background:#c8f04a;color:#243007;}
 .bento-badge.pink{background:#1a1a1a;color:#ff8fc8;border:1px solid rgba(255,255,255,0.15);}
 .bento-badge:hover{transform:scale(1.15) rotate(-12deg);}
@@ -966,7 +988,7 @@ body.light .cal-card{background:#f4f4f5;}
   width:100vw;
   left:50%;
   margin-left:-50vw;
-  height:430px;
+  height:460px;
   margin-top:20px;
   padding:0;
   border-radius:0;
@@ -1170,6 +1192,13 @@ body.light .cal-card{background:#f4f4f5;}
   box-sizing:border-box;
   display:flex;align-items:center;justify-content:center;
 }
+.spotify-card{
+  background:#fdfcf9;
+  padding:10px;
+  box-sizing:border-box;
+  display:flex;align-items:center;justify-content:center;
+}
+.spotify-card iframe{width:100%;height:100%;border-radius:8px;display:block;}
 .clock-face{width:100%;max-width:150px;height:auto;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.15));}
 .clock-tick{stroke:#2a2a2a;stroke-width:1.6;stroke-linecap:round;}
 .clock-tick.minor{stroke:#bbb;stroke-width:1;}
@@ -1180,8 +1209,7 @@ body.light .cal-card{background:#f4f4f5;}
 .digital-clock{
   width:100%;
   height:100%;
-  display:flex;
-  flex-direction:column;
+  display:flex;  flex-direction:column;
   align-items:center;
   justify-content:center;
   gap:8px;
@@ -1944,90 +1972,80 @@ body.preloading{overflow:hidden;height:100vh;}
     </div>
   </section>
 
-  <section class="fade-up">
-    <p class="section-label">Case Studies</p>
-    <div class="work-list work-grid">
-      <a class="work-item" href="/design/case-study.html?id=mykommune" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786033030/Untitled_design_4_ytsiig.gif" alt="mykommune"/>
-        </div>
-        <div class="work-body">
-          <div class="work-collapse"><div class="work-collapse-inner">
-          <div class="work-left">
-            <p class="work-title">Simplifying Community Engagement and Event Discovery</p>
-            <p class="work-desc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
-          </div>
-          <div class="work-meta" style="margin-top:10px;">
-            <span class="work-tag">Product &middot; Community</span>
-            <span class="work-arrow">&#8599;</span>
-          </div>
-          </div></div>
-        </div>
-      </a>
-      <a class="work-item" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786104737/Desktop_-_34_1_lwweca.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785232722/Desktop_-_15_2_uhhkxg.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786079682/Untitled_design_5_akfrnd.gif" alt="Overflow Navigation"/>
-        </div>
-        <div class="work-body">
-          <div class="work-collapse"><div class="work-collapse-inner">
-          <div class="work-left">
-            <p class="work-title">Optimizing Navigation with Side Navs</p>
-            <p class="work-desc">A navigation redesign focused on improving wayfinding, reducing friction, and helping users move through the product more efficiently. The solution introduces a scalable side navigation system that creates a clearer, more organized user experience.</p>
-          </div>
-          <div class="work-meta" style="margin-top:10px;">
-            <span class="work-tag">UX &middot; Navigation</span>
-            <span class="work-arrow">&#8599;</span>
-          </div>
-          </div></div>
-        </div>
-      </a>
-      <a class="work-item" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105045/Desktop_-_34_2_eub1lq.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786603424/Desktop_-_72_1_a067ie.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786080354/Untitled_design_6_fxjr9d.gif" alt="Suberra Website Revamp"/>
-        </div>
-        <div class="work-body">
-          <div class="work-collapse"><div class="work-collapse-inner">
-          <div class="work-left">
-            <p class="work-title">Redesigning Suberra&rsquo;s Website for Clarity and Conversion</p>
-            <p class="work-desc">A full website redesign for Suberra &mdash; a web3 payments platform. Rebuilt the visual language, information architecture, and brand presence to communicate trust and clarity to a new audience.</p>
-          </div>
-          <div class="work-meta" style="margin-top:10px;">
-            <span class="work-tag">Web Design &middot; Brand</span>
-            <span class="work-arrow">&#8599;</span>
-          </div>
-          </div></div>
-        </div>
-      </a>
-      <a class="work-item" href="https://www.behance.net/gallery/198485845/All-in-one-train-schedule-app-and-more-Case-study" target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786116716/Desktop_-_34_5_a1xolo.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231948/One_ztnqkd.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786081034/Untitled_design_7_d5pvnu.gif" alt="Train Schedule App"/>
-        </div>
-        <div class="work-body">
-          <div class="work-collapse"><div class="work-collapse-inner">
-          <div class="work-left">
-            <p class="work-title">Simplifying the Rail Travel Experience</p>
-            <p class="work-desc">A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience &mdash; built for commuters navigating Nigeria&rsquo;s rail network.</p>
-          </div>
-          <div class="work-meta" style="margin-top:10px;">
-            <span class="work-tag">Mobile &middot; UX</span>
-            <span class="work-arrow">&#8599;</span>
-          </div>
-          </div></div>
-        </div>
-      </a>
-      <a class="work-item work-item-wide" href="/design/case-study.html?id=sortmyscene" style="aspect-ratio:21/7;" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_900/v1786388210/Desktop_-_260_1_aboq58.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786386211/Desktop_-_260_rtc72i.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png" alt="Case Study 05"/>
-        </div>
-      </a>
-      <a class="work-item work-item-wide" href="/design/case-study.html?id=case-06" style="aspect-ratio:21/7;" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786565691/Desktop_-_263_1_kuwq2g.png">
-        <div class="work-thumb">
-          <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786566445/Desktop_-_262_3_grcjyt.png" alt="Case Study 06"/>
-        </div>
-      </a>
+  <section class="fade-up cs-gallery">
+    <div class="cs-gallery-inner">
+      <div class="cs-sticky">
+        <p class="cs-eyebrow">Case Studies</p>
+        <h2 class="cs-title cs-fade cs-in" id="csTitle">Simplifying Community Engagement and Event Discovery</h2>
+        <p class="cs-desc cs-fade cs-in" id="csDesc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
+        <a class="cs-chip cs-fade cs-in" id="csChip" href="/design/case-study.html?id=mykommune">
+          <span class="cs-chip-icon" id="csChipIcon" style="background:#a5f3c4;"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" alt=""/></span>
+          <span class="cs-chip-text">
+            <span class="cs-chip-name" id="csChipName">mykommune</span>
+            <span class="cs-chip-meta" id="csChipMeta">Product &middot; Community</span>
+          </span>
+        </a>
+      </div>
 
+      <div class="cs-panels">
+        <div class="cs-panel is-active" data-title="Simplifying Community Engagement and Event Discovery" data-desc="A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm." data-chip-name="mykommune" data-chip-meta="Product &middot; Community" data-chip-letter="M" data-chip-color="#a5f3c4" data-href="/design/case-study.html?id=mykommune" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786033030/Untitled_design_4_ytsiig.gif" alt="mykommune"/>
+          <a class="cs-panel-link" href="/design/case-study.html?id=mykommune" aria-label="mykommune"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">Simplifying Community Engagement and Event Discovery</h3>
+            <p class="cs-desc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
+          </div>
+        </div>
+
+        <div class="cs-panel" data-title="Optimizing Navigation with Side Navs" data-desc="A navigation redesign focused on improving wayfinding, reducing friction, and helping users move through the product more efficiently. The solution introduces a scalable side navigation system that creates a clearer, more organized user experience." data-chip-name="Overflow" data-chip-meta="UX &middot; Navigation" data-chip-letter="O" data-chip-color="#7dd3fc" data-href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" data-target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786104737/Desktop_-_34_1_lwweca.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785232722/Desktop_-_15_2_uhhkxg.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786079682/Untitled_design_5_akfrnd.gif" alt="Overflow Navigation"/>
+          <a class="cs-panel-link" href="https://www.behance.net/gallery/218336225/Optimizing-Navigation-with-Side-Navs" target="_blank" aria-label="Side Navs"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">Optimizing Navigation with Side Navs</h3>
+            <p class="cs-desc">A navigation redesign focused on improving wayfinding, reducing friction, and helping users move through the product more efficiently.</p>
+          </div>
+        </div>
+
+        <div class="cs-panel" data-title="Redesigning Suberra&rsquo;s Website for Clarity and Conversion" data-desc="A full website redesign for Suberra &mdash; a web3 payments platform. Rebuilt the visual language, information architecture, and brand presence to communicate trust and clarity to a new audience." data-chip-name="Suberra" data-chip-meta="Web Design &middot; Brand" data-chip-letter="S" data-chip-color="#f0abfc" data-href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" data-target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105045/Desktop_-_34_2_eub1lq.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786603424/Desktop_-_72_1_a067ie.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786080354/Untitled_design_6_fxjr9d.gif" alt="Suberra Website Revamp"/>
+          <a class="cs-panel-link" href="https://www.behance.net/gallery/180338549/Unveiling-Suberras-revamped-website" target="_blank" aria-label="Suberra"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">Redesigning Suberra&rsquo;s Website for Clarity and Conversion</h3>
+            <p class="cs-desc">A full website redesign for Suberra &mdash; a web3 payments platform, rebuilding the visual language and information architecture.</p>
+          </div>
+        </div>
+
+        <div class="cs-panel" data-title="Simplifying the Rail Travel Experience" data-desc="A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience &mdash; built for commuters navigating Nigeria&rsquo;s rail network." data-chip-name="Travela" data-chip-meta="Mobile &middot; UX" data-chip-letter="T" data-chip-color="#fde68a" data-href="https://www.behance.net/gallery/198485845/All-in-one-train-schedule-app-and-more-Case-study" data-target="_blank" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786116716/Desktop_-_34_5_a1xolo.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231948/One_ztnqkd.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786081034/Untitled_design_7_d5pvnu.gif" alt="Train Schedule App"/>
+          <a class="cs-panel-link" href="https://www.behance.net/gallery/198485845/All-in-one-train-schedule-app-and-more-Case-study" target="_blank" aria-label="Rail Travel"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">Simplifying the Rail Travel Experience</h3>
+            <p class="cs-desc">A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience.</p>
+          </div>
+        </div>
+
+        <div class="cs-panel cs-panel-wide" data-title="SortMyScene" data-desc="Case study details launching soon." data-chip-name="SortMyScene" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#c4b5fd" data-href="/design/case-study.html?id=sortmyscene" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_900/v1786388210/Desktop_-_260_1_aboq58.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png" alt="SortMyScene"/>
+          <a class="cs-panel-link" href="/design/case-study.html?id=sortmyscene" aria-label="SortMyScene"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">SortMyScene</h3>
+            <p class="cs-desc">Case study details launching soon.</p>
+          </div>
+        </div>
+
+        <div class="cs-panel cs-panel-wide" data-title="Case Study 06" data-desc="Case study details launching soon." data-chip-name="Swaylink" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#fca5a5" data-href="/design/case-study.html?id=case-06" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786565691/Desktop_-_263_1_kuwq2g.png">
+          <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786566445/Desktop_-_262_3_grcjyt.png" alt="Case Study 06"/>
+          <a class="cs-panel-link" href="/design/case-study.html?id=case-06" aria-label="Case Study 06"></a>
+          <div class="cs-panel-caption">
+            <h3 class="cs-title">Case Study 06</h3>
+            <p class="cs-desc">Case study details launching soon.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
+
+  <div class="cs-pip" id="csPip"><img id="csPipImg" src="" alt=""/></div>
 
   <section class="skills-portrait-section fade-up">
     <p class="section-label">Core Competencies</p>
@@ -2135,7 +2153,6 @@ body.preloading{overflow:hidden;height:100vh;}
   </section>
 
   <section class="testimonials-section fade-up">
-    <p class="section-label">Testimonials</p>
     <div class="bento-grid">
       <div class="bento-pair">
         <div class="bento-card stat-card mint">
@@ -2177,37 +2194,6 @@ body.preloading{overflow:hidden;height:100vh;}
     </div>
   </section>
 
-  <section class="cal-section fade-up">
-    <div class="cal-card">
-      <div class="cal-left">
-        <p class="cal-eyebrow">Let's talk</p>
-        <p class="cal-heading">Book a discovery call</p>
-        <p class="cal-sub">Free &middot; 15 - 30 min &middot; Video call</p>
-      </div>
-      <button
-        class="cal-btn"
-        data-cal-namespace="30min"
-        data-cal-link="isaacoreoluwa/30min"
-        data-cal-config='{"layout":"month_view","theme":"dark"}'>
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book a call
-      </button>
-    </div>
-  </section>
-
-  <section class="spotify-section fade-up">
-    <iframe
-      src="https://open.spotify.com/embed/album/74ZmfymZFiIggYZQVE4mBh?utm_source=generator&theme=0"
-      width="100%"
-      height="152"
-      frameborder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"
-      style="border-radius:12px;">
-    </iframe>
-  </section>
-
   <section class="pegboard-section fade-up">
     <div class="pegboard" id="pegboard">
       <div class="pegboard-items" id="pegboardItems">
@@ -2239,6 +2225,17 @@ body.preloading{overflow:hidden;height:100vh;}
       <div class="peg-item photo" style="position:absolute;left:84%;top:8%;width:160px;height:190px;--tilt:-1.6deg;">
         <span class="clip-binder"></span>
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391193/DD843C48-E00E-4789-B723-F8CB92497EEA_gvi4zo.jpg" alt="" loading="lazy"/>
+      </div>
+
+      <div class="peg-item spotify-card" style="position:absolute;left:60%;top:26%;width:230px;height:200px;--tilt:-1.4deg;">
+        <span class="clip-binder"></span>
+        <iframe
+          src="https://open.spotify.com/embed/album/74ZmfymZFiIggYZQVE4mBh?utm_source=generator&theme=0"
+          frameborder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
       </div>
 
       <div class="peg-item calendar-card" style="position:absolute;left:48%;top:55%;width:320px;height:150px;--tilt:-0.8deg;">
@@ -2288,6 +2285,24 @@ body.preloading{overflow:hidden;height:100vh;}
         </svg>
       </div>
       </div>
+    </div>
+  </section>
+
+  <section class="cal-section fade-up">
+    <div class="cal-card">
+      <div class="cal-left">
+        <p class="cal-eyebrow">Let's talk</p>
+        <p class="cal-heading">Book a discovery call</p>
+        <p class="cal-sub">Free &middot; 15 - 30 min &middot; Video call</p>
+      </div>
+      <button
+        class="cal-btn"
+        data-cal-namespace="30min"
+        data-cal-link="isaacoreoluwa/30min"
+        data-cal-config='{"layout":"month_view","theme":"dark"}'>
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Book a call
+      </button>
     </div>
   </section>
 
@@ -2605,6 +2620,122 @@ body.preloading{overflow:hidden;height:100vh;}
 })();
 
 document.addEventListener('DOMContentLoaded', function(){
+  // Case-study pinned-scroll gallery: sticky text column on the left syncs
+  // to whichever panel is centered in the viewport on the right, using
+  // IntersectionObserver with a thin center band as the "active" trigger.
+  // The outgoing panel's image gets a shared-element shrink-to-corner (PiP)
+  // transition before fading out.
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.cs-panel'));
+  if(!panels.length) return;
+
+  var titleEl = document.getElementById('csTitle');
+  var descEl = document.getElementById('csDesc');
+  var chipEl = document.getElementById('csChip');
+  var chipIconEl = document.getElementById('csChipIcon');
+  var chipNameEl = document.getElementById('csChipName');
+  var chipMetaEl = document.getElementById('csChipMeta');
+  var pip = document.getElementById('csPip');
+  var pipImg = document.getElementById('csPipImg');
+  var fadeEls = [titleEl, descEl, chipEl].filter(Boolean);
+
+  var activePanel = null;
+  var textTimer = null;
+
+  function setText(panel){
+    clearTimeout(textTimer);
+    fadeEls.forEach(function(el){ el.classList.remove('cs-in'); });
+
+    textTimer = setTimeout(function(){
+      if(titleEl) titleEl.textContent = panel.dataset.title || '';
+      if(descEl) descEl.textContent = panel.dataset.desc || '';
+      if(chipNameEl) chipNameEl.textContent = panel.dataset.chipName || '';
+      if(chipMetaEl) chipMetaEl.textContent = panel.dataset.chipMeta || '';
+      if(chipIconEl){
+        var iconSrc = panel.getAttribute('data-cursor-img');
+        if(iconSrc){
+          chipIconEl.style.background = panel.dataset.chipColor || 'var(--bg2)';
+          chipIconEl.innerHTML = '<img src="' + iconSrc + '" alt=""/>';
+        } else {
+          chipIconEl.style.background = panel.dataset.chipColor || 'var(--bg2)';
+          chipIconEl.textContent = panel.dataset.chipLetter || '';
+        }
+      }
+      if(chipEl){
+        chipEl.href = panel.dataset.href || '#';
+        if(panel.dataset.target){ chipEl.target = panel.dataset.target; } else { chipEl.removeAttribute('target'); }
+      }
+      requestAnimationFrame(function(){
+        fadeEls.forEach(function(el){ el.classList.add('cs-in'); });
+      });
+    }, 160);
+  }
+
+  function triggerPip(outgoingPanel){
+    if(!pip || !pipImg || !outgoingPanel || window.innerWidth <= 900) return;
+    var media = outgoingPanel.querySelector('.cs-panel-media');
+    if(!media) return;
+    var rect = media.getBoundingClientRect();
+    // Skip if the outgoing panel isn't at least partly on-screen — avoids a
+    // pip flying in from way off-screen when panels are skipped quickly.
+    if(rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+    pipImg.src = media.currentSrc || media.src;
+    pip.style.display = 'block';
+    pip.style.transition = 'none';
+    pip.style.width = rect.width + 'px';
+    pip.style.height = rect.height + 'px';
+    pip.style.left = rect.left + 'px';
+    pip.style.top = rect.top + 'px';
+    pip.style.opacity = '1';
+
+    void pip.offsetWidth; // force reflow so the next change animates
+
+    var targetW = 190, targetH = 120;
+    var targetLeft = window.innerWidth - targetW - 32;
+    var targetTop = window.innerHeight - targetH - 32;
+
+    pip.style.transition = 'top 0.5s cubic-bezier(0.16,1,0.3,1), left 0.5s cubic-bezier(0.16,1,0.3,1), width 0.5s cubic-bezier(0.16,1,0.3,1), height 0.5s cubic-bezier(0.16,1,0.3,1)';
+    pip.style.width = targetW + 'px';
+    pip.style.height = targetH + 'px';
+    pip.style.left = targetLeft + 'px';
+    pip.style.top = targetTop + 'px';
+
+    clearTimeout(pip._hideTimer);
+    pip._hideTimer = setTimeout(function(){
+      pip.style.transition += ', opacity 0.4s ease';
+      pip.style.opacity = '0';
+      pip._hideTimer = setTimeout(function(){ pip.style.display = 'none'; }, 420);
+    }, 650);
+  }
+
+  function activate(panel){
+    if(panel === activePanel) return;
+    var prev = activePanel;
+    activePanel = panel;
+    if(prev){
+      prev.classList.remove('is-active');
+      triggerPip(prev);
+    }
+    panel.classList.add('is-active');
+    setText(panel);
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting) activate(entry.target);
+      });
+    }, {threshold:0, rootMargin:'-45% 0px -45% 0px'});
+    panels.forEach(function(p){ io.observe(p); });
+  }
+
+  activate(panels[0]);
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  // Per-card hover/focus interactions on top of the scroll-driven gallery
+  // above: cursor-follow preview, sibling defocus dimming, and a swap to a
+  // higher-quality "focus" image while hovered — restored from the old grid.
   var preview = document.getElementById('cursorPreview');
   var previewImg = document.getElementById('cursorPreviewImg');
   var previewTicker = document.getElementById('cursorPreviewTicker');
@@ -2627,79 +2758,55 @@ document.addEventListener('DOMContentLoaded', function(){
     mouseY = e.clientY;
   });
 
-  var items = document.querySelectorAll('.work-grid .work-item');
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.cs-panel'));
   var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  // Remember each thumbnail's animated (gif) source so we can restore it later.
-  items.forEach(function(item){
-    var thumbImg = item.querySelector('.work-thumb img');
-    if(thumbImg) thumbImg.dataset.gifSrc = thumbImg.src;
+  // Remember each panel's original (gif) source so it can be restored on mouseleave.
+  panels.forEach(function(panel){
+    var media = panel.querySelector('.cs-panel-media');
+    if(media) media.dataset.gifSrc = media.src;
   });
 
-  // Match each card's aspect ratio to its gif's real dimensions, so the
-  // thumbnail shows uncropped at rest instead of a fixed generic ratio.
-  items.forEach(function(item){
-    var thumbImg = item.querySelector('.work-thumb img');
-    if(!thumbImg) return;
-    var applyRatio = function(){
-      if(thumbImg.naturalWidth && thumbImg.naturalHeight){
-        item.style.aspectRatio = thumbImg.naturalWidth + ' / ' + thumbImg.naturalHeight;
-      }
-    };
-    if(thumbImg.complete){ applyRatio(); } else { thumbImg.addEventListener('load', applyRatio, {once:true}); }
-  });
-
-  // Preload the static/focus images ahead of time so the first hover doesn't
-  // stall waiting on a network fetch — this is what was causing the lag.
-  // Only needed on devices that actually support hover (desktop/trackpad).
   if(supportsHover){
     var preloadImages = [];
-    items.forEach(function(item){
+    panels.forEach(function(panel){
       ['data-focus-img','data-cursor-img'].forEach(function(attr){
-        var src = item.getAttribute(attr);
+        var src = panel.getAttribute(attr);
         if(src) preloadImages.push(src);
       });
     });
     var warmUp = function(){
-      preloadImages.forEach(function(src){
-        var img = new Image();
-        img.src = src;
-      });
+      preloadImages.forEach(function(src){ var img = new Image(); img.src = src; });
     };
     if('requestIdleCallback' in window){ requestIdleCallback(warmUp); } else { setTimeout(warmUp, 200); }
 
-    items.forEach(function(item){
-      var thumb = item.querySelector('.work-thumb img');
-      if(!thumb) return;
-      var isWide = item.classList.contains('work-item-wide');
+    panels.forEach(function(panel){
+      var media = panel.querySelector('.cs-panel-media');
+      if(!media) return;
+      var isWide = panel.classList.contains('cs-panel-wide');
 
-      item.addEventListener('mouseenter', function(){
-        previewImg.src = item.getAttribute('data-cursor-img') || thumb.src;
+      panel.addEventListener('mouseenter', function(){
+        previewImg.src = panel.getAttribute('data-cursor-img') || media.src;
         preview.classList.add('active');
         if(previewTicker) previewTicker.classList.toggle('active', isWide);
         if(!rafId) tick();
 
-        // The wide "coming soon" card keeps the cursor-preview magnifier
-        // but is excluded from the focus-mode interaction — hovering it
-        // never dims siblings, and its own thumbnail never swaps to a
-        // focus image (it has none to swap between).
         if(isWide) return;
 
-        // Defocus every other (non-wide) card, and swap this card's own
-        // thumbnail to its higher-quality focus image while hovered.
-        items.forEach(function(other){
-          if(other.classList.contains('work-item-wide')) return;
-          if(other === item){
+        panels.forEach(function(other){
+          if(other.classList.contains('cs-panel-wide')) return;
+          if(other === panel){
             other.classList.remove('is-defocused');
             var focusSrc = other.getAttribute('data-focus-img');
-            var otherThumb = other.querySelector('.work-thumb img');
-            if(focusSrc && otherThumb) otherThumb.src = focusSrc;
+            var otherMedia = other.querySelector('.cs-panel-media');
+            if(focusSrc && otherMedia) otherMedia.src = focusSrc;
           } else {
             other.classList.add('is-defocused');
           }
         });
       });
-      item.addEventListener('mouseleave', function(){
+
+      panel.addEventListener('mouseleave', function(){
         preview.classList.remove('active');
         if(previewTicker) previewTicker.classList.remove('active');
         cancelAnimationFrame(rafId);
@@ -2707,13 +2814,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
         if(isWide) return;
 
-        // Restore every card: clear defocus and swap thumbnails back to
-        // their original animated (gif) source.
-        items.forEach(function(other){
-          if(other.classList.contains('work-item-wide')) return;
+        panels.forEach(function(other){
+          if(other.classList.contains('cs-panel-wide')) return;
           other.classList.remove('is-defocused');
-          var otherThumb = other.querySelector('.work-thumb img');
-          if(otherThumb && otherThumb.dataset.gifSrc) otherThumb.src = otherThumb.dataset.gifSrc;
+          var otherMedia = other.querySelector('.cs-panel-media');
+          if(otherMedia && otherMedia.dataset.gifSrc) otherMedia.src = otherMedia.dataset.gifSrc;
         });
       });
     });
