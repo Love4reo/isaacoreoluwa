@@ -1234,6 +1234,75 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
   text-transform:uppercase;
   color:rgba(138,255,193,0.55);
 }
+.clock-card{cursor:pointer;}
+.clock-expand-backdrop{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0);
+  z-index:9997;
+  opacity:0;
+  pointer-events:none;
+  transition:background 0.45s ease, opacity 0.45s ease;
+}
+.clock-expand-backdrop.active{
+  background:rgba(0,0,0,0.86);
+  opacity:1;
+  pointer-events:auto;
+}
+.clock-card.clock-expanded{
+  box-shadow:0 40px 100px rgba(0,0,0,0.6);
+}
+.clock-card.clock-expanded .digital-clock{
+  border-radius:inherit;
+  gap:18px;
+}
+.clock-card.clock-expanded .digital-clock-time{
+  font-size:min(13vw,150px);
+  letter-spacing:5px;
+  transition:font-size 0.5s cubic-bezier(0.16,1,0.3,1), letter-spacing 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.clock-card.clock-expanded .digital-clock-date{
+  font-size:min(2.6vw,22px);
+  letter-spacing:5px;
+  transition:font-size 0.5s cubic-bezier(0.16,1,0.3,1), letter-spacing 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.clock-expand-close{
+  position:absolute;
+  top:22px;right:22px;
+  width:42px;height:42px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(138,255,193,0.3);
+  color:#8affc1;
+  font-size:22px;
+  line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  opacity:0;
+  transform:scale(0.8);
+  pointer-events:none;
+  transition:opacity 0.3s ease 0.25s, transform 0.3s ease 0.25s;
+  z-index:2;
+}
+.clock-card.clock-expanded .clock-expand-close{
+  opacity:1;
+  transform:scale(1);
+  pointer-events:auto;
+}
+.clock-expand-hint{
+  position:absolute;
+  bottom:22px;left:50%;
+  transform:translateX(-50%);
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:rgba(138,255,193,0.4);
+  opacity:0;
+  transition:opacity 0.3s ease 0.35s;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.clock-card.clock-expanded .clock-expand-hint{opacity:1;}
 .love-particle{
   position:fixed;
   top:0;left:0;
@@ -1720,6 +1789,7 @@ body.light .preloader-grid{background-image:radial-gradient(rgba(0,0,0,0.07) 1px
 }
 .preloader-pct{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:0.04em;}
 body.preloading{overflow:hidden;height:100vh;}
+body.clock-expand-lock{overflow:hidden;}
 </style>
 </head>
 <body>
@@ -2230,7 +2300,7 @@ body.preloading{overflow:hidden;height:100vh;}
       <div class="peg-item spotify-card" style="position:absolute;left:60%;top:26%;width:230px;height:200px;--tilt:-1.4deg;">
         <span class="clip-binder"></span>
         <iframe
-          src="https://open.spotify.com/embed/album/3f7yVbV4DWziHiUBzcD0Pq?utm_source=generator&theme=0"
+          src="https://open.spotify.com/embed/track/1MGQJITgxRkZITT6aqcqfo?utm_source=generator&theme=0"
           frameborder="0"
           allowfullscreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
@@ -2255,12 +2325,19 @@ body.preloading{overflow:hidden;height:100vh;}
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1785391464/IMG_2935_r3cttd.jpg" alt="" loading="lazy"/>
       </div>
 
-      <div class="peg-item clock-card" style="position:absolute;left:76%;top:55%;width:170px;height:170px;--tilt:1.1deg;">
+      <div class="peg-item photo" style="position:absolute;left:34%;top:60%;width:160px;height:190px;--tilt:2.1deg;">
+        <span class="clip-binder"></span>
+        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1787346454/8B2A0D92-B174-4E82-BEDE-E32C9FB8A438_jev9aw.jpg" alt="" loading="lazy"/>
+      </div>
+
+      <div class="peg-item clock-card" id="pegClockCard" style="position:absolute;left:76%;top:55%;width:170px;height:170px;--tilt:1.1deg;">
         <span class="clip-binder"></span>
         <div class="digital-clock">
           <div class="digital-clock-time" id="pegDigitalTime">00:00:00</div>
           <div class="digital-clock-date" id="pegDigitalDate">&nbsp;</div>
         </div>
+        <button class="clock-expand-close" id="clockExpandClose" aria-label="Close">&times;</button>
+        <span class="clock-expand-hint">Tap to close</span>
       </div>
 
       <div class="peg-item photo" style="position:absolute;left:30%;top:30%;width:130px;height:150px;--tilt:-2deg;z-index:5;">
@@ -3229,6 +3306,126 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     updateClock();
     setInterval(updateClock, 1000);
+  })();
+
+  // Clock card fullscreen expand: a true shared-element zoom — the actual
+  // pegboard clock morphs from its small pinned position to fill the
+  // screen (still ticking live), then morphs back on close.
+  (function(){
+    var card = document.getElementById('pegClockCard');
+    var closeBtn = document.getElementById('clockExpandClose');
+    if(!card || !closeBtn) return;
+
+    var backdrop = document.createElement('div');
+    backdrop.className = 'clock-expand-backdrop';
+    document.body.appendChild(backdrop);
+
+    var isExpanded = false;
+    var saved = null;
+    var downX = 0, downY = 0, downTime = 0;
+
+    function expand(){
+      if(isExpanded) return;
+      var rect = card.getBoundingClientRect();
+      saved = {
+        parent: card.parentNode,
+        nextSibling: card.nextSibling,
+        position: card.style.position,
+        left: card.style.left,
+        top: card.style.top,
+        width: card.style.width,
+        height: card.style.height,
+        zIndex: card.style.zIndex,
+        transform: card.style.transform,
+        transition: card.style.transition
+      };
+
+      // Reparent to <body> first — .pegboard-section is a `.fade-up` element,
+      // and `.fade-up` sets will-change:transform (and later a real
+      // translateY transform once revealed). Either one makes that ancestor
+      // the containing block for any position:fixed descendant instead of
+      // the real viewport, which silently breaks the centering math below.
+      // getBoundingClientRect() above already gave us true viewport
+      // coordinates, so moving the node to <body> right now is seamless.
+      document.body.appendChild(card);
+
+      card.style.transition = 'none';
+      card.style.position = 'fixed';
+      card.style.left = rect.left + 'px';
+      card.style.top = rect.top + 'px';
+      card.style.width = rect.width + 'px';
+      card.style.height = rect.height + 'px';
+      card.style.zIndex = '9999';
+      card.style.transform = 'rotate(0deg)';
+
+      void card.offsetWidth; // force reflow before animating
+
+      card.style.transition = 'left 0.5s cubic-bezier(0.16,1,0.3,1), top 0.5s cubic-bezier(0.16,1,0.3,1), width 0.5s cubic-bezier(0.16,1,0.3,1), height 0.5s cubic-bezier(0.16,1,0.3,1), border-radius 0.5s ease';
+      isExpanded = true;
+      backdrop.classList.add('active');
+      document.body.classList.add('clock-expand-lock');
+
+      requestAnimationFrame(function(){
+        var side = Math.min(window.innerWidth, window.innerHeight) * 0.72;
+        card.style.left = ((window.innerWidth - side) / 2) + 'px';
+        card.style.top = ((window.innerHeight - side) / 2) + 'px';
+        card.style.width = side + 'px';
+        card.style.height = side + 'px';
+        card.style.borderRadius = '28px';
+        card.classList.add('clock-expanded');
+      });
+    }
+
+    function collapse(){
+      if(!isExpanded) return;
+      isExpanded = false;
+      card.classList.remove('clock-expanded');
+      backdrop.classList.remove('active');
+      document.body.classList.remove('clock-expand-lock');
+
+      card.style.left = saved.left;
+      card.style.top = saved.top;
+      card.style.width = saved.width;
+      card.style.height = saved.height;
+      card.style.borderRadius = '';
+
+      setTimeout(function(){
+        card.style.transition = saved.transition;
+        card.style.position = saved.position;
+        card.style.zIndex = saved.zIndex;
+        card.style.transform = saved.transform;
+        // Move it back to exactly where it lived in the pegboard DOM.
+        if(saved.nextSibling){
+          saved.parent.insertBefore(card, saved.nextSibling);
+        } else {
+          saved.parent.appendChild(card);
+        }
+      }, 520);
+    }
+
+    // Track genuine taps (not drags) independently of the pegboard's own
+    // drag script, so a real drag never accidentally triggers expand.
+    card.addEventListener('pointerdown', function(e){
+      downX = e.clientX; downY = e.clientY; downTime = Date.now();
+    });
+    card.addEventListener('pointerup', function(e){
+      if(e.target === closeBtn) return;
+      var dx = Math.abs(e.clientX - downX);
+      var dy = Math.abs(e.clientY - downY);
+      var dt = Date.now() - downTime;
+      if(dx < 6 && dy < 6 && dt < 500){
+        if(isExpanded){ collapse(); } else { expand(); }
+      }
+    });
+
+    closeBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      collapse();
+    });
+    backdrop.addEventListener('click', collapse);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') collapse();
+    });
   })();
 });
 
