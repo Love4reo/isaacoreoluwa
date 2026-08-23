@@ -1605,9 +1605,10 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   object-fit:contain;
   border-radius:10px;
   transform:scale(0.92);
-  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),max-height 0.35s ease;
   box-shadow:0 24px 80px rgba(0,0,0,0.6);
 }
+#sliderMediaWrap.quality-hidden img{max-height:90vh;}
 #sliderLightbox.on img{transform:scale(1);}
 #sliderClose{
   position:absolute;top:20px;right:24px;
@@ -3619,16 +3620,20 @@ function setQualityBarState(){
   var text = document.getElementById('sliderQualityText');
   var btn = document.getElementById('sliderQualityBtn');
   var bar = document.getElementById('sliderQualityBar');
+  var mediaWrap = document.getElementById('sliderMediaWrap');
   if(!text || !btn) return;
   btn.classList.remove('is-loading');
   btn.disabled = false;
   if(sliderShowingHD){
     // Once they've switched to full quality, just fade the whole bar away
-    // instead of offering a "Back to optimized" fallback.
+    // instead of offering a "Back to optimized" fallback — and let the
+    // image grow into the space the bar leaves behind, re-centered.
     if(bar) bar.classList.add('is-hidden');
+    if(mediaWrap) mediaWrap.classList.add('quality-hidden');
     return;
   }
   if(bar) bar.classList.remove('is-hidden');
+  if(mediaWrap) mediaWrap.classList.remove('quality-hidden');
   var fast = hasFastConnection();
   if(fast === true){
     text.textContent = "You're on a fast connection — full quality available";
