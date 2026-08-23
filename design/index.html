@@ -80,12 +80,23 @@ header.scrolled{border-bottom-color:transparent;}
   margin-right:9px;
 }
 .nav-name-row{display:flex;align-items:center;}
-.name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.03em;}
+.name{
+  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--text);letter-spacing:-0.03em;
+  max-width:240px;
+  overflow:hidden;
+  white-space:nowrap;
+  opacity:1;
+  transition:opacity 0.3s ease,max-width 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.nav-avatar.visible + .name{
+  opacity:0;
+  max-width:0;
+}
 .availability{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);font-family:var(--mono);}
 .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e88;animation:pulse 2s ease-in-out infinite;}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
 .hero{margin-bottom:56px;}
-.hero h1{font-size:clamp(22px,5vw,28px);font-weight:500;line-height:1.25;letter-spacing:-0.03em;color:var(--text);margin-bottom:16px;}
+.hero h1{font-size:clamp(28px,6.5vw,38px);font-weight:500;line-height:1.2;letter-spacing:-0.03em;color:var(--text);margin-bottom:16px;}
 .tagline{font-size:13px;color:var(--muted);font-family:var(--mono);margin-bottom:20px;}
 .hero p{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;}
 .bio-text{font-size:14px;color:#71717a;line-height:1.75;max-width:520px;margin-top:0;margin-bottom:16px;}
@@ -1642,16 +1653,25 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   display:flex;align-items:center;gap:10px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.16);
-  border-radius:999px;
-  padding:7px 8px 7px 16px;
+  border-radius:18px;
+  padding:9px 8px 9px 16px;
   margin-top:14px;
   backdrop-filter:blur(8px);
+  opacity:1;
+  transition:opacity 0.35s ease,margin-top 0.35s ease;
+}
+#sliderQualityBar.is-hidden{
+  opacity:0;
+  pointer-events:none;
+  margin-top:0;
 }
 #sliderQualityText{
   font-family:var(--mono);
   font-size:11px;
   color:rgba(255,255,255,0.65);
-  white-space:nowrap;
+  white-space:normal;
+  line-height:1.4;
+  max-width:280px;
 }
 #sliderQualityBtn{
   font-family:var(--mono);
@@ -3598,21 +3618,22 @@ function hasFastConnection(){
 function setQualityBarState(){
   var text = document.getElementById('sliderQualityText');
   var btn = document.getElementById('sliderQualityBtn');
+  var bar = document.getElementById('sliderQualityBar');
   if(!text || !btn) return;
   btn.classList.remove('is-loading');
   btn.disabled = false;
   if(sliderShowingHD){
-    text.textContent = 'Full quality';
-    btn.textContent = 'Back to optimized';
+    // Once they've switched to full quality, just fade the whole bar away
+    // instead of offering a "Back to optimized" fallback.
+    if(bar) bar.classList.add('is-hidden');
     return;
   }
+  if(bar) bar.classList.remove('is-hidden');
   var fast = hasFastConnection();
   if(fast === true){
-    text.textContent = 'Fast connection detected';
-  } else if(fast === false){
-    text.textContent = 'Optimized for speed';
+    text.textContent = "You're on a fast connection — full quality available";
   } else {
-    text.textContent = 'Optimized for speed';
+    text.textContent = "You're viewing a compressed version for faster loading";
   }
   btn.textContent = 'View full quality';
 }
@@ -3643,14 +3664,7 @@ document.addEventListener('DOMContentLoaded', function(){
       e.stopPropagation();
       var lbImg = document.getElementById('sliderLBImg');
       var current = sliderImages[sliderIndex];
-      if(!current) return;
-      if(sliderShowingHD){
-        // Switch back to the fast version — already cached by the browser.
-        sliderShowingHD = false;
-        lbImg.src = current.thumb;
-        setQualityBarState();
-        return;
-      }
+      if(!current || sliderShowingHD) return;
       qualityBtn.classList.add('is-loading');
       qualityBtn.disabled = true;
       qualityBtn.textContent = 'Loading…';
@@ -3664,8 +3678,7 @@ document.addEventListener('DOMContentLoaded', function(){
         qualityBtn.classList.remove('is-loading');
         qualityBtn.disabled = false;
         qualityBtn.textContent = 'View full quality';
-      };
-      hdImg.src = current.full;
+      };      hdImg.src = current.full;
     });
   }
   document.getElementById('sliderPrev').addEventListener('click', function(e){
@@ -3993,7 +4006,7 @@ document.addEventListener('keydown', function(e){
   <div id="sliderMediaWrap">
     <img id="sliderLBImg" src="" alt="Design work"/>
     <div id="sliderQualityBar" onclick="event.stopPropagation()">
-      <span id="sliderQualityText">Optimized for speed</span>
+      <span id="sliderQualityText">You're viewing a compressed version for faster loading</span>
       <button id="sliderQualityBtn" type="button">View full quality</button>
     </div>
   </div>
