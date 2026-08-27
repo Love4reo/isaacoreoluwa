@@ -623,7 +623,7 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
 .theme-toggle:hover svg{transform:rotate(30deg);}
 
 .work-banner{
-  width:calc(100vw);
+  width:100vw;
   margin-left:calc(-50vw + 50%);
   overflow:hidden;
   position:relative;
@@ -633,20 +633,12 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
   user-select:none;
 }
 .work-banner.dragging{cursor:grabbing;}
-.work-banner.dragging .slider-track,
-.work-banner.wheeling .slider-track{animation-play-state:paused;}
-.work-banner:hover .slider-track{animation-play-state:paused;}
 /* Slider track */
 .slider-track{
   display:flex;
   gap:12px;
   width:max-content;
-  animation:sliderLeft 30s linear infinite;
-}
-
-@keyframes sliderLeft{
-  0%{transform:translateX(0);}
-  100%{transform:translateX(-50%);}
+  will-change:transform;
 }
 .slide-card{
   position:relative;
@@ -3740,177 +3732,114 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'ArrowLeft') showSliderImage(sliderIndex - 1);
 });
 
-// Slider drag to scroll
+// Top slider — fully JS-driven infinite marquee. Replaces the old CSS
+// @keyframes-based auto-scroll so the auto-scroll direction itself can be
+// reversed live (a CSS keyframe animation can't do that), in response to
+// which way the page is being scrolled: scrolling down flips the marquee
+// to drift right, scrolling up flips it back to drift left (its natural
+// default direction). Dragging (mouse), trackpad horizontal wheel, and
+// hover-to-pause all still work, layered on top of the same trackX value.
 (function(){
   var banner = document.querySelector('.work-banner');
   var track  = document.querySelector('.slider-track');
   if(!banner || !track) return;
 
+  var DURATION = 30; // seconds for one full loop, matches the old CSS animation's pace
+  var totalWidth = 0;
+  var baseSpeed = 0; // px/frame, derived from totalWidth so pacing matches regardless of content width
+  var direction = -1; // -1 = left (default), 1 = right
+  var trackX = 0;
   var isDragging = false;
+  var isHovering = false;
+  var isWheeling = false;
   var startX = 0;
-  var offsetX = 0;
-  var currentTranslate = 0;
-  var animOffset = 0;
-  var lastAnimX = 0;
-  var raf;
+  var dragStartX = 0;
+  var wheelEndTimer = null;
+  var rafId = null;
 
-  // Read current animation translateX
-  function getAnimX(){
-    var style = window.getComputedStyle(track);
-    var matrix = new DOMMatrix(style.transform);
-    return matrix.m41;
+  function computeMetrics(){
+    totalWidth = track.scrollWidth / 2; // content is duplicated once for seamless looping
+    baseSpeed = totalWidth / (DURATION * 60); // assumes ~60fps; fine as a pace reference even when actual fps varies since rAF delta is roughly constant
   }
+  computeMetrics();
+  window.addEventListener('resize', computeMetrics);
+
+  function wrap(x){
+    if(totalWidth <= 0) return 0;
+    x = x % totalWidth;
+    if(x > 0) x -= totalWidth;
+    return x;
+  }
+
+  function render(){
+    track.style.transform = 'translateX(' + trackX + 'px)';
+  }
+
+  function frame(){
+    if(!isDragging && !isHovering && !isWheeling){
+      trackX = wrap(trackX + direction * baseSpeed);
+      render();
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+  rafId = requestAnimationFrame(frame);
+
+  // Hover pause (desktop only — coarse-pointer devices don't get real hover)
+  banner.addEventListener('mouseenter', function(){ isHovering = true; });
+  banner.addEventListener('mouseleave', function(){ isHovering = false; });
 
   var isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
-  banner.addEventListener('mousedown', function(e){
-    if(isCoarsePointer) return;
-    // Don't intercept clicks on slide-card
-    isDragging = true;
-    startX = e.clientX;
-    lastAnimX = getAnimX();
-    currentTranslate = lastAnimX;
-    track.style.animationPlayState = 'paused';
-    track.style.transform = 'translateX(' + currentTranslate + 'px)';
-    banner.classList.add('dragging');
-    e.preventDefault();
-  });
-
-  window.addEventListener('mousemove', function(e){
-    if(!isDragging) return;
-    var dx = e.clientX - startX;
-    var newX = currentTranslate + dx;
-    track.style.transform = 'translateX(' + newX + 'px)';
-    offsetX = dx;
-  });
-
-  window.addEventListener('mouseup', function(e){
-    if(!isDragging) return;
-    isDragging = false;
-    banner.classList.remove('dragging');
-    // Resume animation from current position
-    var finalX = currentTranslate + offsetX;
-    track.style.transform = '';
-    // Re-sync animation by adjusting animation-delay
-    var totalWidth = track.scrollWidth / 2;
-    var duration = 30; // seconds
-    var pct = (-finalX % totalWidth) / totalWidth;
-    if(pct < 0) pct += 1;
-    var delay = -(pct * duration);
-    track.style.animationDelay = delay + 's';
-    // Let CSS (:hover / .dragging) control play-state again instead of
-    // pinning it inline — pinning here is what broke pause-on-hover after
-    // any click (a click is just a mousedown+mouseup), including opening
-    // the slider lightbox.
-    track.style.removeProperty('animation-play-state');
-    offsetX = 0;
-  });
-
-  // Touch support — skipped on touch/coarse-pointer devices so slides are
-  // just tap-to-expand there instead of drag-to-scroll (the CSS marquee
-  // still auto-scrolls; this only disables the manual swipe-drag).
+  // Drag to scroll (mouse) — skipped on touch devices so slides there are
+  // just tap-to-expand, per the earlier mobile-specific request.
   if(!isCoarsePointer){
-  banner.addEventListener('touchstart', function(e){
-    isDragging = true;
-    startX = e.touches[0].clientX;
-    lastAnimX = getAnimX();
-    currentTranslate = lastAnimX;
-    track.style.animationPlayState = 'paused';
-    track.style.transform = 'translateX(' + currentTranslate + 'px)';
-    offsetX = 0;
-  }, {passive:true});
+    banner.addEventListener('mousedown', function(e){
+      isDragging = true;
+      startX = e.clientX;
+      dragStartX = trackX;
+      banner.classList.add('dragging');
+      e.preventDefault();
+    });
 
-  banner.addEventListener('touchmove', function(e){
-    if(!isDragging) return;
-    var dx = e.touches[0].clientX - startX;
-    track.style.transform = 'translateX(' + (currentTranslate + dx) + 'px)';
-    offsetX = dx;
-  }, {passive:true});
+    window.addEventListener('mousemove', function(e){
+      if(!isDragging) return;
+      trackX = wrap(dragStartX + (e.clientX - startX));
+      render();
+    });
 
-  banner.addEventListener('touchend', function(){
-    if(!isDragging) return;
-    isDragging = false;
-    var finalX = currentTranslate + offsetX;
-    track.style.transform = '';
-    var totalWidth = track.scrollWidth / 2;
-    var duration = 30;
-    var pct = (-finalX % totalWidth) / totalWidth;
-    if(pct < 0) pct += 1;
-    track.style.animationDelay = -(pct * duration) + 's';
-    track.style.removeProperty('animation-play-state');
-    offsetX = 0;
-  });
-  }
-})();
-
-// Slider trackpad gesture support — two-finger horizontal swipe scrolls the
-// track left/right manually, same resync logic as the drag handler above.
-// Wheel events fire in uneven, sometimes chunky bursts depending on
-// browser/trackpad, so raw deltaX applied 1:1 looks batchy — instead we feed
-// deltas into a target value and lerp the actual rendered position toward it
-// every frame (same smoothing technique used for the cursor-follow preview).
-(function(){
-  var banner = document.querySelector('.work-banner');
-  var track  = document.querySelector('.slider-track');
-  if(!banner || !track) return;
-
-  function getAnimX(){
-    var style = window.getComputedStyle(track);
-    var matrix = new DOMMatrix(style.transform);
-    return matrix.m41;
-  }
-  function lerp(a,b,t){ return a + (b - a) * t; }
-
-  var isWheeling = false;
-  var targetX = 0;
-  var currentX = 0;
-  var wheelEndTimer = null;
-  var settleTimer = null;
-  var rafId = null;
-
-  function frame(){
-    currentX = lerp(currentX, targetX, 0.2);
-    track.style.transform = 'translateX(' + currentX + 'px)';
-    if(isWheeling || Math.abs(targetX - currentX) > 0.05){
-      rafId = requestAnimationFrame(frame);
-    } else {
-      rafId = null;
-    }
+    window.addEventListener('mouseup', function(){
+      if(!isDragging) return;
+      isDragging = false;
+      banner.classList.remove('dragging');
+    });
   }
 
+  // Trackpad horizontal wheel/swipe support.
   banner.addEventListener('wheel', function(e){
     // Only take over for genuinely horizontal gestures (trackpad swipe or
     // shift+wheel) — let normal vertical page scroll pass through untouched.
     if(Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
     e.preventDefault();
 
-    if(!isWheeling){
-      isWheeling = true;
-      currentX = getAnimX();
-      targetX = currentX;
-      banner.classList.add('wheeling');
-      if(!rafId) rafId = requestAnimationFrame(frame);
-    }
-    targetX -= e.deltaX;
+    isWheeling = true;
+    trackX = wrap(trackX - e.deltaX);
+    render();
 
     clearTimeout(wheelEndTimer);
-    clearTimeout(settleTimer);
-    wheelEndTimer = setTimeout(function(){
-      isWheeling = false;
-      banner.classList.remove('wheeling');
-      // Give the lerp a moment to glide to a stop before handing control
-      // back to the CSS animation, so the resync doesn't cut it short.
-      settleTimer = setTimeout(function(){
-        track.style.transform = '';
-        var totalWidth = track.scrollWidth / 2;
-        var duration = 30;
-        var pct = (-targetX % totalWidth) / totalWidth;
-        if(pct < 0) pct += 1;
-        track.style.animationDelay = -(pct * duration) + 's';
-        track.style.removeProperty('animation-play-state');
-      }, 260);
-    }, 150);
+    wheelEndTimer = setTimeout(function(){ isWheeling = false; }, 150);
   }, {passive:false});
+
+  // Scroll-direction-linked marquee direction: scrolling the page down
+  // flips the marquee to drift right; scrolling up flips it back to drift
+  // left. Persists until the next opposite scroll (not a transient nudge).
+  var lastScrollY = window.scrollY;
+  window.addEventListener('scroll', function(){
+    var y = window.scrollY;
+    var delta = y - lastScrollY;
+    lastScrollY = y;
+    if(Math.abs(delta) < 1) return;
+    direction = delta > 0 ? 1 : -1;
+  }, {passive:true});
 })();
 
 // Muhsl Pro launch countdown — live, updates every minute.
