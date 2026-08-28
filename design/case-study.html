@@ -97,7 +97,27 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   border-radius:16px;overflow:hidden;
   border:1px solid var(--border);background:var(--bg2);
 }
-.cs-img-wrap img{display:block;width:100%;height:auto;}
+.cs-img-wrap img,.cs-img-wrap video{display:block;width:100%;height:auto;}
+
+.cs-video-wrap{position:relative;overflow:hidden;}
+.cs-video-wrap video{border-radius:inherit;}
+.cs-video-tooltip{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  overflow:hidden;
+  border:none;
+  background:var(--bg2);
+  box-shadow:none;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease;
+  z-index:20;
+}
+.cs-video-tooltip img{display:block;width:100%;height:100%;object-fit:cover;}
+.cs-video-wrap:hover .cs-video-tooltip{
+  opacity:1;
+}
 .cs-hero-img-wrap{
   margin:52px 0 0;
   opacity:0;
@@ -305,7 +325,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
           "Playful details — hand-drawn stickers, loose sticker-style callouts, an oversized wordmark — carry that same energy across the app, the website, and the marketing pages, so the brand feels consistent no matter where someone encounters it."
         ],
         images: [
-          "https://res.cloudinary.com/dmqyultl0/image/upload/v1787051543/Desktop_-_22_gs6exo.png",
+          "https://res.cloudinary.com/dmqyultl0/video/upload/v1787930591/bmncghc_xvwwxl.mp4",
           "https://res.cloudinary.com/dmqyultl0/image/upload/v1786984386/Desktop_-_27_1_p9ihqy.png",
           "https://res.cloudinary.com/dmqyultl0/image/upload/v1787005674/Desktop_-_33_htuyqp.png",
           "https://res.cloudinary.com/dmqyultl0/image/upload/v1787050545/Desktop_-_89_yljeqm.png"
@@ -455,7 +475,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
         var designParasHtml = (data.design.paragraphs && data.design.paragraphs.length)
           ? '<div class="cs-block" style="border-top:none;padding:0 0 40px;">'+ paragraphsHtml(data.design.paragraphs) +'</div>'
           : '';
+        var videoTooltips = {
+          "https://res.cloudinary.com/dmqyultl0/video/upload/v1787930591/bmncghc_xvwwxl.mp4": "https://res.cloudinary.com/dmqyultl0/image/upload/v1787051543/Desktop_-_22_gs6exo.png"
+        };
         var imgsHtml = (data.design.images || []).map(function(src){
+          var isVideo = /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
+          if(isVideo){
+            var tooltipSrc = videoTooltips[src];
+            var media = '<video src="'+ src +'" autoplay loop muted playsinline preload="auto"></video>';
+            var tooltip = tooltipSrc
+              ? '<div class="cs-video-tooltip"><img src="'+ tooltipSrc +'" alt="'+ escapeHtml(data.title) +' — detail"/></div>'
+              : '';
+            return '<div class="cs-img-wrap cs-video-wrap">'+ media + tooltip +'</div>';
+          }
           return '<div class="cs-img-wrap"><img src="'+ src +'" alt="'+ escapeHtml(data.title) +' — product screens"/></div>';
         }).join('');
         blocks += '<div class="wrap"><div class="cs-design-block reveal">'+
