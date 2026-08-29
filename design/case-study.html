@@ -240,7 +240,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 
 #csRoot{min-height:60vh;}
 
+@media(hover:none){
+  .cs-video-wrap:hover .cs-video-tooltip{opacity:0;}
+}
 @media(max-width:640px){
+  .cs-video-wrap:hover .cs-video-tooltip{opacity:0;}
   .cs-hero{padding-top:64px;}
   .cs-hero-img-wrap{margin-top:36px;}
   .cs-decision{grid-template-columns:1fr;gap:8px;padding:24px 0;}
