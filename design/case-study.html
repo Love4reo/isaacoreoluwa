@@ -286,7 +286,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   //
   // `order` controls the "Next case study" link at the bottom.
   // ---------------------------------------------------------------
-  var CASE_ORDER = ["mykommune", "sortmyscene", "case-06"];
+  var CASE_ORDER = ["mykommune", "travella", "sortmyscene", "case-06"];
 
   var CASE_STUDIES = {
     "mykommune": {
@@ -348,6 +348,68 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       reflection: [
         "Building myKommune made it clear this is less a \"new app\" problem and more a chaos-migration problem — people aren't choosing between products, they're being asked to leave a workflow they already trust. The real design challenge wasn't the interface, it was earning that switch.",
         "If I were starting over, I'd spend more time on the specific moment someone moves a group from WhatsApp into myKommune — that handoff is where most of the friction, and the trust, actually gets won or lost. It's a good reminder that the strongest product decisions usually come from naming the real problem precisely, not from adding more screens."
+      ]
+    },
+
+    "travella": {
+      title: "Simplifying the Rail Travel Experience",
+      role: "Product Designer",
+      timeline: "6 weeks",
+      platform: "App",
+
+      hero: "https://placehold.co/2400x1500/111113/52525b?text=Travella+%E2%80%94+Hero+Mockup",
+
+      context: "Travella is an all-in-one train schedule app built around the newly launched Lagos–Abeokuta–Ibadan train system. It brings accurate schedules, station details, real-time updates, and ticket information into a single accessible place — solving a problem the official channels hadn't solved yet — and is built to adapt easily to similar train systems.",
+
+      contextMedia: "https://placehold.co/1600x1000/111113/52525b?text=Travella+%E2%80%94+App+Overview",
+
+      problem: [
+        "A close friend needed to travel from Abeokuta to Lagos for a job interview and decided to try the newly launched Lagos–Abeokuta–Ibadan train for the first time — it seemed convenient and eco-friendly.",
+        "She hit a wall almost immediately: accurate, up-to-date schedule information simply wasn't accessible in one place. There was no official website or app dedicated to it — information was scattered across various platforms, and none of them offered a user-friendly experience."
+      ],
+
+      insight: "Research and surveys reinforced the same picture: more than 80% of people found their usual way of sourcing train schedules uncomfortable, and roughly 90% wanted access to that information through whichever channel felt most comfortable — app, website, or social media. The reframe: people didn't need more information sources, they needed one dependable, user-centric place — built around accessibility, real-time updates, and user-friendly features from the ground up.",
+
+      insightMedia: "https://placehold.co/1600x1000/111113/52525b?text=User+Research+%26+Interviews",
+
+      decisions: [
+        {
+          decision: "Started with research and user analysis.",
+          reasoning: "Interviews and surveys with people new to train travel surfaced real pain points and preferences, and a look at existing resources confirmed the gap: no dedicated, user-friendly source existed."
+        },
+        {
+          decision: "Moved into conceptualization and ideation.",
+          reasoning: "Brainstormed how the app should work end to end, then wireframed and prototyped early flows to visualize the interface before committing to a direction."
+        },
+        {
+          decision: "Designed around clarity, simplicity, and accessibility.",
+          reasoning: "Usability testing with representative users shaped the interface, and features were added specifically to keep the experience inclusive for users with diverse needs."
+        },
+        {
+          decision: "Partnered closely on development and implementation.",
+          reasoning: "Worked with developers on feasibility for real-time updates, interactive maps, and ticket purchasing, to make sure the design held up technically."
+        }
+      ],
+
+      design: {
+        intro: "https://placehold.co/1600x1000/111113/52525b?text=Lo-Fi+Wireframes",
+        paragraphs: [
+          "The visual system centers on a confident, deep green (#128400) paired with a warm, sunny yellow (#F4D31E) — a palette meant to feel energetic and easy to navigate at a glance, set in Inter for clean, highly legible type across dense schedule data.",
+          "Custom illustrations and a consistent icon set carry that same tone through onboarding, empty states, and everyday use, so the app feels approachable even to someone taking their very first train ride."
+        ],
+        images: [
+          "https://placehold.co/1600x1000/111113/52525b?text=Onboarding+Screens",
+          "https://placehold.co/1600x1000/111113/52525b?text=Schedule+%26+City+Selection",
+          "https://placehold.co/1600x1000/111113/52525b?text=Real-Time+Station+Map",
+          "https://placehold.co/1600x1000/111113/52525b?text=Ticket+Pricing+%26+Schedule"
+        ]
+      },
+
+      outcome: "Travella brings train schedules, station details, real-time updates, and ticket pricing for the Lagos–Abeokuta–Ibadan line into one dependable app — replacing calls to friends, scattered searches, and outdated pages with a single user-friendly source, while staying flexible enough to extend to other rail systems.",
+
+      outcomeMedia: [
+        "https://placehold.co/1600x1000/111113/52525b?text=Final+App+Screens",
+        "https://placehold.co/1600x1000/111113/52525b?text=Download+%2F+Closing+Screen"
       ]
     },
 
