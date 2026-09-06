@@ -24,6 +24,9 @@
 <link rel="dns-prefetch" href="https://res.cloudinary.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
+@view-transition{navigation:auto;}
+::view-transition-old(root){animation-duration:0.22s;animation-timing-function:cubic-bezier(.4,0,1,1);}
+::view-transition-new(root){animation-duration:0.28s;animation-timing-function:cubic-bezier(0,0,.2,1);}
 :root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;--nav-bg:rgba(9,9,11,0.72);}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--link-hov);outline-offset:2px;border-radius:4px;}
@@ -2100,7 +2103,7 @@ body.clock-expand-lock{overflow:hidden;}
         <p class="cs-eyebrow">Case Studies</p>
         <h2 class="cs-title cs-fade cs-in" id="csTitle">Simplifying Community Engagement and Event Discovery</h2>
         <p class="cs-desc cs-fade cs-in" id="csDesc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
-        <a class="cs-chip cs-fade cs-in" id="csChip" href="/design/case-study.html?id=mykommune">
+        <a class="cs-chip cs-fade cs-in" id="csChip" href="/design/casestudy/mykommune/">
           <span class="cs-chip-icon" id="csChipIcon" style="background:#a5f3c4;"><img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" alt=""/></span>
           <span class="cs-chip-text">
             <span class="cs-chip-name" id="csChipName">mykommune</span>
@@ -2110,9 +2113,9 @@ body.clock-expand-lock{overflow:hidden;}
       </div>
 
       <div class="cs-panels">
-        <div class="cs-panel is-active" data-title="Simplifying Community Engagement and Event Discovery" data-desc="A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm." data-chip-name="mykommune" data-chip-meta="Product &middot; Community" data-chip-letter="M" data-chip-color="#a5f3c4" data-href="/design/case-study.html?id=mykommune" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png">
+        <div class="cs-panel is-active" data-title="Simplifying Community Engagement and Event Discovery" data-desc="A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm." data-chip-name="mykommune" data-chip-meta="Product &middot; Community" data-chip-letter="M" data-chip-color="#a5f3c4" data-href="/design/casestudy/mykommune/" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786105252/Desktop_-_34_4_n6grks.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png">
           <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786033030/Untitled_design_4_ytsiig.gif" alt="mykommune"/>
-          <a class="cs-panel-link" href="/design/case-study.html?id=mykommune" aria-label="mykommune"></a>
+          <a class="cs-panel-link" href="/design/casestudy/mykommune/" aria-label="mykommune"></a>
           <div class="cs-panel-caption">
             <h3 class="cs-title">Simplifying Community Engagement and Event Discovery</h3>
             <p class="cs-desc">A community-first platform that makes it easier for people to discover local events, connect with their people, and engage beyond the algorithm.</p>
@@ -2137,27 +2140,27 @@ body.clock-expand-lock{overflow:hidden;}
           </div>
         </div>
 
-        <div class="cs-panel" data-title="Simplifying the Rail Travel Experience" data-desc="A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience &mdash; built for commuters navigating Nigeria&rsquo;s rail network." data-chip-name="Travella" data-chip-meta="Mobile &middot; UX" data-chip-letter="T" data-chip-color="#fde68a" data-href="/design/case-study-travella.html" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786116716/Desktop_-_34_5_a1xolo.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231948/One_ztnqkd.png">
+        <div class="cs-panel" data-title="Simplifying the Rail Travel Experience" data-desc="A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience &mdash; built for commuters navigating Nigeria&rsquo;s rail network." data-chip-name="Travella" data-chip-meta="Mobile &middot; UX" data-chip-letter="T" data-chip-color="#fde68a" data-href="/design/casestudy/travella/" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786116716/Desktop_-_34_5_a1xolo.png" data-focus-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto,w_900/v1785231948/One_ztnqkd.png">
           <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786081034/Untitled_design_7_d5pvnu.gif" alt="Train Schedule App"/>
-          <a class="cs-panel-link" href="/design/case-study-travella.html" aria-label="Rail Travel"></a>
+          <a class="cs-panel-link" href="/design/casestudy/travella/" aria-label="Rail Travel"></a>
           <div class="cs-panel-caption">
             <h3 class="cs-title">Simplifying the Rail Travel Experience</h3>
             <p class="cs-desc">A mobile app design simplifying train schedules, route planning, and ticketing into one seamless experience.</p>
           </div>
         </div>
 
-        <div class="cs-panel cs-panel-wide" data-title="SortMyScene" data-desc="Case study details launching soon." data-chip-name="SortMyScene" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#c4b5fd" data-href="/design/case-study.html?id=sortmyscene" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_900/v1786388210/Desktop_-_260_1_aboq58.png">
+        <div class="cs-panel cs-panel-wide" data-title="SortMyScene" data-desc="Case study details launching soon." data-chip-name="SortMyScene" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#c4b5fd" data-href="/design/casestudy/sortmyscene/" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_900/v1786388210/Desktop_-_260_1_aboq58.png">
           <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png" alt="SortMyScene"/>
-          <a class="cs-panel-link" href="/design/case-study.html?id=sortmyscene" aria-label="SortMyScene"></a>
+          <a class="cs-panel-link" href="/design/casestudy/sortmyscene/" aria-label="SortMyScene"></a>
           <div class="cs-panel-caption">
             <h3 class="cs-title">SortMyScene</h3>
             <p class="cs-desc">Case study details launching soon.</p>
           </div>
         </div>
 
-        <div class="cs-panel cs-panel-wide" data-title="Swaylink" data-desc="Case study details launching soon." data-chip-name="Swaylink" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#fca5a5" data-href="/design/case-study.html?id=case-06" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786565691/Desktop_-_263_1_kuwq2g.png">
+        <div class="cs-panel cs-panel-wide" data-title="Swaylink" data-desc="Case study details launching soon." data-chip-name="Swaylink" data-chip-meta="Coming Soon" data-chip-letter="S" data-chip-color="#fca5a5" data-href="/design/casestudy/swaylink/" data-cursor-img="https://res.cloudinary.com/dmqyultl0/image/upload/v1786565691/Desktop_-_263_1_kuwq2g.png">
           <img class="cs-panel-media" src="https://res.cloudinary.com/dmqyultl0/image/upload/v1786566445/Desktop_-_262_3_grcjyt.png" alt="Swaylink"/>
-          <a class="cs-panel-link" href="/design/case-study.html?id=case-06" aria-label="Swaylink"></a>
+          <a class="cs-panel-link" href="/design/casestudy/swaylink/" aria-label="Swaylink"></a>
           <div class="cs-panel-caption">
             <h3 class="cs-title">Swaylink</h3>
             <p class="cs-desc">Case study details launching soon.</p>
