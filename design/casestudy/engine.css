@@ -1,1 +1,252 @@
 
+@view-transition{navigation:auto;}
+::view-transition-old(root){animation-duration:0.22s;animation-timing-function:cubic-bezier(.4,0,1,1);}
+::view-transition-new(root){animation-duration:0.28s;animation-timing-function:cubic-bezier(0,0,.2,1);}
+:root{--bg:#09090b;--bg2:#111113;--border:rgba(255,255,255,0.07);--text:#e4e4e7;--muted:#52525b;--muted2:#3f3f46;--body:#a1a1aa;--link:#a1a1aa;--link-hov:#e4e4e7;--mono:"Geist Mono",monospace;--sans:"Geist",sans-serif;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+a:focus-visible,button:focus-visible{outline:2px solid var(--link-hov);outline-offset:2px;border-radius:4px;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;}
+::selection{background:rgba(255,255,255,0.16);}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,64px);
+  background:rgba(9,9,11,0.72);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.back-link{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:32px;
+  color:var(--link);text-decoration:none;
+  border:1px solid var(--border);border-radius:50%;
+  transition:color 0.15s,border-color 0.15s,background 0.15s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.back-link:hover{color:var(--link-hov);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);transform:translateX(-2px);}
+.back-link:active{transform:translateX(-2px) scale(0.9);}
+.back-link svg{width:15px;height:15px;flex-shrink:0;transition:transform 0.15s ease;}
+.back-link:hover svg{transform:translateX(-2px);}
+.topbar-clock{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:12px;letter-spacing:0.01em;color:var(--muted);
+  white-space:nowrap;
+}
+
+/* ---------- scroll-triggered reveal ---------- */
+@keyframes csFadeUp{to{opacity:1;transform:translateY(0);}}
+.reveal{
+  opacity:0;
+  transform:translateY(26px);
+  transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in-view{opacity:1;transform:translateY(0);}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .cs-title,.cs-meta,.cs-hero-img-wrap{animation:none;opacity:1;transform:none;}
+}
+
+/* ---------- layout ---------- */
+.wrap{max-width:100%;margin:0 auto;padding:0 clamp(20px,5vw,64px);}
+.section-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:16px;
+}
+
+/* ---------- hero ---------- */
+.cs-hero{padding:88px 0 0;text-align:center;}
+.cs-title{
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(30px,5.4vw,64px);line-height:1.08;letter-spacing:-0.03em;
+  color:var(--text);margin-bottom:20px;max-width:1000px;margin-left:auto;margin-right:auto;
+  opacity:0;transform:translateY(10px);
+  animation:csFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.cs-meta{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:0.02em;color:var(--muted);
+  text-transform:uppercase;
+  opacity:0;transform:translateY(10px);
+  animation:csFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.12s forwards;
+}
+.cs-meta span:not(:last-child)::after{content:'\00B7';margin-left:10px;color:var(--muted2);}
+.cs-hero-link{
+  display:inline-block;margin-top:22px;
+  font-family:var(--mono);font-size:12px;color:var(--link);text-decoration:none;
+  border-bottom:1px solid var(--border);
+  padding-bottom:2px;
+  transition:color 0.15s,border-color 0.15s;
+  opacity:0;transform:translateY(10px);
+  animation:csFadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.16s forwards;
+}
+.cs-hero-link:hover{color:var(--link-hov);border-color:var(--link-hov);}
+
+/* ---------- hero / design images ---------- */
+.cs-img-wrap{
+  border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);background:var(--bg2);
+}
+.cs-img-wrap img,.cs-img-wrap video{display:block;width:100%;height:auto;}
+
+.cs-video-wrap{position:relative;overflow:hidden;}
+.cs-video-wrap video{border-radius:inherit;}
+.cs-video-tooltip{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  overflow:hidden;
+  border:none;
+  background:var(--bg2);
+  box-shadow:none;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s ease;
+  z-index:20;
+}
+.cs-video-tooltip img{display:block;width:100%;height:100%;object-fit:cover;}
+.cs-video-wrap:hover .cs-video-tooltip{
+  opacity:1;
+}
+.cs-hero-img-wrap{
+  margin:52px 0 0;
+  opacity:0;
+  animation:csFadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+}
+
+/* ---------- generic full-width text section ---------- */
+.cs-block{padding:76px 0;border-top:1px solid var(--border);}
+.cs-block:first-of-type{border-top:none;}
+.cs-block p{font-size:16px;line-height:1.85;color:var(--body);max-width:none;}
+.cs-block p + p{margin-top:16px;}
+
+/* ---------- problem: large statement ---------- */
+.cs-problem p{
+  font-family:var(--sans);font-weight:600;
+  font-size:clamp(22px,3.2vw,36px);line-height:1.32;letter-spacing:-0.015em;
+  color:var(--text);max-width:none;
+}
+
+/* ---------- insight: accented paragraph ---------- */
+.cs-insight{position:relative;padding-left:24px;}
+.cs-insight::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:2px;background:var(--muted2);}
+.cs-insight p{font-size:17px;color:var(--text);}
+
+/* ---------- key decisions ---------- */
+.cs-decisions{display:flex;flex-direction:column;}
+.cs-decision{
+  display:grid;grid-template-columns:56px 1fr;gap:24px;
+  padding:32px 0;border-top:1px solid var(--border);
+}
+.cs-decision:first-child{border-top:none;padding-top:0;}
+.cs-decision-index{font-family:var(--mono);font-size:12px;color:var(--muted2);padding-top:3px;}
+.cs-decision-decision{font-size:18px;font-weight:600;letter-spacing:-0.01em;color:var(--text);margin-bottom:8px;line-height:1.4;}
+.cs-decision-reasoning{font-size:15px;line-height:1.8;color:var(--body);max-width:none;}
+
+/* ---------- design: big visual moment ---------- */
+.cs-design-block{padding:76px 0;}
+.cs-design-images{display:flex;flex-direction:column;gap:20px;}
+
+/* ---------- outcome: callout box ---------- */
+.cs-outcome-box{
+  border:1px solid var(--border);border-radius:16px;background:var(--bg2);
+  padding:clamp(24px,4vw,44px);
+}
+.cs-outcome-box p{font-size:16px;line-height:1.85;color:var(--body);max-width:none;}
+.cs-outcome-box p + p{margin-top:16px;}
+.cs-outcome-stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+  background:var(--border);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;margin-top:28px;
+}
+.cs-outcome-stat{background:var(--bg);padding:20px 16px;}
+.cs-outcome-stat .num{font-family:var(--sans);font-weight:700;font-size:22px;letter-spacing:-0.02em;color:var(--text);}
+.cs-outcome-stat .label{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:6px;line-height:1.5;}
+
+/* ---------- reflection: quiet + personal ---------- */
+.cs-reflection p{
+  font-size:16px;line-height:1.85;color:var(--body);font-style:italic;max-width:none;
+}
+.cs-reflection-placeholder{
+  font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--muted2);
+  border:1px dashed var(--border);border-radius:10px;padding:18px 20px;
+}
+
+/* ---------- coming soon ---------- */
+.cs-coming-soon{padding:80px 0 120px;text-align:center;}
+.cs-coming-soon .tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12px;letter-spacing:0.04em;color:var(--muted);
+  text-transform:uppercase;
+  border:1px solid var(--border);border-radius:999px;
+  padding:8px 18px;
+}
+
+/* ---------- next case study ---------- */
+.cs-next{
+  border-top:1px solid var(--border);
+  display:block;text-decoration:none;
+  padding:52px clamp(20px,5vw,64px);
+  transition:background 0.2s;
+}
+.cs-next:hover{background:rgba(255,255,255,0.015);}
+.cs-next-label{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:14px;
+}
+.cs-next-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;}
+.cs-next-title{
+  flex:1;min-width:0;
+  font-family:var(--sans);font-weight:700;
+  font-size:clamp(24px,4.5vw,46px);line-height:1.1;letter-spacing:-0.02em;color:var(--text);
+  transition:transform 0.2s cubic-bezier(0.16,1,0.3,1);
+}
+.cs-next:hover .cs-next-title{transform:translateX(6px);}
+.cs-next-arrow{
+  width:44px;height:44px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);border-radius:50%;color:var(--link);
+  transition:border-color 0.2s,color 0.2s,transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  margin-bottom:6px;
+}
+.cs-next:hover .cs-next-arrow{border-color:rgba(255,255,255,0.22);color:var(--link-hov);transform:translateX(4px);}
+.cs-next-arrow svg{width:16px;height:16px;}
+
+/* ---------- footer links ---------- */
+.cs-footer{
+  border-top:1px solid var(--border);
+  padding:28px 0 80px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.cs-footer-link{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--link);text-decoration:none;
+  font-family:var(--mono);font-size:12.5px;
+  padding:9px 16px;border:1px solid var(--border);border-radius:999px;
+  transition:color 0.15s,border-color 0.15s,background 0.15s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.cs-footer-link:hover{color:var(--link-hov);border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.03);transform:translateY(-1px);}
+.cs-footer-link:active{transform:translateY(0) scale(0.96);}
+
+#csRoot{min-height:60vh;}
+
+@media(hover:none){
+  .cs-video-wrap:hover .cs-video-tooltip{opacity:0;}
+}
+@media(max-width:640px){
+  .cs-video-wrap:hover .cs-video-tooltip{opacity:0;}
+  .cs-hero{padding-top:64px;}
+  .cs-hero-img-wrap{margin-top:36px;}
+  .cs-decision{grid-template-columns:1fr;gap:8px;padding:24px 0;}
+  .cs-block{padding:52px 0;}
+  .cs-design-block{padding:52px 0;}
+  .cs-design-images{gap:14px;}
+  .cs-outcome-box{margin-top:0;}
+  .cs-next{padding:40px clamp(20px,5vw,64px);}
+  .cs-coming-soon{padding:56px 0 88px;}
+}
+@media(max-width:400px){
+  .cs-hero{padding-top:48px;}
+  .cs-title{margin-bottom:16px;}
+}
