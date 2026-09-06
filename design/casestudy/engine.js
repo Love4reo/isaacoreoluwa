@@ -1,1 +1,328 @@
+// ---------------------------------------------------------------
+  // Case study data. Structured around Context → Problem → Insight →
+  // Key Decisions → Design → Outcome → Reflection, rather than a
+  // generic Problem/Research/Wireframes/UI walkthrough.
+  //
+  // Every field is optional — a case study only renders the sections
+  // it has real content for. Missing sections are simply skipped,
+  // except `reflection`, which always renders (as a placeholder
+  // prompt if no real reflection has been written yet), and `hero`,
+  // which is required.
+  //
+  // `order` controls the "Next case study" link at the bottom.
+  // ---------------------------------------------------------------
+  var CASE_ORDER = ["mykommune", "travella", "sortmyscene", "swaylink"];
+  var CASE_NAV = {
+    "mykommune": {title:"Simplifying community engagement and event discovery", url:"/design/casestudy/mykommune/"},
+    "travella": {title:"Simplifying the Rail Travel Experience", url:"/design/casestudy/travella/"},
+    "sortmyscene": {title:"Transforming how nightlife is discovered, managed, and experienced", url:"/design/casestudy/sortmyscene/"},
+    "swaylink": {title:"Swaylink", url:"/design/casestudy/swaylink/"}
+  };
 
+  var CASE_STUDIES = {
+    "mykommune": {
+      title: "Simplifying community engagement and event discovery",
+      role: "Product Designer",
+      timeline: "2–4 weeks",
+      platform: "App · Web",
+      hero: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786605156/Desktop_-_78_bzc8it.png",
+      link: {label:"Visit myKommune ↗", url:"https://www.behance.net/gallery/242100717/Simplifying-Community-Engagement-and-Event-Discovery"},
+
+      context: "myKommune is a community-driven platform that helps people, brands, and organizations connect, collaborate, and grow within shared spaces — both online and in person. It's built to reduce the friction of forming and sustaining communities, whether they're organized around work, interests, culture, or shared goals.",
+
+      contextMedia: "https://res.cloudinary.com/dmqyultl0/image/upload/v1787029494/Desktop_-_17_kbaadf.png",
+
+      problem: "Most community events still get organized inside WhatsApp groups — RSVPs buried in chat threads, payments handled through screenshots and bank transfers, and no single place to see who's actually coming. Ditch the WhatsApp chaos: that was the brief.",
+
+      insight: "The opportunity wasn't to build another events app — it was to give communities a single, structured space to plan, host, and join events, instead of relying on scattered chat threads. That reframing shaped every decision that followed: from how events get created to how people discover and commit to them.",
+
+      insightMedia: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786905615/539bd3242100717.6966450c2d615_xrsy3p.gif",
+
+      decisions: [
+        {
+          decision: "Kept the platform experience clear and simple.",
+          reasoning: "So people could create, discover, and join community-driven events without a learning curve getting in the way."
+        },
+        {
+          decision: "Designed every flow — creation, discovery, participation — with intention.",
+          reasoning: "Reducing friction at each step so the platform builds trust, instead of adding another layer of chat-app fatigue."
+        },
+        {
+          decision: "Built consistency across the app and website.",
+          reasoning: "So the experience feels seamless no matter where someone enters the product, on a foundation that can evolve as it grows."
+        }
+      ],
+
+      design: {
+        intro: "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030208/Desktop_-_6_1_ncfgkl.png",
+        paragraphs: [
+          "The visual direction leans warm and expressive — a cream base, bold display type, and candid photography that feels closer to a community zine than a typical SaaS product. It's built to feel human first, software second.",
+          "Playful details — hand-drawn stickers, loose sticker-style callouts, an oversized wordmark — carry that same energy across the app, the website, and the marketing pages, so the brand feels consistent no matter where someone encounters it."
+        ],
+        images: [
+          "https://res.cloudinary.com/dmqyultl0/video/upload/v1787930591/bmncghc_xvwwxl.mp4",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1786984386/Desktop_-_27_1_p9ihqy.png",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1787005674/Desktop_-_33_htuyqp.png",
+          "https://res.cloudinary.com/dmqyultl0/image/upload/v1787050545/Desktop_-_89_yljeqm.png"
+        ]
+      },
+
+      outcome: "myKommune is still in active development, so this is a look at the work so far rather than a finished-product story. What exists today: a consistent interface across the app and website, and a discovery flow designed specifically to replace ad-hoc WhatsApp planning. More of the product — and more of this case study — will follow as it takes shape.",
+
+      outcomeMedia: [
+        "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030702/Desktop_-_20_1_d2ipkd.png",
+        "https://res.cloudinary.com/dmqyultl0/image/upload/v1787030700/Desktop_-_88_sithaw.png"
+      ],
+
+      // No genuine personal reflection written yet — left as an
+      // explicit placeholder rather than an invented one.
+      reflection: [
+        "Building myKommune made it clear this is less a \"new app\" problem and more a chaos-migration problem — people aren't choosing between products, they're being asked to leave a workflow they already trust. The real design challenge wasn't the interface, it was earning that switch.",
+        "If I were starting over, I'd spend more time on the specific moment someone moves a group from WhatsApp into myKommune — that handoff is where most of the friction, and the trust, actually gets won or lost. It's a good reminder that the strongest product decisions usually come from naming the real problem precisely, not from adding more screens."
+      ]
+    },
+
+    "sortmyscene": {
+      title: "Transforming how nightlife is discovered, managed, and experienced",
+      role: "Product Designer",
+      timeline: "Placeholder — Present",
+      platform: "Placeholder",
+      hero: "https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png",
+      link: {label:"Visit SortMyScene ↗", url:"#"},
+      comingSoon: true
+    },
+
+    "swaylink": {
+      title: "Swaylink",
+      role: "Product Designer",
+      timeline: "Placeholder — Present",
+      platform: "Placeholder",
+      hero: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786566445/Desktop_-_262_3_grcjyt.png",
+      link: {label:"Visit project ↗", url:"#"},
+      comingSoon: true
+    }
+  };
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function paragraphsHtml(body){
+    var paras = Array.isArray(body) ? body : [body];
+    return paras.map(function(p){ return '<p>'+ escapeHtml(p) +'</p>'; }).join('');
+  }
+
+  function render(){
+    var params = new URLSearchParams(window.location.search);
+    var id = window.CASE_ID || params.get('id') || CASE_ORDER[0];
+    var data = CASE_STUDIES[id];
+    var root = document.getElementById('csRoot');
+
+    if(!data){
+      root.innerHTML = '<div class="wrap" style="padding:120px 24px;text-align:center;">'+
+        '<p style="font-family:var(--mono);font-size:12px;color:var(--muted);">Case study not found.</p>'+
+        '</div>';
+      return;
+    }
+
+    document.title = data.title + ' — Oreoluwa';
+
+    var metaParts = [];
+    if(data.role) metaParts.push(data.role);
+    if(data.timeline) metaParts.push(data.timeline);
+    if(data.platform) metaParts.push(data.platform);
+    var metaHtml = metaParts.map(function(m){ return '<span>'+ escapeHtml(m) +'</span>'; }).join('');
+
+    var heroHtml =
+      '<div class="wrap">'+
+        '<div class="cs-hero">'+
+          '<h1 class="cs-title">'+ escapeHtml(data.title) +'</h1>'+
+          (metaHtml ? '<div class="cs-meta">'+ metaHtml +'</div>' : '')+
+          (data.link ? '<a class="cs-hero-link" href="'+ data.link.url +'" target="_blank" rel="noopener">'+ escapeHtml(data.link.label) +'</a>' : '')+
+        '</div>'+
+        '<div class="cs-hero-img-wrap cs-img-wrap"><img src="'+ data.hero +'" alt="'+ escapeHtml(data.title) +'"/></div>'+
+      '</div>';
+
+    var bodyHtml;
+    if(data.comingSoon){
+      bodyHtml =
+        '<div class="wrap"><div class="cs-coming-soon reveal">'+
+          '<span class="tag">Full case study coming soon</span>'+
+        '</div></div>';
+    } else {
+      var blocks = '';
+
+      if(data.context){
+        blocks += '<div class="wrap"><div class="cs-block reveal">'+
+          '<span class="section-label">Context</span>'+
+          paragraphsHtml(data.context)+
+        '</div></div>';
+      }
+
+      if(data.contextMedia){
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          '<div class="cs-img-wrap"><img src="'+ data.contextMedia +'" alt="'+ escapeHtml(data.title) +'"/></div>'+
+        '</div></div>';
+      }
+
+      if(data.problem){
+        blocks += '<div class="wrap"><div class="cs-block cs-problem reveal">'+
+          '<span class="section-label">The Problem</span>'+
+          paragraphsHtml(data.problem)+
+        '</div></div>';
+      }
+
+      if(data.insight){
+        blocks += '<div class="wrap"><div class="cs-block reveal">'+
+          '<span class="section-label">The Insight</span>'+
+          '<div class="cs-insight">'+ paragraphsHtml(data.insight) +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.insightMedia){
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          '<div class="cs-img-wrap"><img src="'+ data.insightMedia +'" alt="'+ escapeHtml(data.title) +' — in action"/></div>'+
+        '</div></div>';
+      }
+
+      if(data.decisions && data.decisions.length){
+        var decisionsHtml = data.decisions.map(function(d, i){
+          return '<div class="cs-decision">'+
+            '<div class="cs-decision-index">'+ String(i+1).padStart(2,'0') +'</div>'+
+            '<div>'+
+              '<div class="cs-decision-decision">'+ escapeHtml(d.decision) +'</div>'+
+              (d.reasoning ? '<div class="cs-decision-reasoning">'+ escapeHtml(d.reasoning) +'</div>' : '')+
+            '</div>'+
+          '</div>';
+        }).join('');
+        blocks += '<div class="wrap"><div class="cs-block reveal">'+
+          '<span class="section-label">Key Design Decisions</span>'+
+          '<div class="cs-decisions">'+ decisionsHtml +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.design && ((data.design.images && data.design.images.length) || data.design.intro)){
+        var introImgHtml = data.design.intro
+          ? '<div class="cs-img-wrap" style="margin-bottom:32px;"><img src="'+ data.design.intro +'" alt="'+ escapeHtml(data.title) +' — design overview"/></div>'
+          : '';
+        var designParasHtml = (data.design.paragraphs && data.design.paragraphs.length)
+          ? '<div class="cs-block" style="border-top:none;padding:0 0 40px;">'+ paragraphsHtml(data.design.paragraphs) +'</div>'
+          : '';
+        var videoTooltips = {
+          "https://res.cloudinary.com/dmqyultl0/video/upload/v1787930591/bmncghc_xvwwxl.mp4": "https://res.cloudinary.com/dmqyultl0/image/upload/v1787051543/Desktop_-_22_gs6exo.png"
+        };
+        var imgsHtml = (data.design.images || []).map(function(src){
+          var isVideo = /\.(mp4|webm|mov)(\?.*)?$/i.test(src);
+          if(isVideo){
+            var tooltipSrc = videoTooltips[src];
+            var media = '<video src="'+ src +'" autoplay loop muted playsinline preload="auto"></video>';
+            var tooltip = tooltipSrc
+              ? '<div class="cs-video-tooltip"><img src="'+ tooltipSrc +'" alt="'+ escapeHtml(data.title) +' — detail"/></div>'
+              : '';
+            return '<div class="cs-img-wrap cs-video-wrap">'+ media + tooltip +'</div>';
+          }
+          return '<div class="cs-img-wrap"><img src="'+ src +'" alt="'+ escapeHtml(data.title) +' — product screens"/></div>';
+        }).join('');
+        blocks += '<div class="wrap"><div class="cs-design-block reveal">'+
+          '<span class="section-label">The Design</span>'+
+          introImgHtml +
+          designParasHtml +
+          '<div class="cs-design-images">'+ imgsHtml +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.outcome){
+        var outcomeStatsHtml = '';
+        if(data.outcomeStats && data.outcomeStats.length){
+          outcomeStatsHtml = '<div class="cs-outcome-stats">'+
+            data.outcomeStats.map(function(s){
+              return '<div class="cs-outcome-stat"><div class="num">'+ escapeHtml(s.num) +'</div><div class="label">'+ escapeHtml(s.label) +'</div></div>';
+            }).join('')+
+          '</div>';
+        }
+        blocks += '<div class="wrap"><div class="cs-block reveal">'+
+          '<span class="section-label">Outcome</span>'+
+          '<div class="cs-outcome-box">'+ paragraphsHtml(data.outcome) + outcomeStatsHtml +'</div>'+
+        '</div></div>';
+      }
+
+      if(data.outcomeMedia && data.outcomeMedia.length){
+        var outcomeMediaHtml = data.outcomeMedia.map(function(src){
+          return '<div class="cs-img-wrap"><img src="'+ src +'" alt="'+ escapeHtml(data.title) +'"/></div>';
+        }).join('<div style="height:20px;"></div>');
+        blocks += '<div class="wrap"><div class="cs-block reveal" style="border-top:none;padding-top:0;">'+
+          outcomeMediaHtml +
+        '</div></div>';
+      }
+
+      // Reflection always renders — as a real reflection if written,
+      // otherwise as an explicit placeholder prompt (never invented).
+      var reflectionInner = data.reflection
+        ? '<div class="cs-reflection">'+ paragraphsHtml(data.reflection) +'</div>'
+        : '<div class="cs-reflection-placeholder">Reflection placeholder — add 2–3 sentences: what you learned building this, what you\u2019d approach differently next time, and what this project shows about how you work as a designer.</div>';
+      blocks += '<div class="wrap"><div class="cs-block reveal">'+
+        '<span class="section-label">Reflection</span>'+
+        reflectionInner +
+      '</div></div>';
+
+      bodyHtml = blocks;
+    }
+
+    // Next case study
+    var idx = CASE_ORDER.indexOf(id);
+    var nextId = idx === -1 ? CASE_ORDER[0] : CASE_ORDER[(idx + 1) % CASE_ORDER.length];
+    var nextNav = CASE_NAV[nextId];
+    var nextHtml = '';
+    if(nextNav && nextId !== id){
+      nextHtml =
+        '<a class="cs-next" href="'+ nextNav.url +'">'+
+          '<span class="cs-next-label">Next case study</span>'+
+          '<div class="cs-next-row">'+
+            '<span class="cs-next-title">'+ escapeHtml(nextNav.title) +'</span>'+
+            '<span class="cs-next-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>'+
+          '</div>'+
+        '</a>';
+    }
+
+    var footerHtml =
+      '<div class="wrap"><div class="cs-footer reveal">'+
+        '<a class="cs-footer-link" href="/design/index.html">&larr; Back to all work</a>'+
+        '<a class="cs-footer-link" href="mailto:hello@isaacoreoluwa.xyz">Get in touch &rarr;</a>'+
+      '</div></div>';
+
+    root.innerHTML = heroHtml + bodyHtml + nextHtml + footerHtml;
+  }
+
+  function initScrollReveal(){
+    var items = document.querySelectorAll('.reveal');
+    if(!items.length) return;
+    if(!('IntersectionObserver' in window)){
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+    items.forEach(function(el){ observer.observe(el); });
+  }
+
+  function updateClock(){
+    var el = document.getElementById('topbarClockText');
+    if(!el) return;
+    var now = new Date();
+    var datePart = now.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
+    var timePart = now.toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'});
+    el.textContent = datePart + ' \u00B7 ' + timePart;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  render();
+  initScrollReveal();
