@@ -324,5 +324,19 @@
   updateClock();
   setInterval(updateClock, 1000);
 
+  /* ---------- smart back: reuse browser history so home's scroll position and
+     state are preserved instead of forcing a fresh navigation ---------- */
+  (function(){
+    var link = document.getElementById('backLink');
+    if(!link) return;
+    var cameFromSite = document.referrer && document.referrer.indexOf(location.origin) === 0;
+    if(cameFromSite && window.history.length > 1){
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        window.history.back();
+      });
+    }
+  })();
+
   render();
   initScrollReveal();
