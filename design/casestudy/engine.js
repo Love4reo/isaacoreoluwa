@@ -95,10 +95,9 @@
     "swaylink": {
       title: "Swaylink",
       role: "Product Designer",
-      timeline: "Placeholder — Present",
-      platform: "Placeholder",
+      timeline: "May 2026 — Present",
+      platform: "Web",
       hero: "https://res.cloudinary.com/dmqyultl0/image/upload/v1786566445/Desktop_-_262_3_grcjyt.png",
-      link: {label:"Visit project ↗", url:"#"},
       comingSoon: true
     }
   };
