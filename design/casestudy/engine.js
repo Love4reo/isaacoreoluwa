@@ -85,10 +85,10 @@
     "sortmyscene": {
       title: "Transforming how nightlife is discovered, managed, and experienced",
       role: "Product Designer",
-      timeline: "Placeholder — Present",
-      platform: "Placeholder",
+      timeline: "April 2025 — Present",
+      platform: "App · Web App",
       hero: "https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_2400/v1786385956/Desktop_-_259_satbns.png",
-      link: {label:"Visit SortMyScene ↗", url:"#"},
+      link: {label:"Visit SortMyScene ↗", url:"https://sortmyscene.com"},
       comingSoon: true
     },
 
