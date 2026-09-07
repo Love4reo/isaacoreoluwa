@@ -91,6 +91,12 @@ img{display:block;max-width:100%;}
 .meta-item .label{font-family:var(--mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
 .meta-item .value{font-size:14px;font-weight:600;}
 .meta-item .value a{color:var(--accent);text-decoration:none;}
+.type-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.type-tag{
+  font-size:12px;font-weight:600;color:var(--accent);
+  background:var(--accent-soft);border:1px solid rgba(74,222,128,0.25);
+  border-radius:999px;padding:3px 10px;
+}
 
 .hero-media{
   margin-top:40px;border-radius:20px;overflow:hidden;
@@ -397,10 +403,9 @@ footer a:hover{color:var(--text);border-color:rgba(255,255,255,0.18);background:
     <div class="meta-list">
       <div class="meta-item"><div class="label">Role</div><div class="value">Sole Product Designer</div></div>
       <div class="meta-item"><div class="label">Year</div><div class="value">2024</div></div>
-      <div class="meta-item"><div class="label">Type</div><div class="value">Travel · Mobile App · Concept</div></div>
+      <div class="meta-item"><div class="label">Type</div><div class="value type-tags"><span class="type-tag">Travel</span><span class="type-tag">Mobile App</span></div></div>
       <div class="meta-item"><div class="label">Project</div><div class="value"><a href="https://www.behance.net/gallery/198485845/Simplifying-the-Rail-Travel-Experience" target="_blank" rel="noopener">Travella ↗</a></div></div>
       <div class="meta-item"><div class="label">Team</div><div class="value">1 Designer, Dev collaborators</div></div>
-      <div class="meta-item"><div class="label">Status</div><div class="value">Concept case study</div></div>
     </div>
   </div>
 
