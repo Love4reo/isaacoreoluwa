@@ -38,7 +38,6 @@ img{display:block;max-width:100%;}
 }
 
 /* ---------- scroll progress + back-to-top ---------- */
-.scroll-progress{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--accent),var(--yellow));z-index:70;}
 .to-top{
   position:fixed;bottom:22px;right:22px;width:42px;height:42px;border-radius:50%;
   border:1px solid var(--border);background:rgba(17,17,19,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
@@ -386,7 +385,6 @@ footer a:hover{color:var(--text);border-color:rgba(255,255,255,0.18);background:
 </head>
 <body>
 
-<div class="scroll-progress" id="scrollProgress"></div>
 
 <div class="topbar">
   <a class="back-link" href="/design/index.html" id="backLink" aria-label="Back to work">
@@ -1053,16 +1051,12 @@ footer a:hover{color:var(--text);border-color:rgba(255,255,255,0.18);background:
 
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- scroll progress + back to top ---------- */
+  /* ---------- back to top ---------- */
   (function(){
-    var progress = document.getElementById('scrollProgress');
     var toTop = document.getElementById('toTop');
     function onScroll(){
       var doc = document.documentElement;
       var scrollTop = doc.scrollTop || document.body.scrollTop;
-      var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
-      var pct = Math.min((scrollTop / scrollHeight) * 100, 100);
-      if(progress) progress.style.width = pct + '%';
       if(toTop) toTop.classList.toggle('visible', scrollTop > 480);
     }
     document.addEventListener('scroll', onScroll, {passive:true});
