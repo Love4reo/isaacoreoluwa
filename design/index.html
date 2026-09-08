@@ -636,6 +636,8 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
   user-select:none;
 }
 .work-banner.dragging{cursor:grabbing;}
+.work-banner{transition:opacity 0.4s ease, transform 0.45s cubic-bezier(0.4,0,0.2,1);}
+.work-banner.view-hidden{opacity:0;transform:scale(0.96) translateY(-14px);pointer-events:none;}
 /* Slider track */
 .slider-track{
   display:flex;
@@ -756,6 +758,56 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
 }
 #gifBanner.gif-active{
   transform:scale(1.02);
+}
+
+/* Grid / slider view toggle */
+.view-toggle-row{display:flex;justify-content:flex-end;margin-bottom:14px;}
+.view-toggle-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg2);border:1px solid var(--border);border-radius:999px;
+  padding:6px 12px;cursor:pointer;font-family:var(--mono);font-size:11px;
+  color:var(--muted);transition:color 0.2s,border-color 0.2s,background 0.2s,transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+}
+.view-toggle-btn:hover{color:var(--link-hov);border-color:var(--link);transform:translateY(-1px);}
+.view-toggle-btn:active{transform:translateY(0) scale(0.94);}
+.view-toggle-btn svg{width:13px;height:13px;flex-shrink:0;}
+.view-toggle-btn .icon-slider{display:none;}
+.view-toggle-btn.is-grid .icon-grid{display:none;}
+.view-toggle-btn.is-grid .icon-slider{display:inline-flex;}
+
+.work-grid{
+  display:none;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  width:100vw;
+  margin-left:calc(-50vw + 50%);
+  padding:0 24px;
+  box-sizing:border-box;
+  margin-bottom:52px;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity 0.45s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+.work-grid.visible{opacity:1;transform:translateY(0);}
+@media(max-width:900px){
+  .work-grid{grid-template-columns:repeat(3,1fr);}
+}
+.grid-card{
+  position:relative;
+  border-radius:10px;
+  overflow:hidden;
+  aspect-ratio:3/2;
+  background:var(--bg2);
+  cursor:pointer;
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+}
+.grid-card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.05);transition:filter 0.3s, transform 0.4s ease;}
+@media(hover:hover) and (pointer:fine){
+  .grid-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.4);}
+  .grid-card:hover img{filter:grayscale(0);transform:scale(1.05);}
+}
+@media(max-width:640px){
+  .work-grid{grid-template-columns:repeat(2,1fr);gap:8px;padding:0 16px;}
 }
 
 .cal-section{margin-top:100px;margin-bottom:100px;display:flex;justify-content:center;}
@@ -1893,6 +1945,14 @@ body.clock-expand-lock{overflow:hidden;}
     <h1>I design products that drive growth, not just attention.</h1>
   </div>
 
+  <div class="view-toggle-row">
+    <button class="view-toggle-btn" id="viewToggleBtn" type="button" aria-label="Toggle grid view">
+      <span class="icon-grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+      <span class="icon-slider"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="14" height="10" rx="1"/><path d="M20 8v8"/><path d="M23 9v6"/></svg></span>
+      <span class="vt-label" id="viewToggleLabel">Grid view</span>
+    </button>
+  </div>
+
   <div class="work-banner fade-up" id="gifBanner">
     <div class="slider-track">
       <div class="slide-card">
@@ -2052,6 +2112,8 @@ body.clock-expand-lock{overflow:hidden;}
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1786198090/Desktop_-_405_yf2duw.png" alt="Design work" loading="lazy"/>
       </div>
     </div></div>
+
+  <div class="work-grid" id="workGrid"></div>
 
   <div class="bio-block" id="bioText">
     <p class="bio-text">Obsessed with thoughtful interactions, clean interfaces, and products that feel effortless. I design experiences where every detail has a purpose.</p>
@@ -3779,7 +3841,7 @@ document.addEventListener('keydown', function(e){
   }
 
   function frame(){
-    if(!isDragging && !isHovering && !isWheeling){
+    if(!isDragging && !isHovering && !isWheeling && !window.isSliderGridView){
       trackX = wrap(trackX + direction * baseSpeed);
       render();
     }
@@ -3843,6 +3905,92 @@ document.addEventListener('keydown', function(e){
     if(Math.abs(delta) < 1) return;
     direction = delta > 0 ? 1 : -1;
   }, {passive:true});
+})();
+
+// Grid / slider view toggle for the top work banner.
+window.isSliderGridView = false;
+(function(){
+  var banner = document.getElementById('gifBanner');
+  var grid = document.getElementById('workGrid');
+  var btn = document.getElementById('viewToggleBtn');
+  var label = document.getElementById('viewToggleLabel');
+  if(!banner || !grid || !btn) return;
+
+  var HIDE_MS = 400; // matches .work-banner transition duration
+  var built = false;
+  var animTimer = null;
+
+  function buildGrid(){
+    if(built) return;
+    built = true;
+    var imgs = Array.prototype.slice.call(document.querySelectorAll('.slide-card img'));
+    var half = Math.floor(imgs.length / 2) || imgs.length; // slide-cards are duplicated once for the marquee loop
+
+    // Randomize the grid's arrangement independent of the slider's order.
+    // We shuffle an index list (not the imgs themselves) so each cell can
+    // still call showSliderImage() with the correct original index.
+    var order = [];
+    for(var i = 0; i < half; i++) order.push(i);
+    for(var i = order.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = order[i]; order[i] = order[j]; order[j] = tmp;
+    }
+
+    var frag = document.createDocumentFragment();
+    order.forEach(function(origIdx){
+      var img = imgs[origIdx];
+      var cell = document.createElement('div');
+      cell.className = 'grid-card';
+      var im = document.createElement('img');
+      im.src = img.currentSrc || img.src;
+      im.alt = img.alt || 'Design work';
+      im.loading = 'lazy';
+      cell.appendChild(im);
+      cell.addEventListener('click', function(){
+        if(typeof showSliderImage === 'function'){
+          showSliderImage(origIdx);
+          document.getElementById('sliderLightbox').classList.add('on');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+      frag.appendChild(cell);
+    });
+    grid.appendChild(frag);
+  }
+
+  function showGrid(){
+    buildGrid();
+    window.isSliderGridView = true;
+    banner.classList.add('view-hidden');
+    btn.classList.add('is-grid');
+    if(label) label.textContent = 'Slider view';
+    clearTimeout(animTimer);
+    animTimer = setTimeout(function(){
+      banner.style.display = 'none';
+      grid.style.display = 'grid';
+      // Force a reflow so the transition below actually runs.
+      void grid.offsetWidth;
+      grid.classList.add('visible');
+    }, HIDE_MS);
+  }
+
+  function showSlider(){
+    window.isSliderGridView = false;
+    grid.classList.remove('visible');
+    btn.classList.remove('is-grid');
+    if(label) label.textContent = 'Grid view';
+    clearTimeout(animTimer);
+    animTimer = setTimeout(function(){
+      grid.style.display = 'none';
+      banner.style.display = '';
+      void banner.offsetWidth;
+      banner.classList.remove('view-hidden');
+    }, HIDE_MS);
+  }
+
+  btn.addEventListener('click', function(){
+    if(window.isSliderGridView) showSlider(); else showGrid();
+  });
 })();
 
 // Muhsl Pro launch countdown — live, updates every minute.
