@@ -4038,16 +4038,25 @@ window.isSliderGridView = false;
   if(!banner || !grid || !btn) return;
 
   var HIDE_MS = 400; // matches .work-banner transition duration
-  var built = false;
   var animTimer = null;
 
+  function shuffle(arr){
+    for(var i = arr.length - 1; i > 0; i--){
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
   function buildGrid(){
-    if(built) return;
-    built = true;
+    grid.innerHTML = '';
     var imgs = Array.prototype.slice.call(document.querySelectorAll('.slide-card img'));
     var half = Math.floor(imgs.length / 2) || imgs.length; // slide-cards are duplicated once for the marquee loop
+    var entries = imgs.slice(0, half).map(function(img, idx){ return {img:img, idx:idx}; });
+    shuffle(entries);
     var frag = document.createDocumentFragment();
-    imgs.slice(0, half).forEach(function(img, idx){
+    entries.forEach(function(entry){
+      var img = entry.img, idx = entry.idx;
       var cell = document.createElement('div');
       cell.className = 'grid-card';
       var im = document.createElement('img');
