@@ -733,17 +733,18 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
   transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
   cursor:pointer;
 }
+.slide-card:has(video){cursor:default;}
 @media(hover:hover) and (pointer:fine){
   .slide-card:hover{
     transform:scale(1.02) translateY(-3px);
     box-shadow:0 12px 40px rgba(0,0,0,0.4);
   }
-  .slide-card:hover img{ filter:grayscale(0); transform:scale(1.04); }
+  .slide-card:hover img, .slide-card:hover video{ filter:grayscale(0); transform:scale(1.04); }
   .slide-card:hover::after{
     background:rgba(0,0,0,0.28);
   }
 }
-.slide-card img{
+.slide-card img, .slide-card video{
   width:100%;
   height:100%;
   object-fit:cover;
@@ -875,7 +876,8 @@ body.light .proj-wip-tag{color:#a1a1aa;border-color:#a1a1aa;}
   cursor:pointer;
   transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
 }
-.grid-card img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.05);transition:filter 0.3s, transform 0.4s ease;}
+.grid-card:has(video){cursor:default;}
+.grid-card img, .grid-card video{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(0.05);transition:filter 0.3s, transform 0.4s ease;}
 @media(hover:hover) and (pointer:fine){
   .grid-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.4);}
   .grid-card:hover img{filter:grayscale(0);transform:scale(1.05);}
@@ -1723,7 +1725,7 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   max-width:92vw;
   max-height:90vh;
 }
-#sliderLightbox img{
+#sliderLightbox img, #sliderLightbox video{
   max-width:92vw;max-height:calc(90vh - 54px);
   object-fit:contain;
   border-radius:10px;
@@ -1731,8 +1733,8 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
   transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),max-height 0.35s ease;
   box-shadow:0 24px 80px rgba(0,0,0,0.6);
 }
-#sliderMediaWrap.quality-hidden img{max-height:90vh;}
-#sliderLightbox.on img{transform:scale(1);}
+#sliderMediaWrap.quality-hidden img, #sliderMediaWrap.quality-hidden video{max-height:90vh;}
+#sliderLightbox.on img, #sliderLightbox.on video{transform:scale(1);}
 #sliderClose{
   position:absolute;top:20px;right:24px;
   width:38px;height:38px;
@@ -1772,6 +1774,9 @@ header.is-expanded .header-icons a:not([data-tooltip="CV"]){
 }
 @media(hover:hover) and (pointer:fine){
   .slide-card{cursor:zoom-in;}
+  .slide-card:has(video){cursor:default;}
+  .grid-card{cursor:zoom-in;}
+  .grid-card:has(video){cursor:default;}
 }
 #sliderQualityBar{
   display:flex;align-items:center;gap:10px;
@@ -2093,9 +2098,6 @@ body.clock-expand-lock{overflow:hidden;}
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1785626148/Frame_1966951718_1_c1yg4d.png" alt="Design work" loading="lazy"/>
       </div>
       <div class="slide-card">
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1786198091/Desktop_-_404_1_tmjhql.png" alt="Design work" loading="lazy"/>
-      </div>
-      <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1786198090/Desktop_-_405_yf2duw.png" alt="Design work" loading="lazy"/>
       </div>
       <div class="slide-card">
@@ -2106,6 +2108,21 @@ body.clock-expand-lock{overflow:hidden;}
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1788944530/Frame_1984078424_mn2hir.png" alt="Design work" loading="lazy"/>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078305/Desktop-17_ctlmte.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078086/Desktop-10_rzldk3.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789077986/Desktop-11_zmivrt.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789077984/Instagram-post-82_adqgci.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078781/Desktop-3_1_aelrk4.mp4" autoplay loop muted playsinline></video>
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1785186112/Frame_1000003596_ioqerw.png" alt="Design work" loading="lazy"/>
@@ -2168,9 +2185,6 @@ body.clock-expand-lock{overflow:hidden;}
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1785626148/Frame_1966951718_1_c1yg4d.png" alt="Design work" loading="lazy"/>
       </div>
       <div class="slide-card">
-        <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1786198091/Desktop_-_404_1_tmjhql.png" alt="Design work" loading="lazy"/>
-      </div>
-      <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/f_auto,q_auto:best,w_800/v1786198090/Desktop_-_405_yf2duw.png" alt="Design work" loading="lazy"/>
       </div>
       <div class="slide-card">
@@ -2181,6 +2195,21 @@ body.clock-expand-lock{overflow:hidden;}
       </div>
       <div class="slide-card">
         <img src="https://res.cloudinary.com/dmqyultl0/image/upload/v1788944530/Frame_1984078424_mn2hir.png" alt="Design work" loading="lazy"/>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078305/Desktop-17_ctlmte.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078086/Desktop-10_rzldk3.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789077986/Desktop-11_zmivrt.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789077984/Instagram-post-82_adqgci.mp4" autoplay loop muted playsinline></video>
+      </div>
+      <div class="slide-card">
+        <video src="https://res.cloudinary.com/dmqyultl0/video/upload/v1789078781/Desktop-3_1_aelrk4.mp4" autoplay loop muted playsinline></video>
       </div>
     </div></div>
 
@@ -3197,9 +3226,10 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   });
 
-  // Custom "Expand +" cursor-follow badge for slider images — mouse/trackpad only.
-  // Touch devices synthesize a mouseenter right at tap time, which would
-  // otherwise flash this badge at the exact moment a card is tapped/opened.
+  // Custom "Expand +" cursor-follow badge for slider images and grid cells —
+  // mouse/trackpad only. Touch devices synthesize a mouseenter right at tap
+  // time, which would otherwise flash this badge at the exact moment a card
+  // is tapped/opened.
   if(window.matchMedia('(hover: hover) and (pointer: fine)').matches){
   var expandCursor = document.createElement('div');
   expandCursor.id = 'expandCursor';
@@ -3210,7 +3240,12 @@ document.addEventListener('DOMContentLoaded', function(){
     expandCursor.style.left = e.clientX + 'px';
     expandCursor.style.top = e.clientY + 'px';
   }
-  document.querySelectorAll('.slide-card').forEach(function(el){
+  // Exposed globally so the grid view (built dynamically, later, in a
+  // separate script block) can wire the same badge onto its cells.
+  window.wireExpandBadge = function(el){
+    if(el.querySelector('video')) return; // videos aren't expandable — no "Expand +" teaser
+    if(el.dataset.expandWired) return; // avoid double-binding the same element
+    el.dataset.expandWired = '1';
     el.addEventListener('mouseenter', function(){
       expandCursor.classList.add('visible');
       el.style.cursor = 'none';
@@ -3220,7 +3255,8 @@ document.addEventListener('DOMContentLoaded', function(){
       expandCursor.classList.remove('visible');
       el.style.cursor = '';
     });
-  });
+  };
+  document.querySelectorAll('.slide-card').forEach(window.wireExpandBadge);
   }
 
   // Love blast celebration — full-screen experience
@@ -3779,6 +3815,13 @@ function setQualityBarState(){
   if(!text || !btn) return;
   btn.classList.remove('is-loading');
   btn.disabled = false;
+  var entry = sliderImages[sliderIndex];
+  if(entry && entry.type === 'video'){
+    // Videos have a single source — no compressed/full-quality toggle to offer.
+    if(bar) bar.classList.add('is-hidden');
+    if(mediaWrap) mediaWrap.classList.add('quality-hidden');
+    return;
+  }
   if(sliderShowingHD){
     // Once they've switched to full quality, just fade the whole bar away
     // instead of offering a "Back to optimized" fallback — and let the
@@ -3798,14 +3841,47 @@ function setQualityBarState(){
   btn.textContent = 'View full quality';
 }
 
+// Videos aren't expandable, so prev/next navigation steps over any video
+// entries and lands on the next viewable image in that direction.
+function nextViewableIndex(from, dir){
+  var len = sliderImages.length;
+  if(len === 0) return from;
+  var i = from;
+  for(var n = 0; n < len; n++){
+    i = (i + dir + len) % len;
+    if(sliderImages[i] && sliderImages[i].type !== 'video') return i;
+  }
+  return from;
+}
+
 function showSliderImage(i){
   var len = sliderImages.length;
   if(len === 0) return;
   sliderIndex = (i + len) % len;
   sliderShowingHD = false;
-  document.getElementById('sliderLBImg').src = sliderImages[sliderIndex].thumb;
+  var entry = sliderImages[sliderIndex];
+  var lbImg = document.getElementById('sliderLBImg');
+  var lbVideo = document.getElementById('sliderLBVideo');
+  if(entry.type === 'video'){
+    lbImg.style.display = 'none';
+    lbImg.removeAttribute('src');
+    lbVideo.style.display = '';
+    if(lbVideo.getAttribute('src') !== entry.src){
+      lbVideo.src = entry.src;
+    }
+    lbVideo.currentTime = 0;
+    var playPromise = lbVideo.play();
+    if(playPromise && playPromise.catch) playPromise.catch(function(){});
+  } else {
+    lbVideo.pause();
+    lbVideo.removeAttribute('src');
+    lbVideo.load();
+    lbVideo.style.display = 'none';
+    lbImg.style.display = '';
+    lbImg.src = entry.thumb;
+    loadHD(sliderIndex, true); // kick off a background full-quality fetch right away
+  }
   setQualityBarState();
-  loadHD(sliderIndex, true); // kick off a background full-quality fetch right away
 }
 
 // Fetches the full-quality version of image `idx` and swaps it in once ready,
@@ -3814,7 +3890,7 @@ function showSliderImage(i){
 // auto=false → user pressed the button, so show loading feedback on it.
 function loadHD(idx, auto){
   var current = sliderImages[idx];
-  if(!current) return;
+  if(!current || current.type === 'video') return; // no HD variant for video
   var qualityBtn = document.getElementById('sliderQualityBtn');
   if(sliderHDLoaded[idx]){
     // Already fetched this session — the browser has it cached, swap instantly.
@@ -3855,10 +3931,16 @@ function loadHD(idx, auto){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  sliderImages = Array.prototype.map.call(document.querySelectorAll('.slide-card img'), function(img){
-    return { thumb: img.src, full: toHDUrl(img.src) };
+  sliderImages = Array.prototype.map.call(document.querySelectorAll('.slide-card'), function(card){
+    var vid = card.querySelector('video');
+    if(vid){
+      return { type:'video', src: vid.getAttribute('src') };
+    }
+    var img = card.querySelector('img');
+    return { type:'image', thumb: img.src, full: toHDUrl(img.src) };
   });
   document.querySelectorAll('.slide-card').forEach(function(card, idx){
+    if(card.querySelector('video')) return; // videos aren't expandable — no lightbox click
     card.addEventListener('click', function(){
       showSliderImage(idx);
       document.getElementById('sliderLightbox').classList.add('on');
@@ -3875,23 +3957,23 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   document.getElementById('sliderPrev').addEventListener('click', function(e){
     e.stopPropagation();
-    showSliderImage(sliderIndex - 1);
+    showSliderImage(nextViewableIndex(sliderIndex, -1));
   });
   document.getElementById('sliderNext').addEventListener('click', function(e){
     e.stopPropagation();
-    showSliderImage(sliderIndex + 1);
+    showSliderImage(nextViewableIndex(sliderIndex, 1));
   });
-  var lbImg = document.getElementById('sliderLBImg');
+  var mediaWrap = document.getElementById('sliderMediaWrap');
   var touchStartX = null;
-  lbImg.addEventListener('touchstart', function(e){
+  mediaWrap.addEventListener('touchstart', function(e){
     touchStartX = e.changedTouches[0].clientX;
   });
-  lbImg.addEventListener('touchend', function(e){
+  mediaWrap.addEventListener('touchend', function(e){
     if(touchStartX === null) return;
     var dx = e.changedTouches[0].clientX - touchStartX;
     if(Math.abs(dx) > 40){
-      if(dx < 0) showSliderImage(sliderIndex + 1);
-      else showSliderImage(sliderIndex - 1);
+      if(dx < 0) showSliderImage(nextViewableIndex(sliderIndex, 1));
+      else showSliderImage(nextViewableIndex(sliderIndex, -1));
     }
     touchStartX = null;
   });
@@ -3910,12 +3992,14 @@ document.addEventListener('DOMContentLoaded', function(){
 function closeSliderLB(e){
   document.getElementById('sliderLightbox').classList.remove('on');
   document.body.style.overflow = '';
+  var lbVideo = document.getElementById('sliderLBVideo');
+  if(lbVideo) lbVideo.pause();
 }
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeSliderLB();
   if(!document.getElementById('sliderLightbox').classList.contains('on')) return;
-  if(e.key === 'ArrowRight') showSliderImage(sliderIndex + 1);
-  if(e.key === 'ArrowLeft') showSliderImage(sliderIndex - 1);
+  if(e.key === 'ArrowRight') showSliderImage(nextViewableIndex(sliderIndex, 1));
+  if(e.key === 'ArrowLeft') showSliderImage(nextViewableIndex(sliderIndex, -1));
 });
 
 // Top slider — fully JS-driven infinite marquee. Replaces the old CSS
@@ -4050,27 +4134,41 @@ window.isSliderGridView = false;
 
   function buildGrid(){
     grid.innerHTML = '';
-    var imgs = Array.prototype.slice.call(document.querySelectorAll('.slide-card img'));
-    var half = Math.floor(imgs.length / 2) || imgs.length; // slide-cards are duplicated once for the marquee loop
-    var entries = imgs.slice(0, half).map(function(img, idx){ return {img:img, idx:idx}; });
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.slide-card'));
+    var half = Math.floor(cards.length / 2) || cards.length; // slide-cards are duplicated once for the marquee loop
+    var entries = cards.slice(0, half).map(function(card, idx){ return {card:card, idx:idx}; });
     shuffle(entries);
     var frag = document.createDocumentFragment();
     entries.forEach(function(entry){
-      var img = entry.img, idx = entry.idx;
+      var card = entry.card, idx = entry.idx;
       var cell = document.createElement('div');
       cell.className = 'grid-card';
-      var im = document.createElement('img');
-      im.src = img.currentSrc || img.src;
-      im.alt = img.alt || 'Design work';
-      im.loading = 'lazy';
-      cell.appendChild(im);
+      var vid = card.querySelector('video');
+      if(vid){
+        var v = document.createElement('video');
+        v.src = vid.getAttribute('src');
+        v.autoplay = true;
+        v.loop = true;
+        v.muted = true;
+        v.playsInline = true;
+        cell.appendChild(v);
+      } else {
+        var img = card.querySelector('img');
+        var im = document.createElement('img');
+        im.src = img.currentSrc || img.src;
+        im.alt = img.alt || 'Design work';
+        im.loading = 'lazy';
+        cell.appendChild(im);
+      }
       cell.addEventListener('click', function(){
+        if(vid) return; // videos aren't expandable — no lightbox click
         if(typeof showSliderImage === 'function'){
           showSliderImage(idx);
           document.getElementById('sliderLightbox').classList.add('on');
           document.body.style.overflow = 'hidden';
         }
       });
+      if(typeof window.wireExpandBadge === 'function') window.wireExpandBadge(cell);
       frag.appendChild(cell);
     });
     grid.appendChild(frag);
@@ -4217,6 +4315,7 @@ window.isSliderGridView = false;
   <button id="sliderNext" class="slider-nav-btn" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
   <div id="sliderMediaWrap">
     <img id="sliderLBImg" src="" alt="Design work"/>
+    <video id="sliderLBVideo" autoplay loop muted playsinline style="display:none;"></video>
     <div id="sliderQualityBar" onclick="event.stopPropagation()">
       <span id="sliderQualityText">You're viewing a compressed version for faster loading</span>
       <button id="sliderQualityBtn" type="button">View full quality</button>
